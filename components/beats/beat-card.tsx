@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import Image from "next/image";
 import { Beat } from "@/lib/beats";
 import { PlayToggle } from "@/components/audio/play-toggle";
@@ -18,7 +19,11 @@ export function BeatCard({ beat }: { beat: Beat }) {
         <div className="beat-card-heading">
           <div>
             <p className="eyebrow">{beat.genre}</p>
-            <h3>{beat.title}</h3>
+            <h3>
+              <Link href={`/beats/${beat.slug}`} className="beat-card-title-link">
+                {beat.title}
+              </Link>
+            </h3>
           </div>
           <button type="button" className="favorite-chip" aria-label={`Favorite ${beat.title}`}>
             Save
@@ -32,7 +37,9 @@ export function BeatCard({ beat }: { beat: Beat }) {
         </div>
         <div className="beat-card-actions">
           <span className="ghost-chip">Add to Cart</span>
-          <span className="solid-chip">Licensing Next</span>
+          <Link href={`/beats/${beat.slug}`} className="solid-chip">
+            View Beat
+          </Link>
         </div>
       </div>
     </article>
