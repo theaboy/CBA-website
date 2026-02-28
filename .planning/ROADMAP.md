@@ -12,7 +12,7 @@ This roadmap moves from brand and architecture foundations into the two core bus
 
 Decimal phases appear between their surrounding integers in numeric order.
 
-- [ ] **Phase 1: Foundation and Brand System** - Establish the design language, app structure, and shared layout foundations.
+- [x] **Phase 1: Foundation and Brand System** - Establish the design language, app structure, and shared layout foundations. (completed 2026-02-28)
 - [ ] **Phase 2: Marketplace Browsing and Playback** - Deliver the public beats browsing experience and persistent audio player.
 - [ ] **Phase 3: Beat Detail and Inquiry Conversion** - Turn beat discovery into structured lead capture with license-aware detail pages.
 - [ ] **Phase 4: Studio Booking Flow** - Ship the second primary business path with availability and booking requests.
@@ -36,10 +36,10 @@ Decimal phases appear between their surrounding integers in numeric order.
 **Plans**: 4 plans
 
 Plans:
-- [ ] 01-01: Audit assets, define design tokens, and establish visual system primitives.
-- [ ] 01-02: Set up Next.js app structure, layouts, navigation, and route groups.
-- [ ] 01-03: Build foundational public shell sections and responsive patterns.
-- [ ] 01-04: Scaffold protected admin shell layout without deep features yet.
+- [x] 01-01: Audit assets, define design tokens, and establish visual system primitives.
+- [x] 01-02: Set up Next.js app structure, layouts, navigation, and route groups.
+- [x] 01-03: Build foundational public shell sections and responsive patterns.
+- [x] 01-04: Scaffold protected admin shell layout without deep features yet.
 
 ### Phase 2: Marketplace Browsing and Playback
 **Goal**: Deliver the core audio-first beats browsing experience with persistent single-track playback.
@@ -182,7 +182,7 @@ Phases execute in numeric order: 2 → 2.1 → 2.2 → 3 → 3.1 → 4
 
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
-| 1. Foundation and Brand System | 0/4 | Not started | - |
+| 1. Foundation and Brand System | 4/4 | Complete | 2026-02-28 |
 | 2. Marketplace Browsing and Playback | 0/5 | Not started | - |
 | 3. Beat Detail and Inquiry Conversion | 0/3 | Not started | - |
 | 4. Studio Booking Flow | 0/4 | Not started | - |
