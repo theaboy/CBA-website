@@ -1,5 +1,7 @@
 import type { Metadata } from "next";
 import "./globals.css";
+import { MiniPlayer } from "@/components/audio/mini-player";
+import { AudioProvider } from "@/lib/audio";
 import { siteConfig } from "@/lib/site";
 
 export const metadata: Metadata = {
@@ -14,7 +16,12 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en">
-      <body>{children}</body>
+      <body>
+        <AudioProvider>
+          {children}
+          <MiniPlayer />
+        </AudioProvider>
+      </body>
     </html>
   );
 }

@@ -576,3 +576,236 @@ h3 {
     width: min(calc(100% - 1.2rem), var(--content-max));
   }
 }
+
+.marketplace-overview,
+.featured-beats-grid,
+.beat-grid {
+  display: grid;
+  gap: 1rem;
+  margin-top: 1.5rem;
+}
+
+.marketplace-overview,
+.featured-beats-grid {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.marketplace-shell,
+.featured-beats-shell {
+  display: grid;
+  gap: 1.4rem;
+}
+
+.marketplace-header,
+.featured-beats-head {
+  display: grid;
+  gap: 0.8rem;
+  align-items: end;
+  grid-template-columns: 1.1fr 0.9fr;
+}
+
+.marketplace-filters {
+  display: grid;
+  gap: 0.9rem;
+}
+
+.filter-group {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 0.9rem;
+}
+
+.filter-group label {
+  display: grid;
+  gap: 0.45rem;
+  color: var(--ink-1);
+  font-size: 0.9rem;
+}
+
+.filter-group select,
+.filter-group input {
+  width: 100%;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-sm);
+  background: rgba(255, 255, 255, 0.04);
+  color: var(--ink-0);
+  padding: 0.8rem 0.9rem;
+}
+
+.filter-range-group label span {
+  color: var(--accent-soft);
+}
+
+.beat-grid {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.beat-card {
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  border: 1px solid var(--line);
+  background: rgba(22, 18, 15, 0.94);
+  box-shadow: var(--shadow);
+}
+
+.beat-card-art {
+  position: relative;
+  aspect-ratio: 16 / 11;
+  overflow: hidden;
+}
+
+.beat-card-art img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.beat-card-overlay {
+  position: absolute;
+  inset: auto 1rem 1rem 1rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 0.8rem;
+}
+
+.play-toggle,
+.favorite-chip {
+  border: 1px solid var(--line);
+  background: rgba(8, 7, 7, 0.74);
+  color: var(--ink-0);
+  border-radius: 999px;
+  padding: 0.7rem 1rem;
+  cursor: pointer;
+}
+
+.play-toggle.active {
+  background: linear-gradient(135deg, var(--accent) 0%, #f3b668 100%);
+  color: #160e08;
+}
+
+.beat-price {
+  display: inline-flex;
+  align-items: center;
+  min-height: 2.5rem;
+  padding: 0.5rem 0.9rem;
+  border-radius: 999px;
+  background: rgba(8, 7, 7, 0.74);
+  color: var(--accent-soft);
+  border: 1px solid var(--line);
+}
+
+.beat-card-copy {
+  padding: 1.2rem;
+  display: grid;
+  gap: 0.9rem;
+}
+
+.beat-card-heading {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  align-items: start;
+}
+
+.beat-card-meta,
+.mini-player-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.65rem;
+  color: var(--ink-1);
+  font-size: 0.86rem;
+}
+
+.beat-card-meta span,
+.mini-player-meta span {
+  padding: 0.25rem 0.55rem;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.04);
+}
+
+.beat-card-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+}
+
+.marketplace-empty {
+  border-radius: var(--radius-lg);
+  border: 1px dashed var(--line);
+  background: rgba(255, 255, 255, 0.03);
+  padding: 1.5rem;
+}
+
+.mini-player {
+  position: fixed;
+  left: 50%;
+  bottom: 1rem;
+  transform: translateX(-50%);
+  z-index: 50;
+  width: min(calc(100% - 1.5rem), 1040px);
+  padding: 0.9rem;
+  border-radius: 28px;
+  border: 1px solid rgba(240, 193, 123, 0.18);
+  background: rgba(14, 12, 11, 0.95);
+  box-shadow: 0 20px 70px rgba(0, 0, 0, 0.45);
+  display: grid;
+  grid-template-columns: 84px 1fr auto;
+  gap: 1rem;
+  align-items: center;
+  backdrop-filter: blur(22px);
+}
+
+.mini-player-art img {
+  border-radius: 20px;
+  object-fit: cover;
+}
+
+.mini-player-copy {
+  display: grid;
+  gap: 0.4rem;
+}
+
+.mini-player-copy h3 {
+  font-size: 1.35rem;
+}
+
+.mini-player-copy p {
+  margin: 0;
+  color: var(--ink-1);
+}
+
+.mini-player-progress {
+  height: 7px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.08);
+  overflow: hidden;
+}
+
+.mini-player-progress-bar {
+  height: 100%;
+  border-radius: inherit;
+  background: linear-gradient(90deg, var(--accent) 0%, var(--accent-soft) 100%);
+}
+
+.mini-player-actions {
+  display: flex;
+  gap: 0.7rem;
+  align-items: center;
+}
+
+@media (max-width: 980px) {
+  .marketplace-overview,
+  .featured-beats-grid,
+  .beat-grid,
+  .marketplace-header,
+  .featured-beats-head,
+  .filter-group,
+  .mini-player {
+    grid-template-columns: 1fr;
+  }
+
+  .mini-player {
+    width: min(calc(100% - 1rem), 1040px);
+  }
+}
