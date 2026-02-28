@@ -1,6 +1,7 @@
 # Phase 3: Beat Detail and Inquiry Conversion - Research
 
 **Researched:** 2026-02-28
+**Refreshed:** 2026-02-28
 **Status:** Complete
 **Phase:** 3
 **Requirements:** BEAT-05, BEAT-06
@@ -10,6 +11,8 @@
 Answer: "What do we need to know to plan Phase 3 well?"
 
 Phase 3 needs to convert browse intent into qualified beat leads without a real checkout yet. The planning emphasis should be on route architecture, reuse of the Phase 2 audio/catalog foundations, license communication, and a submission path that feels real now without overcommitting to backend systems scheduled later.
+
+This refresh confirms there is no scope change from the original plan. The only meaningful new signal is that the Phase 2 marketplace and playback behavior was manually confirmed in-browser, so the Phase 3 detail route can safely build on those interaction assumptions.
 
 ## Findings
 
@@ -60,6 +63,13 @@ The success state must explain:
 
 This replaces the reassurance that a real checkout usually provides.
 
+### 7. Phase 3 should preserve continuity from the already-confirmed marketplace behavior
+
+Because the user confirmed the Phase 2 experience in a real browser, Phase 3 should assume:
+- beat cards and homepage features are stable entry points
+- persistent playback continuity is part of the user expectation now
+- the detail route should feel like a deeper layer of the same product, not a disconnected microsite
+
 ## Planning Implications
 
 - Plan 01 should build the dynamic beat detail route, large player composition, and waveform-ready module.
@@ -80,4 +90,4 @@ This replaces the reassurance that a real checkout usually provides.
 
 ---
 
-*Research completed: 2026-02-28*
+*Research refreshed: 2026-02-28*
