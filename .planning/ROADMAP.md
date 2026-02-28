@@ -13,8 +13,8 @@ This roadmap moves from brand and architecture foundations into the two core bus
 Decimal phases appear between their surrounding integers in numeric order.
 
 - [x] **Phase 1: Foundation and Brand System** - Establish the design language, app structure, and shared layout foundations. (completed 2026-02-28)
-- [ ] **Phase 2: Marketplace Browsing and Playback** - Deliver the public beats browsing experience and persistent audio player.
-- [ ] **Phase 3: Beat Detail and Inquiry Conversion** - Turn beat discovery into structured lead capture with license-aware detail pages.
+- [x] **Phase 2: Marketplace Browsing and Playback** - Deliver the public beats browsing experience and persistent audio player. (completed 2026-02-28)
+- [x] **Phase 3: Beat Detail and Inquiry Conversion** - Turn beat discovery into structured lead capture with license-aware detail pages. (completed 2026-02-28)
 - [ ] **Phase 4: Studio Booking Flow** - Ship the second primary business path with availability and booking requests.
 - [ ] **Phase 5: Secondary Public Pages and Trust Content** - Complete the broader public site for events, DJ services, story, and contact.
 - [ ] **Phase 6: Accounts and Favorites UX** - Add account-ready surfaces and favorite interactions without making backend auth a blocker.
@@ -53,11 +53,11 @@ Plans:
 **Plans**: 5 plans
 
 Plans:
-- [ ] 02-01: Define beat data shape and placeholder content strategy.
-- [ ] 02-02: Implement centralized audio state and one-track-at-a-time behavior.
-- [ ] 02-03: Build beats listing page with cards, filters, and sort controls.
-- [ ] 02-04: Integrate featured beats and CTA behavior into the homepage.
-- [ ] 02-05: Polish marketplace interactions, responsiveness, and loading/empty states.
+- [x] 02-01: Define beat data shape and placeholder content strategy.
+- [x] 02-02: Implement centralized audio state and one-track-at-a-time behavior.
+- [x] 02-03: Build beats listing page with cards, filters, and sort controls.
+- [x] 02-04: Integrate featured beats and CTA behavior into the homepage.
+- [x] 02-05: Polish marketplace interactions, responsiveness, and loading/empty states.
 
 ### Phase 3: Beat Detail and Inquiry Conversion
 **Goal**: Convert beat browsing into credible, structured licensing inquiries.
@@ -71,9 +71,9 @@ Plans:
 **Plans**: 3 plans
 
 Plans:
-- [ ] 03-01: Build beat detail template and waveform-ready presentation.
-- [ ] 03-02: Design and implement license-selection and inquiry form UX.
-- [ ] 03-03: Wire submission handling, confirmations, and admin notification path.
+- [x] 03-01: Build beat detail template and waveform-ready presentation.
+- [x] 03-02: Design and implement license-selection and inquiry form UX.
+- [x] 03-03: Wire submission handling, confirmations, and admin notification path.
 
 ### Phase 4: Studio Booking Flow
 **Goal**: Deliver the studio booking surface for availability discovery and request capture.
@@ -183,8 +183,8 @@ Phases execute in numeric order: 2 → 2.1 → 2.2 → 3 → 3.1 → 4
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
 | 1. Foundation and Brand System | 4/4 | Complete | 2026-02-28 |
-| 2. Marketplace Browsing and Playback | 0/5 | Not started | - |
-| 3. Beat Detail and Inquiry Conversion | 0/3 | Not started | - |
+| 2. Marketplace Browsing and Playback | 5/5 | Complete | 2026-02-28 |
+| 3. Beat Detail and Inquiry Conversion | 3/3 | Complete | 2026-02-28 |
 | 4. Studio Booking Flow | 0/4 | Not started | - |
 | 5. Secondary Public Pages and Trust Content | 0/4 | Not started | - |
 | 6. Accounts and Favorites UX | 0/3 | Not started | - |
