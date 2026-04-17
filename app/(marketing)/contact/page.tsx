@@ -9,13 +9,13 @@ export default function ContactPage() {
       <Section eyebrow={page.eyebrow} title={page.title} body={page.body}>
         <div className="route-placeholder-grid">
           <article className="route-placeholder-card">
-            <h3>Location</h3>
+            <h3>Localisation</h3>
             <p>{siteConfig.location}</p>
-            <p>Contact form and booking-specific messaging will connect here in the next phases.</p>
+            <p>Le formulaire de contact et les messages liés aux réservations seront intégrés ici dans les prochaines phases.</p>
           </article>
           <article className="route-placeholder-card">
-            <h3>Signal quality</h3>
-            <p>Structured inquiries, licensing notes, and response expectations will be layered into this surface.</p>
+            <h3>Qualité du signal</h3>
+            <p>Les demandes structurées, notes de licence et délais de réponse seront ajoutés à cette surface.</p>
           </article>
         </div>
       </Section>

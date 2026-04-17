@@ -9,12 +9,12 @@ export default function DjServicesPage() {
       <Section eyebrow={page.eyebrow} title={page.title} body={page.body}>
         <div className="route-placeholder-grid">
           <article className="route-placeholder-card">
-            <h3>Service positioning</h3>
-            <p>Equipment, event types, and atmosphere-led presentation start here.</p>
+            <h3>Positionnement du service</h3>
+            <p>Équipement, types d'événements et présentation axée sur l'ambiance débutent ici.</p>
           </article>
           <article className="route-placeholder-card">
-            <h3>Inquiry-ready structure</h3>
-            <p>Later phases connect budget, location, and duration fields into a managed lead flow.</p>
+            <h3>Structure prête aux demandes</h3>
+            <p>Les phases suivantes connecteront le budget, le lieu et la durée dans un flux de leads géré.</p>
           </article>
         </div>
       </Section>

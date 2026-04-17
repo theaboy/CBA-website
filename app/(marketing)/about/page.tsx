@@ -9,12 +9,12 @@ export default function AboutPage() {
       <Section eyebrow={page.eyebrow} title={page.title} body={page.body}>
         <div className="route-placeholder-grid">
           <article className="route-placeholder-card">
-            <h3>Band story</h3>
-            <p>Editorial structure for roots, process, collaborators, and evolving catalog.</p>
+            <h3>Histoire du groupe</h3>
+            <p>Structure éditoriale pour les origines, le processus, les collaborateurs et le catalogue évolutif.</p>
           </article>
           <article className="route-placeholder-card">
-            <h3>Press / media</h3>
-            <p>Reserved space for embedded media, photography, and press references.</p>
+            <h3>Presse / médias</h3>
+            <p>Espace réservé pour les médias intégrés, la photographie et les références presse.</p>
           </article>
         </div>
       </Section>

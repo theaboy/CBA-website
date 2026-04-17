@@ -5,19 +5,19 @@ export type NavLink = {
 };
 
 export const siteConfig = {
-  name: "CBA Official Website",
+  name: "Site officiel de CBA",
   title: "CBA",
   description:
-    "Premium Montreal music collective website for beats, studio bookings, DJ services, and live event discovery.",
-  location: "Montreal, Canada",
+    "Site officiel du collectif musical CBA de Montréal — beats, réservations studio, services DJ et découverte d'événements.",
+  location: "Montréal, Canada",
   adminPreviewCookie: "cba_admin_preview",
   nav: [
-    { href: "/", label: "Home" },
+    { href: "/", label: "Accueil" },
     { href: "/beats", label: "Beats" },
-    { href: "/events", label: "Events" },
+    { href: "/events", label: "Événements" },
     { href: "/studio", label: "Studio" },
-    { href: "/dj-services", label: "DJ Services", shortLabel: "DJ" },
-    { href: "/about", label: "About" },
+    { href: "/dj-services", label: "Services DJ", shortLabel: "DJ" },
+    { href: "/about", label: "À propos" },
     { href: "/contact", label: "Contact" }
   ] satisfies NavLink[],
   social: [
@@ -26,44 +26,44 @@ export const siteConfig = {
     { label: "SoundCloud", href: "https://soundcloud.com/" }
   ],
   adminNav: [
-    "Overview",
-    "Homepage Content",
-    "Beat Catalog",
-    "Studio Availability",
-    "Events",
-    "DJ Inquiries"
+    "Vue d'ensemble",
+    "Contenu page d'accueil",
+    "Catalogue de beats",
+    "Disponibilités studio",
+    "Événements",
+    "Demandes DJ"
   ]
 } as const;
 
 export const pageSummaries: Record<string, { eyebrow: string; title: string; body: string }> = {
   "/beats": {
-    eyebrow: "Beat Marketplace",
-    title: "Browse polished placeholders for the audio storefront to come.",
-    body: "Phase 1 establishes the shell, metadata, and presentation patterns that the full marketplace will inherit."
+    eyebrow: "Marketplace de Beats",
+    title: "Explorez notre catalogue audio soigneusement sélectionné.",
+    body: "La phase 1 établit la structure, les métadonnées et les gabarits de présentation que le marketplace complet héritera."
   },
   "/events": {
-    eyebrow: "Live Events",
-    title: "Event discovery and ticket promotion architecture.",
-    body: "This page establishes the event presentation frame so future admin-managed listings feel intentional from day one."
+    eyebrow: "Événements Live",
+    title: "Découverte d'événements et architecture de promotion de billets.",
+    body: "Cette page pose le cadre de présentation des événements pour que les futures annonces gérées par l'admin soient cohérentes dès le premier jour."
   },
   "/studio": {
-    eyebrow: "Studio Sessions",
-    title: "Studio booking starts with trust, clarity, and atmosphere.",
-    body: "The booking flow lands in the next phase, but the information architecture starts here."
+    eyebrow: "Sessions Studio",
+    title: "Réservez du temps studio dans un espace conçu pour la précision, le son et l'élan créatif.",
+    body: "Choisissez un forfait, vérifiez les disponibilités et envoyez une demande de session que CBA confirmera manuellement."
   },
   "/dj-services": {
-    eyebrow: "DJ Services",
-    title: "Private events, curated sound, and production-minded presence.",
-    body: "The inquiry flow will plug into this foundation after the first public shell is established."
+    eyebrow: "Services DJ",
+    title: "Événements privés, son curatif et présence orientée production.",
+    body: "Le flux de demandes se connectera à cette base après l'établissement du premier shell public."
   },
   "/about": {
-    eyebrow: "About CBA",
-    title: "Montreal roots with a scalable premium identity.",
-    body: "This early page lays out the editorial rhythm for story-driven content and press materials."
+    eyebrow: "À propos de CBA",
+    title: "Des racines montréalaises avec une identité premium évolutive.",
+    body: "Cette page pose le rythme éditorial pour les contenus narratifs et les dossiers de presse."
   },
   "/contact": {
     eyebrow: "Contact",
-    title: "A controlled, high-trust contact surface for future conversion flows.",
-    body: "Phase 1 provides structure and presentation so contact and inquiry mechanics can be added cleanly."
+    title: "Un point de contact contrôlé et fiable pour les futures demandes.",
+    body: "La phase 1 fournit la structure et la présentation pour que les mécaniques de contact et de demande puissent être ajoutées proprement."
   }
 };
