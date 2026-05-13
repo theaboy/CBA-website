@@ -1,0 +1,551 @@
+.hero {
+  --hero-pointer-x: 0;
+  --hero-pointer-y: 0;
+  position: relative;
+  min-height: 98dvh;
+  overflow: clip;
+  display: grid;
+  align-items: center;
+  padding: clamp(5.5rem, 9vw, 8.8rem) clamp(1.1rem, 4vw, 4.8rem)
+    clamp(4rem, 7vw, 5.4rem);
+  background: #090807;
+}
+
+.bgLayer {
+  position: absolute;
+  inset: -5%;
+  z-index: 0;
+}
+
+.bgImage {
+  object-fit: cover;
+  object-position: center;
+  transform: scale(1.04);
+  filter: saturate(0.86) contrast(1.02);
+  animation: settle 1200ms cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+.bgShade {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  background:
+    linear-gradient(
+      114deg,
+      rgba(8, 7, 6, 0.95) 3%,
+      rgba(8, 7, 6, 0.7) 48%,
+      rgba(8, 7, 6, 0.9) 100%
+    );
+}
+
+.bgGlow {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  background:
+    radial-gradient(
+      circle at 17% 24%,
+      rgba(62, 76, 63, 0.32),
+      transparent 48%
+    ),
+    radial-gradient(
+      circle at 82% 80%,
+      rgba(212, 163, 115, 0.16),
+      transparent 41%
+    );
+}
+
+.bgGrain {
+  position: absolute;
+  inset: -140%;
+  z-index: 2;
+  opacity: 0.12;
+  mix-blend-mode: soft-light;
+  pointer-events: none;
+  background-image: radial-gradient(
+    circle at center,
+    rgba(255, 255, 255, 0.9) 1px,
+    transparent 1px
+  );
+  background-size: 3px 3px;
+  animation: grain 12s steps(24) infinite;
+}
+
+.gridOverlay {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  pointer-events: none;
+  opacity: 0.5;
+}
+
+.gridPattern {
+  mask-image: radial-gradient(650px circle at 55% 46%, white, transparent 76%);
+}
+
+.gridSquare {
+  stroke: rgba(255, 255, 255, 0.08);
+}
+
+.reactiveGlow {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  pointer-events: none;
+  mix-blend-mode: screen;
+}
+
+.inner {
+  position: relative;
+  z-index: 4;
+  width: min(100%, 1220px);
+  margin-inline: auto;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(18rem, 34rem);
+  gap: clamp(1.4rem, 3vw, 3rem);
+  align-items: center;
+}
+
+.copyCol {
+  max-width: 44rem;
+}
+
+.eyebrow {
+  margin: 0 0 1.15rem;
+  font-family: "JetBrains Mono", monospace;
+  font-size: clamp(0.62rem, 0.75vw, 0.74rem);
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+  color: rgba(236, 202, 146, 0.95);
+  animation: rise 780ms cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+.title {
+  margin: 0;
+  display: grid;
+  gap: 0.1em;
+  font-family: "Cormorant Garamond", serif;
+  font-style: italic;
+  font-size: clamp(2.7rem, 8.7vw, 6.8rem);
+  font-weight: 500;
+  line-height: 0.92;
+  letter-spacing: 0.01em;
+}
+
+.title span {
+  color: #f7ebd7;
+  animation: rise 1000ms cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+.title span:nth-child(1) {
+  animation-delay: 80ms;
+}
+
+.title span:nth-child(2) {
+  color: #e3c789;
+  animation-delay: 180ms;
+}
+
+.title span:nth-child(3) {
+  color: rgba(247, 235, 215, 0.72);
+  animation-delay: 270ms;
+}
+
+.subtitle {
+  margin: 1.55rem 0 0;
+  max-width: 36rem;
+  color: rgba(240, 228, 211, 0.76);
+  font-size: clamp(0.96rem, 1.13vw, 1.1rem);
+  line-height: 1.72;
+  text-wrap: balance;
+  animation: rise 860ms cubic-bezier(0.22, 1, 0.36, 1) 350ms both;
+}
+
+.actions {
+  margin-top: 2rem;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.86rem;
+  animation: rise 860ms cubic-bezier(0.22, 1, 0.36, 1) 480ms both;
+}
+
+.primaryAction,
+.secondaryAction {
+  min-height: 2.9rem;
+  padding: 0.74rem 1.28rem;
+  border-radius: 999px;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.48rem;
+  font-family: "Space Grotesk", sans-serif;
+  font-size: 0.73rem;
+  letter-spacing: 0.13em;
+  text-transform: uppercase;
+  transition:
+    transform 220ms ease,
+    background 220ms ease,
+    border-color 220ms ease,
+    color 220ms ease;
+}
+
+.primaryAction {
+  color: #fdf3df;
+  border: 1px solid rgba(231, 196, 140, 0.28);
+  background: linear-gradient(
+    132deg,
+    rgba(212, 163, 115, 0.28),
+    rgba(62, 76, 63, 0.64)
+  );
+}
+
+.secondaryAction {
+  color: rgba(246, 236, 224, 0.9);
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  background: rgba(20, 18, 16, 0.52);
+}
+
+.primaryAction:hover,
+.secondaryAction:hover {
+  transform: translateY(-2px);
+}
+
+.meta {
+  margin-top: 1.5rem;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  animation: rise 860ms cubic-bezier(0.22, 1, 0.36, 1) 560ms both;
+}
+
+.meta span {
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  background: rgba(10, 11, 10, 0.42);
+  padding: 0.36rem 0.62rem;
+  font-family: "JetBrains Mono", monospace;
+  font-size: 0.6rem;
+  letter-spacing: 0.13em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.66);
+}
+
+.visualCol {
+  position: relative;
+  display: grid;
+  justify-items: end;
+}
+
+.mainFrame {
+  position: relative;
+  margin: 0;
+  width: min(100%, 34rem);
+  aspect-ratio: 0.79;
+  overflow: hidden;
+  border-radius: 1.65rem;
+  border: 1px solid rgba(212, 163, 115, 0.3);
+  box-shadow:
+    0 35px 80px rgba(0, 0, 0, 0.66),
+    inset 0 1px 0 rgba(255, 255, 255, 0.1);
+  transform: translateY(0);
+  animation: frame-in 1200ms cubic-bezier(0.22, 1, 0.36, 1) 180ms both;
+}
+
+.mainFrameImage {
+  object-fit: cover;
+  object-position: center;
+  filter: contrast(1.05) saturate(0.9);
+  transform: scale(1.03);
+}
+
+.mainFrame::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(
+      to top,
+      rgba(9, 8, 7, 0.74) 0%,
+      rgba(9, 8, 7, 0.2) 48%,
+      transparent 73%
+    );
+}
+
+.mainFrameCaption {
+  position: absolute;
+  left: 1rem;
+  bottom: 1rem;
+  z-index: 2;
+  margin: 0;
+  padding: 0.46rem 0.7rem;
+  border-radius: 999px;
+  border: 1px solid rgba(212, 163, 115, 0.34);
+  background: rgba(13, 15, 14, 0.78);
+  backdrop-filter: blur(10px);
+  font-family: "JetBrains Mono", monospace;
+  font-size: 0.58rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: rgba(236, 202, 146, 0.92);
+}
+
+.sideFrame {
+  position: absolute;
+  width: clamp(8.3rem, 18vw, 12rem);
+  aspect-ratio: 1.02;
+  right: clamp(-1.5rem, -3vw, -0.8rem);
+  bottom: clamp(1rem, 4.6vw, 3.2rem);
+  border-radius: 1rem;
+  border: 1px solid rgba(255, 255, 255, 0.24);
+  overflow: hidden;
+  box-shadow: 0 22px 50px rgba(0, 0, 0, 0.5);
+  animation: frame-in 1150ms cubic-bezier(0.22, 1, 0.36, 1) 360ms both;
+}
+
+.sideFrameImage {
+  object-fit: cover;
+  object-position: center;
+}
+
+.signatureRelic {
+  position: absolute;
+  left: clamp(-4.2rem, -5vw, -2.8rem);
+  bottom: clamp(0.6rem, 5vw, 2.6rem);
+  animation: relic-in 1250ms cubic-bezier(0.22, 1, 0.36, 1) 420ms both;
+  will-change: transform;
+}
+
+.relicHalo {
+  position: absolute;
+  inset: -18%;
+  border-radius: 999px;
+  background: radial-gradient(
+    circle,
+    rgba(212, 163, 115, 0.3) 0%,
+    rgba(212, 163, 115, 0.02) 67%
+  );
+  filter: blur(6px);
+}
+
+.relicBody {
+  position: relative;
+  width: clamp(8.6rem, 14vw, 11.2rem);
+  aspect-ratio: 1;
+  display: grid;
+  place-items: center;
+  border-radius: 999px;
+  border: 1px solid rgba(212, 163, 115, 0.45);
+  background:
+    radial-gradient(circle at 30% 20%, rgba(255, 255, 255, 0.12), transparent 36%),
+    linear-gradient(142deg, rgba(27, 38, 32, 0.95), rgba(13, 15, 14, 0.98));
+  box-shadow:
+    0 16px 44px rgba(0, 0, 0, 0.58),
+    inset 0 1px 0 rgba(255, 255, 255, 0.18);
+}
+
+.relicLogo {
+  width: 62%;
+  height: auto;
+  filter: saturate(0.88) brightness(1.08);
+}
+
+.relicLabel {
+  margin-top: 0.48rem;
+  display: block;
+  text-align: center;
+  font-family: "JetBrains Mono", monospace;
+  font-size: 0.55rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: rgba(236, 202, 146, 0.78);
+}
+
+.scrollHint {
+  position: absolute;
+  left: 50%;
+  bottom: clamp(1.2rem, 2.8vw, 2rem);
+  transform: translateX(-50%);
+  z-index: 5;
+  display: grid;
+  justify-items: center;
+  gap: 0.4rem;
+  animation: rise 840ms cubic-bezier(0.22, 1, 0.36, 1) 720ms both;
+}
+
+.scrollLine {
+  width: 1px;
+  height: 2.8rem;
+  background: linear-gradient(
+    to bottom,
+    rgba(227, 199, 137, 0.95),
+    rgba(227, 199, 137, 0)
+  );
+  animation: pulse 2.6s ease-in-out infinite;
+}
+
+.scrollText {
+  font-family: "JetBrains Mono", monospace;
+  font-size: 0.54rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: rgba(227, 199, 137, 0.64);
+}
+
+@media (max-width: 1120px) {
+  .inner {
+    grid-template-columns: 1fr;
+    gap: 2rem;
+  }
+
+  .copyCol {
+    max-width: 100%;
+  }
+
+  .visualCol {
+    justify-items: center;
+    width: min(100%, 36rem);
+    margin-inline: auto;
+  }
+
+  .signatureRelic {
+    left: clamp(0rem, 3vw, 1.2rem);
+    bottom: -1.3rem;
+  }
+}
+
+@media (max-width: 740px) {
+  .hero {
+    min-height: auto;
+    padding-top: 6rem;
+    padding-bottom: 3.4rem;
+  }
+
+  .title {
+    font-size: clamp(2.2rem, 12vw, 4rem);
+  }
+
+  .subtitle {
+    font-size: 0.94rem;
+  }
+
+  .actions {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .primaryAction,
+  .secondaryAction {
+    width: 100%;
+    justify-content: center;
+  }
+
+  .meta {
+    justify-content: center;
+  }
+
+  .mainFrame {
+    width: min(100%, 30rem);
+  }
+
+  .sideFrame {
+    width: clamp(7.1rem, 33vw, 9rem);
+    right: -0.4rem;
+  }
+
+  .signatureRelic {
+    left: -0.3rem;
+    bottom: -1.2rem;
+  }
+
+  .relicBody {
+    width: 8rem;
+  }
+
+  .scrollHint {
+    display: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero * {
+    animation: none !important;
+    transition: none !important;
+  }
+
+  .gridOverlay,
+  .reactiveGlow {
+    display: none;
+  }
+}
+
+@keyframes settle {
+  from {
+    transform: scale(1.08);
+    opacity: 0.84;
+  }
+  to {
+    transform: scale(1.04);
+    opacity: 1;
+  }
+}
+
+@keyframes rise {
+  from {
+    opacity: 0;
+    transform: translateY(18px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes frame-in {
+  from {
+    opacity: 0;
+    transform: translateY(34px) scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@keyframes relic-in {
+  from {
+    opacity: 0;
+    transform: translateY(16px) scale(0.85);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@keyframes pulse {
+  0%,
+  100% {
+    opacity: 1;
+    transform: scaleY(1);
+  }
+  50% {
+    opacity: 0.45;
+    transform: scaleY(0.86);
+  }
+}
+
+@keyframes grain {
+  0% {
+    transform: translate(0, 0);
+  }
+  25% {
+    transform: translate(8%, -5%);
+  }
+  50% {
+    transform: translate(-5%, 9%);
+  }
+  75% {
+    transform: translate(4%, 4%);
+  }
+  100% {
+    transform: translate(0, 0);
+  }
+}

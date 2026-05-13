@@ -1,0 +1,125 @@
+.section {
+  padding: clamp(4.2rem, 7.2vw, 6.4rem) 1.1rem clamp(4rem, 7vw, 5.5rem);
+  background:
+    radial-gradient(
+      ellipse at 50% 10%,
+      rgba(212, 163, 115, 0.14),
+      transparent 58%
+    ),
+    #0c0e0d;
+}
+
+.panel {
+  width: min(100%, 1080px);
+  margin-inline: auto;
+  border-radius: 1.35rem;
+  border: 1px solid rgba(212, 163, 115, 0.24);
+  background:
+    linear-gradient(
+      150deg,
+      rgba(212, 163, 115, 0.13),
+      rgba(15, 17, 16, 0.92) 44%
+    );
+  box-shadow:
+    0 26px 70px rgba(0, 0, 0, 0.44),
+    inset 0 1px 0 rgba(255, 255, 255, 0.08);
+  padding: clamp(1.4rem, 4vw, 2.6rem);
+  text-align: center;
+}
+
+.eyebrow {
+  margin: 0;
+  font-family: "JetBrains Mono", monospace;
+  font-size: 0.64rem;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: #d4a373;
+}
+
+.title {
+  margin: 0.8rem auto 0;
+  max-width: 22ch;
+  font-family: "Cormorant Garamond", serif;
+  font-style: italic;
+  font-size: clamp(1.9rem, 4vw, 3rem);
+  font-weight: 500;
+  line-height: 1.1;
+  color: #f5ebd8;
+}
+
+.body {
+  margin: 0.8rem auto 0;
+  max-width: 58ch;
+  color: rgba(245, 236, 222, 0.68);
+  font-size: 0.94rem;
+  line-height: 1.7;
+}
+
+.form {
+  margin: 1.4rem auto 0;
+  width: min(100%, 40rem);
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 0.55rem;
+}
+
+.input {
+  min-height: 3rem;
+  border-radius: 999px;
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  background: rgba(10, 11, 10, 0.62);
+  color: #f5ebd8;
+  font-family: "Space Grotesk", sans-serif;
+  font-size: 0.91rem;
+  padding: 0.72rem 1.05rem;
+  outline: none;
+}
+
+.input::placeholder {
+  color: rgba(245, 236, 222, 0.48);
+}
+
+.input:focus-visible {
+  border-color: rgba(212, 163, 115, 0.5);
+}
+
+.submit {
+  min-height: 3rem;
+  border-radius: 999px;
+  border: 1px solid rgba(212, 163, 115, 0.36);
+  background: linear-gradient(
+    135deg,
+    rgba(212, 163, 115, 0.95),
+    rgba(169, 132, 103, 0.96)
+  );
+  color: #17110a;
+  padding: 0.72rem 1.2rem;
+  font-family: "Space Grotesk", sans-serif;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: transform 220ms ease;
+}
+
+.submit:hover {
+  transform: translateY(-2px);
+}
+
+.srOnly {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  border: 0;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+}
+
+@media (max-width: 680px) {
+  .form {
+    grid-template-columns: 1fr;
+  }
+}
