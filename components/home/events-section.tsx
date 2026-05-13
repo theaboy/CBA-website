@@ -35,7 +35,8 @@ const events = [
 
 export function EventsSection() {
   return (
-    <section className={`${styles.section} motion-safe:animate-fade-up`} aria-labelledby="events-home-heading">
+    /* TODO: replace with real stream URL */
+    <section id="listen" className={`${styles.section} motion-safe:animate-fade-up`} aria-labelledby="events-home-heading">
       <div className={styles.inner}>
         <header className={styles.header}>
           <div>

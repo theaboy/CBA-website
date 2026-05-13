@@ -1,20 +1,19 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import Link from "next/link";
 import Image from "next/image";
 
 const SCROLL_HEIGHT  = "190vh";
 const NAV_THRESHOLD  = 0.45; // nav fades in once 45 % of the animation is done
 
 const NAV_ITEMS = [
-  { label: "EXPLORE BEATS", href: "/beats"       },
-  { label: "BOOK SESSION",  href: "/dj-services"  },
-  { label: "LISTEN LIVE",   href: "/events"        },
+  { label: "EXPLORE BEATS", scrollTo: "beats"   },
+  { label: "BOOK SESSION",  scrollTo: "studio"  },
+  { label: "LISTEN LIVE",   scrollTo: "listen"  },
 ];
 
-// ── Single nav link ───────────────────────────────────────────────────────────
-function NavLink({ label, href, divider }: { label: string; href: string; divider: boolean }) {
+// ── Single nav button ─────────────────────────────────────────────────────────
+function NavLink({ label, scrollTo, divider }: { label: string; scrollTo: string; divider: boolean }) {
   const [hovered, setHovered] = useState(false);
 
   return (
@@ -26,8 +25,8 @@ function NavLink({ label, href, divider }: { label: string; href: string; divide
         borderLeft: divider ? "1px solid rgba(255,255,255,0.15)" : "none",
       }}
     >
-      <Link
-        href={href}
+      <button
+        onClick={() => document.getElementById(scrollTo)?.scrollIntoView({ behavior: "smooth" })}
         onMouseEnter={() => setHovered(true)}
         onMouseLeave={() => setHovered(false)}
         style={{
@@ -35,9 +34,10 @@ function NavLink({ label, href, divider }: { label: string; href: string; divide
           display: "flex",
           alignItems: "center",
           justifyContent: "center",
-          textDecoration: "none",
+          background: "none",
+          border: "none",
+          cursor: "pointer",
 
-          // ── Typography — matches the logo's thin geometric uppercase feel
           fontFamily: "var(--font-sans, 'Helvetica Neue', Arial, sans-serif)",
           fontSize: "clamp(0.7rem, 1.2vw, 0.95rem)",
           fontWeight: 300,
@@ -50,7 +50,7 @@ function NavLink({ label, href, divider }: { label: string; href: string; divide
         }}
       >
         {label}
-      </Link>
+      </button>
     </div>
   );
 }
@@ -206,7 +206,7 @@ export function ScrollHero() {
           }}
         >
           {NAV_ITEMS.map((item, i) => (
-            <NavLink key={item.href} {...item} divider={i > 0} />
+            <NavLink key={item.scrollTo} {...item} divider={i > 0} />
           ))}
         </nav>
       </div>
