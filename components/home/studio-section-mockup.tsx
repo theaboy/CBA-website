@@ -29,7 +29,8 @@ const services = [
 
 export function StudioSectionMockup() {
   return (
-    <section className={`${styles.section} motion-safe:animate-fade-up`} aria-labelledby="studio-home-heading">
+    /* TODO: wire to studio booking form in components/studio/studio-booking-form.tsx */
+    <section id="studio" className={`${styles.section} motion-safe:animate-fade-up`} aria-labelledby="studio-home-heading">
       <div className={styles.inner}>
         <header className={styles.header}>
           <div>

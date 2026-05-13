@@ -28,10 +28,12 @@ export function EditorialCatalog() {
 
   return (
     <section
+      id="beats"
       aria-labelledby="editorial-catalog-heading"
       className="px-6 py-16 md:px-16 md:py-24"
       style={{ backgroundColor: BG, color: PAPER }}
     >
+      {/* TODO: replace with real beat data from lib/beats/catalog.ts */}
       <div className="mx-auto max-w-7xl">
         {/* Header */}
         <div className="mb-12 flex flex-col items-start gap-6 md:flex-row md:items-end md:justify-between">
