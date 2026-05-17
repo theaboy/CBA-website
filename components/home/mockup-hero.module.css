@@ -124,7 +124,7 @@
   margin: 0;
   display: grid;
   gap: 0.1em;
-  font-family: "Cormorant Garamond", serif;
+  font-family: var(--font-title, "Cinzel", serif);
   font-style: italic;
   font-size: clamp(2.7rem, 8.7vw, 6.8rem);
   font-weight: 500;

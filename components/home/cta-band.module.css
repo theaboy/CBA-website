@@ -39,7 +39,7 @@
 .title {
   margin: 0.8rem auto 0;
   max-width: 22ch;
-  font-family: "Cormorant Garamond", serif;
+  font-family: var(--font-title, "Cinzel", serif);
   font-style: italic;
   font-size: clamp(1.9rem, 4vw, 3rem);
   font-weight: 500;

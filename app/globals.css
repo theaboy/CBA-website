@@ -9,7 +9,7 @@
 /* ─── Mockup brand design system ─────────────────────────── */
 @theme {
   --font-display: "Space Grotesk", sans-serif;
-  --font-serif: "Cormorant Garamond", serif;
+  --font-serif: var(--font-title, "Cinzel", serif);
   --font-mono: "JetBrains Mono", monospace;
 
   --color-brand-bg: #0D0F0E;
@@ -172,7 +172,7 @@
   --ink-1: #cdbba0;
   --ink-2: #9b866a;
   --bg-0: #0a0908;
-  --cinzel: "Bodoni 72", "Didot", "Times New Roman", serif;
+  --cinzel: var(--font-title, "Cinzel", serif);
   --garamond: "Georgia", "Times New Roman", serif;
   --gold: #e8c870;
   --gold-soft: #f0d898;
@@ -194,7 +194,7 @@
   --radius-md: 18px;
   --radius-sm: 12px;
   --content-max: 1180px;
-  --display-font: "Bodoni 72", "Didot", "Times New Roman", serif;
+  --display-font: var(--font-title, "Cinzel", serif);
   --body-font: "Avenir Next", "Segoe UI", sans-serif;
 }
 
@@ -3503,7 +3503,7 @@ body[data-fx-fullscreen="1"] .site-footer-upgraded {
   position: absolute;
   pointer-events: none;
   white-space: nowrap;
-  font-family: "Cormorant Garamond", serif;
+  font-family: var(--font-title, "Cinzel", serif);
   font-style: italic;
   font-weight: 900;
   opacity: 0.03;
@@ -3520,6 +3520,6 @@ body[data-fx-fullscreen="1"] .site-footer-upgraded {
 
 /* Serif display shorthand */
 .serif-display {
-  font-family: "Cormorant Garamond", serif;
+  font-family: var(--font-title, "Cinzel", serif);
   font-style: italic;
 }

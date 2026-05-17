@@ -40,7 +40,7 @@ export function EditorialCatalog() {
           <div className="max-w-2xl">
             <h2
               id="editorial-catalog-heading"
-              className="mb-4 font-serif text-5xl italic"
+              className="mb-4 font-serif text-5xl"
               style={{ color: GOLD }}
             >
               Catalogue éditorial
