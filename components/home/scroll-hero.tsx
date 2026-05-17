@@ -172,16 +172,24 @@ export function ScrollHero() {
             pointerEvents: "none",
           }}
         >
-          <Image
-            src="/cba/cba-logo-full.png"
-            alt="CBA — Create · Build · Achieve"
-            width={560}
-            height={373}
-            priority
+          {/* Logo rendered as a CSS mask so the gradient fills the logo shape only — no box */}
+          {/* OPTION A: #1e6539 (mid green) → gold  |  OPTION B: #0a4b2a (deep green) → gold */}
+          <div
+            role="img"
+            aria-label="CBA — Create · Build · Achieve"
             style={{
-              objectFit: "contain",
-              maxWidth: "min(380px, 52vw)",
-              height: "auto",
+              width: "min(380px, 52vw)",
+              aspectRatio: "560 / 373",
+              background: "linear-gradient(135deg, #1e6539 0%, #c9a961 55%)", // option A
+              // background: "linear-gradient(135deg, #0a4b2a 0%, #c9a961 100%)", // option B
+              WebkitMaskImage: "url(/cba/cba-logo-full.png)",
+              WebkitMaskSize: "contain",
+              WebkitMaskRepeat: "no-repeat",
+              WebkitMaskPosition: "center",
+              maskImage: "url(/cba/cba-logo-full.png)",
+              maskSize: "contain",
+              maskRepeat: "no-repeat",
+              maskPosition: "center",
               filter: "drop-shadow(0 4px 48px rgba(0,0,0,0.55))",
             }}
           />
@@ -209,6 +217,21 @@ export function ScrollHero() {
             <NavLink key={item.scrollTo} {...item} divider={i > 0} />
           ))}
         </nav>
+
+        {/* ── Hero → Beats gradient fade ── */}
+        <div
+          aria-hidden
+          style={{
+            position: "absolute",
+            bottom: 0,
+            left: 0,
+            right: 0,
+            height: "38%",
+            background: "linear-gradient(to bottom, transparent 0%, #0a0a0a 100%)", // matches BG in editorial-catalog.tsx
+            zIndex: 1,
+            pointerEvents: "none",
+          }}
+        />
       </div>
     </section>
   );

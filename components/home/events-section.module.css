@@ -34,7 +34,7 @@
 
 .title {
   margin: 0;
-  font-family: "Cormorant Garamond", serif;
+  font-family: var(--font-title, "Cinzel", serif);
   font-style: italic;
   font-size: clamp(1.85rem, 3.8vw, 2.9rem);
   font-weight: 500;
@@ -107,7 +107,7 @@
 
 .day {
   display: block;
-  font-family: "Cormorant Garamond", serif;
+  font-family: var(--font-title, "Cinzel", serif);
   font-style: italic;
   font-size: 1.72rem;
   line-height: 1;
@@ -139,7 +139,7 @@
 
 .body h3 {
   margin: 0;
-  font-family: "Cormorant Garamond", serif;
+  font-family: var(--font-title, "Cinzel", serif);
   font-style: italic;
   font-size: clamp(1.02rem, 1.6vw, 1.26rem);
   font-weight: 500;

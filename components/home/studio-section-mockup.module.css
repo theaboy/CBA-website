@@ -34,7 +34,7 @@
 
 .title {
   margin: 0;
-  font-family: "Cormorant Garamond", serif;
+  font-family: var(--font-title, "Cinzel", serif);
   font-style: italic;
   font-size: clamp(1.9rem, 4vw, 3.3rem);
   font-weight: 500;
@@ -185,7 +185,7 @@
 
 .cardBody h3 {
   margin: 0;
-  font-family: "Cormorant Garamond", serif;
+  font-family: var(--font-title, "Cinzel", serif);
   font-style: italic;
   font-size: clamp(1rem, 1.7vw, 1.35rem);
   font-weight: 500;
@@ -202,7 +202,7 @@
 
 .cardPrice {
   margin: 0;
-  font-family: "Cormorant Garamond", serif;
+  font-family: var(--font-title, "Cinzel", serif);
   font-style: italic;
   font-size: 1.12rem;
   color: #e3c789;
