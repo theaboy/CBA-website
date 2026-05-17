@@ -219,8 +219,8 @@ export function ScrollHero() {
             left: 0,
             right: 0,
             height: "38%",
-            background: "linear-gradient(to bottom, transparent 0%, #0a0a0a 100%)",
-            zIndex: 2,
+            background: "linear-gradient(to bottom, transparent 0%, #0a0a0a 100%)", // matches BG in editorial-catalog.tsx
+            zIndex: 1,
             pointerEvents: "none",
           }}
         />
