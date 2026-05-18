@@ -1,0 +1,170 @@
+/* components/radio/radio-player-bar.module.css */
+
+/* Vintage amber palette */
+.bar {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 50;
+  background:
+    linear-gradient(to top, #120900, #1c1000);
+  border-top: 1px solid rgba(212,136,60,0.25);
+  padding: 0.8rem clamp(1rem, 4vw, 2.4rem);
+  display: flex;
+  align-items: center;
+  gap: clamp(0.8rem, 2vw, 1.8rem);
+  box-shadow: 0 -8px 40px rgba(0,0,0,0.6);
+}
+
+.episodeInfo {
+  flex: 0 0 auto;
+  min-width: 0;
+  max-width: 26ch;
+}
+
+.episodeTitle {
+  font-family: var(--font-title, "Cinzel", serif);
+  font-style: italic;
+  font-size: 0.82rem;
+  color: #f5e6c8;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  margin: 0;
+}
+
+.episodeHost {
+  font-family: "JetBrains Mono", monospace;
+  font-size: 0.52rem;
+  letter-spacing: 0.1em;
+  color: rgba(212,136,60,0.65);
+  margin: 0.15rem 0 0;
+}
+
+.controls {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  flex-shrink: 0;
+}
+
+.playBtn {
+  width: 2.4rem;
+  height: 2.4rem;
+  border-radius: 50%;
+  border: 1px solid rgba(212,136,60,0.4);
+  background: rgba(212,136,60,0.12);
+  color: #f0b060;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: background 180ms ease, transform 180ms ease;
+  flex-shrink: 0;
+}
+
+.playBtn:hover {
+  background: rgba(212,136,60,0.22);
+  transform: scale(1.06);
+}
+
+.scrubArea {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  gap: 0.7rem;
+  min-width: 0;
+}
+
+.time {
+  font-family: "JetBrains Mono", monospace;
+  font-size: 0.58rem;
+  letter-spacing: 0.08em;
+  color: rgba(212,136,60,0.65);
+  flex-shrink: 0;
+  min-width: 3rem;
+}
+
+.time.right { text-align: right; }
+
+.scrubTrack {
+  flex: 1;
+  height: 3px;
+  background: rgba(212,136,60,0.18);
+  border-radius: 999px;
+  position: relative;
+  cursor: pointer;
+}
+
+.scrubFill {
+  position: absolute;
+  top: 0; left: 0; bottom: 0;
+  background: linear-gradient(to right, #8b4513, #d4883c);
+  border-radius: 999px;
+  pointer-events: none;
+}
+
+.scrubThumb {
+  position: absolute;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: #f0b060;
+  box-shadow: 0 0 8px rgba(212,136,60,0.6);
+  pointer-events: none;
+}
+
+/* Volume */
+.volumeArea {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  flex-shrink: 0;
+}
+
+.volumeIcon {
+  color: rgba(212,136,60,0.6);
+  cursor: pointer;
+  flex-shrink: 0;
+}
+
+.volumeSlider {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 72px;
+  height: 3px;
+  background: rgba(212,136,60,0.18);
+  border-radius: 999px;
+  outline: none;
+  cursor: pointer;
+}
+
+.volumeSlider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: #d4883c;
+  cursor: pointer;
+}
+
+.closeBtn {
+  background: none;
+  border: none;
+  color: rgba(212,136,60,0.4);
+  cursor: pointer;
+  padding: 0.3rem;
+  flex-shrink: 0;
+  transition: color 180ms ease;
+}
+
+.closeBtn:hover { color: rgba(212,136,60,0.8); }
+
+/* Hide volume on narrow screens */
+@media (max-width: 600px) {
+  .volumeArea { display: none; }
+  .episodeInfo { max-width: 14ch; }
+}
