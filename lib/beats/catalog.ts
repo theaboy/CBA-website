@@ -20,6 +20,7 @@ export type Beat = {
   tagline: string;
   description: string;
   bpm: number;
+  musicalKey: string;
   genre: BeatGenre;
   mood: BeatMood;
   price: number;
@@ -74,6 +75,7 @@ export const beatsCatalog: Beat[] = [
     description:
       "A glossy late-night trap instrumental with patient synth builds, heavyweight low end, and enough open air for a melodic hook or direct rap pocket.",
     bpm: 142,
+    musicalKey: "F# min",
     genre: "Trap",
     mood: "Luxe",
     price: 120,
@@ -96,6 +98,7 @@ export const beatsCatalog: Beat[] = [
     description:
       "An R&B-leaning pocket with rich harmonic movement, polished drum programming, and enough negative space for vocal runs, rap verses, or crossover toplines.",
     bpm: 132,
+    musicalKey: "D min",
     genre: "R&B",
     mood: "Melodic",
     price: 95,
@@ -118,6 +121,7 @@ export const beatsCatalog: Beat[] = [
     description:
       "A cold drill bounce built around clipped melodic fragments, hard-knock percussion, and a focused pocket designed for direct bars and stripped-back energy.",
     bpm: 148,
+    musicalKey: "G# min",
     genre: "Drill",
     mood: "Cold",
     price: 110,
@@ -140,6 +144,7 @@ export const beatsCatalog: Beat[] = [
     description:
       "A slower soul pocket with rich chord color, brushed movement, and room for emotional writing. Built for storytelling records and intimate studio sessions.",
     bpm: 96,
+    musicalKey: "C maj",
     genre: "Soul",
     mood: "Cinematic",
     price: 85,
@@ -162,6 +167,7 @@ export const beatsCatalog: Beat[] = [
     description:
       "An afro-fusion instrumental with active percussion, slick melodic accents, and a polished club energy that still leaves space for clean topline writing.",
     bpm: 118,
+    musicalKey: "A min",
     genre: "Afro",
     mood: "Luxe",
     price: 100,
@@ -184,6 +190,7 @@ export const beatsCatalog: Beat[] = [
     description:
       "Dark melodic trap with suspended pad work, half-time drum movement, and a moody arc that suits confessional writing or atmospheric visuals.",
     bpm: 136,
+    musicalKey: "E min",
     genre: "Trap",
     mood: "Nocturnal",
     price: 105,
