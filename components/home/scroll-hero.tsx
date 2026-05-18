@@ -3,8 +3,9 @@
 import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
 
-const SCROLL_HEIGHT  = "190vh";
-const NAV_THRESHOLD  = 0.45; // nav fades in once 45 % of the animation is done
+const SCROLL_HEIGHT  = "300vh";
+const SPLIT_END      = 0.4;  // curtain finishes opening at 40 % of scroll progress
+const NAV_THRESHOLD  = 0.7;  // nav fades in once the video scrub is nearly done
 
 const NAV_ITEMS = [
   { label: "EXPLORE BEATS", scrollTo: "beats"   },
@@ -59,6 +60,9 @@ function NavLink({ label, scrollTo, divider }: { label: string; scrollTo: string
 export function ScrollHero() {
   const sectionRef      = useRef<HTMLElement>(null);
   const videoRef        = useRef<HTMLVideoElement>(null);
+  const leftHalfRef     = useRef<HTMLDivElement>(null);
+  const rightHalfRef    = useRef<HTMLDivElement>(null);
+  const logoRef         = useRef<HTMLDivElement>(null);
   const targetProgressRef = useRef(0);   // raw scroll → [0,1]
   const smoothProgressRef = useRef(0);   // exponentially smoothed [0,1]
   const lastTsRef       = useRef<number>(-1);
@@ -66,21 +70,25 @@ export function ScrollHero() {
   const [navVisible, setNavVisible] = useState(false);
 
   // Smoothing stiffness — forward feels cinematic, reverse snaps faster
-  // so the browser skips intermediate backward keyframe decodes (less jank)
   const K_FORWARD  = 9;
   const K_REVERSE  = 22;
 
   useEffect(() => {
-    const video   = videoRef.current;
-    const section = sectionRef.current;
-    if (!video || !section) return;
+    const video    = videoRef.current;
+    const section  = sectionRef.current;
+    const leftEl   = leftHalfRef.current;
+    const rightEl  = rightHalfRef.current;
+    const logoEl   = logoRef.current;
+    if (!video || !section || !leftEl || !rightEl) return;
 
     video.pause();
 
+    // Easing curve — gives the curtain a deliberate, weighty start and a gentler settle
+    const easeOutCubic = (t: number) => 1 - Math.pow(1 - t, 3);
+
     function tick(ts: number) {
-      // Frame-rate-independent exponential decay: factor = 1 − e^(−K·Δt)
       if (lastTsRef.current < 0) lastTsRef.current = ts;
-      const dt      = Math.min((ts - lastTsRef.current) / 1000, 0.064); // cap at ~4 frames
+      const dt      = Math.min((ts - lastTsRef.current) / 1000, 0.064);
       lastTsRef.current = ts;
 
       const diff    = targetProgressRef.current - smoothProgressRef.current;
@@ -88,8 +96,38 @@ export function ScrollHero() {
       const factor  = 1 - Math.exp(-k * dt);
       smoothProgressRef.current += diff * factor;
 
-      if (video && video.readyState >= 1) {
-        const targetTime = smoothProgressRef.current * (video.duration || 0);
+      const p = smoothProgressRef.current;
+
+      // Phase 1: split — curtain halves slide apart (0 → SPLIT_END)
+      const rawSplit    = Math.min(1, p / SPLIT_END);
+      const splitProgress = easeOutCubic(rawSplit);
+
+      if (leftEl)  leftEl.style.transform  = `translate3d(${-splitProgress * 100}%, 0, 0)`;
+      if (rightEl) rightEl.style.transform = `translate3d(${ splitProgress * 100}%, 0, 0)`;
+
+      // Logo — anchored. At scroll 0 it has a neutral dark shadow; as the curtain opens,
+      // the shadow warms up into gold to feel like the DJ scene is lighting it from behind.
+      if (logoEl) {
+        const glow   = 48 + rawSplit * 56;
+        // Interpolate shadow color from neutral black to warm gold
+        const r = Math.round(0   + rawSplit * 255);
+        const g = Math.round(0   + rawSplit * 200);
+        const b = Math.round(0   + rawSplit * 120);
+        const a = (0.55 + rawSplit * 0.35).toFixed(2);
+        const scale = 1 + rawSplit * 0.04;
+        logoEl.style.filter    = `drop-shadow(0 4px ${glow}px rgba(${r},${g},${b},${a}))`;
+        logoEl.style.transform = `scale(${scale})`;
+      }
+
+      // Video parallax — starts subtly zoomed in (1.06) and settles to 1.0 as curtain opens.
+      // Gives depth: the DJ scene "pulls forward" out of the distance.
+      const videoScale = 1.06 - rawSplit * 0.06;
+      video.style.transform = `scale(${videoScale})`;
+
+      // Phase 2: video scrub — only starts once the curtain has opened
+      const videoProgress = Math.max(0, Math.min(1, (p - SPLIT_END) / (1 - SPLIT_END)));
+      if (video.readyState >= 1) {
+        const targetTime = videoProgress * (video.duration || 0);
         if (Math.abs(video.currentTime - targetTime) > 0.001) {
           video.currentTime = targetTime;
         }
@@ -114,6 +152,36 @@ export function ScrollHero() {
     };
   }, []);
 
+  // Shared content inside each curtain half — the full bg image + vignette.
+  // The half's clip-path is what makes each one show only its 50 % of the screen.
+  const halfContents = (
+    <>
+      <img
+        src="/heroimage.png"
+        alt=""
+        aria-hidden
+        style={{
+          position: "absolute",
+          inset: 0,
+          width: "100%",
+          height: "100%",
+          objectFit: "cover",
+          objectPosition: "center",
+        }}
+      />
+      <div
+        aria-hidden
+        style={{
+          position: "absolute",
+          inset: 0,
+          background:
+            "linear-gradient(to bottom, rgba(0,0,0,0.25) 0%, transparent 30%, transparent 55%, rgba(0,0,0,0.55) 100%)",
+          pointerEvents: "none",
+        }}
+      />
+    </>
+  );
+
   return (
     <section
       ref={sectionRef}
@@ -129,7 +197,7 @@ export function ScrollHero() {
           background: "#080808",
         }}
       >
-        {/* ── Video ── */}
+        {/* ── DJ video (back layer, revealed by the curtain split) ── */}
         <video
           ref={videoRef}
           src="/cba-hero-animation.mp4"
@@ -143,28 +211,48 @@ export function ScrollHero() {
             height: "100%",
             objectFit: "cover",
             objectPosition: "center",
+            zIndex: 1,
           }}
         />
 
-        {/* ── Vignette — just enough to lift the nav text off the video ── */}
+        {/* ── Left curtain half — clipped to the left 50 % of the screen ── */}
         <div
+          ref={leftHalfRef}
           aria-hidden
           style={{
             position: "absolute",
             inset: 0,
-            background:
-              "linear-gradient(to bottom, rgba(0,0,0,0.2) 0%, transparent 30%, transparent 60%, rgba(0,0,0,0.5) 100%)",
-            zIndex: 1,
-            pointerEvents: "none",
+            zIndex: 3,
+            clipPath: "inset(0 50% 0 0)",
+            WebkitClipPath: "inset(0 50% 0 0)",
+            willChange: "transform",
           }}
-        />
+        >
+          {halfContents}
+        </div>
 
-        {/* ── Logo ── */}
+        {/* ── Right curtain half — clipped to the right 50 % of the screen ── */}
+        <div
+          ref={rightHalfRef}
+          aria-hidden
+          style={{
+            position: "absolute",
+            inset: 0,
+            zIndex: 3,
+            clipPath: "inset(0 0 0 50%)",
+            WebkitClipPath: "inset(0 0 0 50%)",
+            willChange: "transform",
+          }}
+        >
+          {halfContents}
+        </div>
+
+        {/* ── CBA logo — anchored center, persistent above the curtain and the video ── */}
         <div
           style={{
             position: "absolute",
             inset: 0,
-            zIndex: 2,
+            zIndex: 5,
             display: "flex",
             alignItems: "center",
             justifyContent: "center",
@@ -172,16 +260,14 @@ export function ScrollHero() {
             pointerEvents: "none",
           }}
         >
-          {/* Logo rendered as a CSS mask so the gradient fills the logo shape only — no box */}
-          {/* OPTION A: #1e6539 (mid green) → gold  |  OPTION B: #0a4b2a (deep green) → gold */}
           <div
+            ref={logoRef}
             role="img"
             aria-label="CBA — Create · Build · Achieve"
             style={{
               width: "min(380px, 52vw)",
               aspectRatio: "560 / 373",
-              background: "linear-gradient(135deg, #1e6539 0%, #c9a961 55%)", // option A
-              // background: "linear-gradient(135deg, #0a4b2a 0%, #c9a961 100%)", // option B
+              background: "linear-gradient(135deg, #1e6539 0%, #c9a961 55%)",
               WebkitMaskImage: "url(/cba/cba-logo-full.png)",
               WebkitMaskSize: "contain",
               WebkitMaskRepeat: "no-repeat",
@@ -191,6 +277,7 @@ export function ScrollHero() {
               maskRepeat: "no-repeat",
               maskPosition: "center",
               filter: "drop-shadow(0 4px 48px rgba(0,0,0,0.55))",
+              willChange: "transform, filter",
             }}
           />
         </div>
@@ -203,7 +290,7 @@ export function ScrollHero() {
             bottom: "45vh",
             left: 0,
             right: 0,
-            zIndex: 3,
+            zIndex: 6,
             display: "flex",
             alignItems: "stretch",
             height: "3rem",
