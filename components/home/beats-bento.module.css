@@ -35,7 +35,7 @@
 
 .title {
   margin: 0;
-  font-family: "Cormorant Garamond", serif;
+  font-family: var(--font-title, "Cinzel", serif);
   font-style: italic;
   font-size: clamp(1.9rem, 4vw, 3.1rem);
   font-weight: 500;
@@ -200,7 +200,7 @@
 
 .cardBottom h3 {
   margin: 0;
-  font-family: "Cormorant Garamond", serif;
+  font-family: var(--font-title, "Cinzel", serif);
   font-style: italic;
   font-size: clamp(1.1rem, 1.9vw, 2rem);
   font-weight: 500;
@@ -226,7 +226,7 @@
 }
 
 .price {
-  font-family: "Cormorant Garamond", serif;
+  font-family: var(--font-title, "Cinzel", serif);
   font-style: italic;
   font-size: clamp(1.15rem, 2vw, 1.56rem);
   color: #e3c789;
