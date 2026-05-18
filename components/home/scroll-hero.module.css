@@ -1,0 +1,103 @@
+/* ── Logo container ─────────────────────────────────────────── */
+.logoWrap {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding-bottom: clamp(60px, 38vh, 300px);
+  pointer-events: none;
+}
+
+.logo {
+  width: clamp(200px, 52vw, 380px);
+  aspect-ratio: 560 / 373;
+  background: linear-gradient(135deg, #1e6539 0%, #c9a961 55%);
+  -webkit-mask-image: url(/cba/cba-logo-full.png);
+  -webkit-mask-size: contain;
+  -webkit-mask-repeat: no-repeat;
+  -webkit-mask-position: center;
+  mask-image: url(/cba/cba-logo-full.png);
+  mask-size: contain;
+  mask-repeat: no-repeat;
+  mask-position: center;
+  filter: drop-shadow(0 4px 48px rgba(0,0,0,0.55));
+}
+
+/* ── Ghost nav ──────────────────────────────────────────────── */
+.nav {
+  position: absolute;
+  bottom: clamp(48px, 45vh, 420px);
+  left: 0;
+  right: 0;
+  z-index: 3;
+  display: flex;
+  align-items: stretch;
+  height: 3rem;
+}
+
+.navItem {
+  flex: 1;
+  display: flex;
+  align-items: stretch;
+}
+
+.navItem + .navItem {
+  border-left: 1px solid rgba(255,255,255,0.15);
+}
+
+.navButton {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-family: var(--font-sans, 'Helvetica Neue', Arial, sans-serif);
+  font-size: clamp(0.65rem, 1.2vw, 0.95rem);
+  font-weight: 300;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.95);
+  text-shadow: 0 1px 12px rgba(0,0,0,0.6);
+  transition: color 0.3s ease, letter-spacing 0.3s ease;
+}
+
+.navButton:hover {
+  color: #ffffff;
+  letter-spacing: 0.38em;
+}
+
+/* ── Narrow mobile: tighten letter-spacing so all 3 items fit ─ */
+@media (max-width: 600px) {
+  .logo {
+    width: clamp(180px, 72vw, 300px);
+  }
+
+  .navButton {
+    font-size: 0.62rem;
+    letter-spacing: 0.1em;
+  }
+
+  .navButton:hover {
+    letter-spacing: 0.16em;
+  }
+}
+
+/* ── Landscape / short viewport ─────────────────────────────── */
+@media (max-height: 480px) {
+  .logoWrap {
+    padding-bottom: clamp(16px, 12vh, 60px);
+  }
+
+  .logo {
+    width: clamp(120px, 28vw, 200px);
+  }
+
+  .nav {
+    bottom: clamp(6px, 5vh, 40px);
+    height: 2.5rem;
+  }
+}
