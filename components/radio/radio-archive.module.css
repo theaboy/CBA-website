@@ -331,27 +331,6 @@
   flex-shrink: 0;
 }
 
-.rowPlay {
-  width: 2rem;
-  height: 2rem;
-  border-radius: 50%;
-  border: 1px solid rgba(200, 120, 32, 0.3);
-  background: rgba(200, 120, 32, 0.06);
-  color: rgba(200, 120, 32, 0.7);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-shrink: 0;
-  transition: background 180ms ease, border-color 180ms ease, box-shadow 180ms ease;
-}
-
-.row:hover .rowPlay,
-.row.active .rowPlay {
-  background: rgba(200, 120, 32, 0.16);
-  border-color: rgba(200, 120, 32, 0.6);
-  box-shadow: 0 0 12px rgba(200, 120, 32, 0.3);
-  color: #c87820;
-}
 
 /* ── Responsive ─────────────────────────────────────────────────────── */
 @media (max-width: 640px) {

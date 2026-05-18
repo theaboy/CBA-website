@@ -2,8 +2,9 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import { Play, Pause, Volume2, X } from "lucide-react";
+import { Volume2, X } from "lucide-react";
 import styles from "./radio-player-bar.module.css";
+import { RadioKnob } from "@/components/radio/radio-knob";
 import type { RadioEpisode } from "@/lib/radio/catalog";
 
 type Props = {
@@ -76,16 +77,12 @@ export function RadioPlayerBar({ episode, onClose }: Props) {
         <p className={styles.episodeHost}>{episode.host}</p>
       </div>
 
-      {/* Play / Pause */}
-      <div className={styles.controls}>
-        <button
-          className={styles.playBtn}
-          onClick={togglePlay}
-          aria-label={isPlaying ? "Pause" : "Lecture"}
-        >
-          {isPlaying ? <Pause size={16} /> : <Play size={16} />}
-        </button>
-      </div>
+      {/* Play / Pause knob */}
+      <RadioKnob
+        isPlaying={isPlaying}
+        onClick={togglePlay}
+        size="md"
+      />
 
       {/* Scrub bar */}
       <div className={styles.scrubArea}>

@@ -1,8 +1,9 @@
 "use client";
 
 import Link from "next/link";
-import { ArrowLeft, Play, Pause } from "lucide-react";
+import { ArrowLeft } from "lucide-react";
 import styles from "./radio-archive.module.css";
+import { RadioKnob } from "@/components/radio/radio-knob";
 import { radioEpisodes, formatDate, type RadioEpisode } from "@/lib/radio/catalog";
 
 // Waveform bar heights — static to avoid hydration mismatch
@@ -102,9 +103,11 @@ export function RadioArchive({ activeId, isPlaying, onSelect }: Props) {
               <span className={styles.rowDate}>{formatDate(ep.date)}</span>
               <span className={styles.rowDur}>{ep.duration}</span>
 
-              <span className={styles.rowPlay} aria-hidden>
-                {isActive && isPlaying ? <Pause size={11} /> : <Play size={11} />}
-              </span>
+              <RadioKnob
+                isPlaying={isActive && isPlaying}
+                size="sm"
+                asDiv
+              />
             </button>
           );
         })}
