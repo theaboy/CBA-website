@@ -297,14 +297,17 @@ export function RadioSection() {
 
         {/* ── Header ─────────────────────────────────────────────── */}
         <header className={styles.header}>
-          <div>
-            <p className={styles.eyebrow}>
-              <span className={styles.liveDot} aria-hidden />
-              Radio CBA · Archives
-            </p>
-            <h2 id="radio-home-heading" className={styles.title}>
-              Nos Ondes
-            </h2>
+          <p className={styles.eyebrow}>
+            <span className={styles.liveDot} aria-hidden />
+            Radio CBA · Archives
+          </p>
+          <h2 id="radio-home-heading" className={styles.title}>
+            Nos Ondes
+          </h2>
+          <div className={styles.ornament} aria-hidden>
+            <span className={styles.ornLine} />
+            <span className={styles.ornDiamond} />
+            <span className={styles.ornLine} />
           </div>
           <div className={styles.headerLinks}>
             <Link href="/radio" className={styles.headerLink}>
