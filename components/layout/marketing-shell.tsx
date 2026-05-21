@@ -1,8 +1,6 @@
 "use client";
 
 import { ReactNode, useEffect } from "react";
-import { SiteFooter } from "@/components/layout/site-footer";
-import { SiteHeader } from "@/components/layout/site-header";
 
 export function MarketingShell({ children }: { children: ReactNode }) {
   // Scroll reveal via IntersectionObserver
@@ -26,16 +24,10 @@ export function MarketingShell({ children }: { children: ReactNode }) {
 
   return (
     <div className="marketing-shell">
-      {/* Film grain overlay */}
       <div className="grain-overlay" aria-hidden="true" />
-
-      {/* Ambient glows */}
       <div className="ambient ambient-one" aria-hidden="true" />
       <div className="ambient ambient-two" aria-hidden="true" />
-
-      <SiteHeader />
       <main>{children}</main>
-      <SiteFooter />
     </div>
   );
 }
