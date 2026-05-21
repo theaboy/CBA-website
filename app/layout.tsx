@@ -5,6 +5,8 @@ import { MiniPlayer } from "@/components/audio/mini-player";
 import { AudioProvider } from "@/lib/audio";
 import { siteConfig } from "@/lib/site";
 import { CustomCursor } from "@/components/ui/custom-cursor";
+import { SiteNav } from "@/components/navigation/site-nav";
+import { SiteFooter } from "@/components/layout/site-footer";
 
 const cinzel = Cinzel({
   subsets: ["latin"],
@@ -33,7 +35,9 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       <body>
         <CustomCursor />
         <AudioProvider>
+          <SiteNav />
           {children}
+          <SiteFooter />
           <MiniPlayer />
         </AudioProvider>
       </body>

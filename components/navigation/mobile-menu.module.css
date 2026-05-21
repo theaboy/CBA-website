@@ -1,0 +1,130 @@
+.overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 60;
+  background: rgba(10, 10, 12, 0.92);
+  -webkit-backdrop-filter: blur(24px);
+  backdrop-filter: blur(24px);
+  transform: translateY(-100%);
+  opacity: 0;
+  transition: transform 280ms ease, opacity 280ms ease;
+  display: flex;
+  flex-direction: column;
+  padding: 1rem 1.5rem 2rem;
+  overflow-y: auto;
+}
+
+.overlay.open {
+  transform: translateY(0);
+  opacity: 1;
+}
+
+.topBar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 2rem;
+}
+
+.brandLabel {
+  font-family: var(--display-font, "Cinzel", serif);
+  letter-spacing: 0.12em;
+  font-size: 1.1rem;
+  color: #fff;
+}
+
+.close {
+  width: 2.4rem;
+  height: 2.4rem;
+  border-radius: 8px;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  background: rgba(255, 255, 255, 0.04);
+  color: #fff;
+  font-size: 1.3rem;
+  cursor: pointer;
+  display: grid;
+  place-items: center;
+}
+
+.primary {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+  padding: 0;
+  margin: 0;
+  list-style: none;
+}
+
+.primary a {
+  display: block;
+  padding: 0.9rem 0.4rem;
+  font-family: "JetBrains Mono", monospace;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  font-size: 1.6rem;
+  color: #fff;
+  text-decoration: none;
+}
+
+.primary a:hover { color: var(--accent, #c9a961); }
+
+.divider {
+  height: 1px;
+  background: rgba(255, 255, 255, 0.10);
+  margin: 1.5rem 0;
+}
+
+.secondary {
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+  padding: 0;
+  margin: 0;
+  list-style: none;
+}
+
+.secondary a {
+  display: block;
+  padding: 0.5rem 0.4rem;
+  font-size: 0.95rem;
+  color: rgba(255, 255, 255, 0.65);
+  text-decoration: none;
+}
+
+.secondary a:hover { color: #fff; }
+
+.adminRow {
+  margin-top: 1.25rem;
+}
+
+.adminChip {
+  display: inline-flex;
+  padding: 0.7rem 1.2rem;
+  border-radius: 999px;
+  background: linear-gradient(135deg, var(--accent, #c9a961) 0%, var(--accent-soft, #8a6d2f) 100%);
+  color: #130d08;
+  font-weight: 700;
+  font-size: 0.75rem;
+  letter-spacing: 0.08em;
+  text-decoration: none;
+  text-transform: uppercase;
+}
+
+.social {
+  margin-top: auto;
+  padding-top: 2rem;
+  display: flex;
+  gap: 1.25rem;
+  flex-wrap: wrap;
+}
+
+.social a {
+  font-family: "JetBrains Mono", monospace;
+  font-size: 0.7rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.55);
+  text-decoration: none;
+}
+
+.social a:hover { color: #fff; }
