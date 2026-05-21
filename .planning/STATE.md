@@ -1,13 +1,13 @@
 ---
 gsd_state_version: 1.0
 milestone: v1.0
-milestone_name: milestone
+milestone_name: Core Commerce
 status: active
-last_updated: "2026-02-28T09:28:44Z"
+last_updated: "2026-05-21T00:00:00Z"
 progress:
-  total_phases: 9
+  total_phases: 8
   completed_phases: 3
-  total_plans: 35
+  total_plans: 31
   completed_plans: 12
 ---
 
@@ -22,12 +22,12 @@ See: .planning/PROJECT.md (updated 2026-02-28)
 
 ## Current Position
 
-Phase: 4 of 9 (Studio Booking Flow)
+Phase: 4 of 8 (Backend Foundation)
 Plan: 0 of 4 in current phase
 Status: Ready for planning
-Last activity: 2026-02-28 — Planned Phase 4 studio booking flow using the established inquiry/request architecture
+Last activity: 2026-05-21 — Roadmap restructured to add real backend (Node.js, Prisma, Stripe). Studio/DJ/calendar deferred to Milestone 2.
 
-Progress: [███░░░░░░░] 33%
+Progress: [███░░░░░░░] 38%
 
 ## Performance Metrics
 
@@ -65,6 +65,7 @@ Recent decisions affecting current work:
 - Phase 1 execution: Admin access uses a preview-cookie gate until real internal authentication is implemented.
 - Phase 2 execution: Beat data, featured selections, filters, and playback all share one local catalog/domain module.
 - Phase 2 execution: One-track playback is mounted at the root layout through a shared audio provider and mini-player.
+- 2026-05-21 roadmap restructure: Roadmap rebuilt around real backend (Node.js, Express, Prisma, PostgreSQL, Stripe). Studio booking, DJ services, and calendar system deferred to Milestone 2. Stripe for beats + tickets promoted from v2 to v1. No public user accounts (PRD confirmed admin-only auth). Traffic baseline: under 1k/month — backend scoped lean (no analytics API, no CSV export, no slot engine yet).
 
 ### Pending Todos
 
