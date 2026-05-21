@@ -56,10 +56,10 @@
 
 ### Backend API
 
-- [ ] **BE-01**: A Node.js/TypeScript API server with Express, Prisma ORM, and PostgreSQL is running and deployable.
-- [ ] **BE-02**: Admin can authenticate via POST /admin/login with bcrypt password check; JWT protects all /admin/* routes; login is rate-limited.
-- [ ] **BE-03**: GET /beats supports server-side filtering by genre, mood, BPM range, price range, and sort; GET /beats/:id returns detail.
-- [ ] **BE-04**: Beat audio files are stored in S3 (single bucket, /preview and /full folders) and delivered via time-limited signed URLs.
+- [ ] **BE-01**: Supabase project configured with all tables (beats, events, orders, tickets, bookings), RLS policies, and Storage buckets for audio and artwork.
+- [ ] **BE-02**: Admin authenticated via Supabase Auth; all protected dashboard routes redirect unauthenticated requests to login.
+- [ ] **BE-03**: Beat catalog queryable from Next.js with server-side filtering by genre, mood, BPM range, price range, and sort; beat detail returns preview URL.
+- [ ] **BE-04**: Beat audio files stored in Supabase Storage; preview audio served from public bucket; full-quality audio delivered via time-limited signed URLs only.
 - [ ] **BE-05**: Visitor can complete a beat purchase via Stripe; license tier validated server-side; exclusive license locks on purchase.
 - [ ] **BE-06**: Visitor can purchase event tickets via Stripe; inventory tracked atomically; overselling prevented.
 - [ ] **BE-07**: Unique non-guessable QR token generated per ticket on successful payment and stored in database.
@@ -145,14 +145,14 @@
 | BE-09 | Phase 6 | Pending |
 | BE-10 | Phase 6 | Pending |
 | BE-11 | Phase 6 | Pending |
-| ADMIN-01 | Phase 7 | Pending |
-| ADMIN-02 | Phase 7 | Pending |
+| ADMIN-01 | Phase 6 | Pending |
+| ADMIN-02 | Phase 6 | Pending |
 | ADMIN-03 | Phase 6 | Pending |
 | ADMIN-04 | Milestone 2 | Deferred |
 | ADMIN-05 | Phase 6 | Pending |
 | ADMIN-06 | Phase 6 | Pending |
-| OPS-01 | Phase 8 | Pending |
-| OPS-02 | Phase 8 | Pending |
+| OPS-01 | Phase 7 | Pending |
+| OPS-02 | Phase 7 | Pending |
 | OPS-03 | Phase 5 | Pending |
 
 **Coverage:**

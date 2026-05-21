@@ -3,12 +3,12 @@ gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: Core Commerce
 status: active
-last_updated: "2026-05-21T22:24:00Z"
+last_updated: "2026-05-21T23:00:00Z"
 progress:
-  total_phases: 8
+  total_phases: 7
   completed_phases: 3
-  total_plans: 31
-  completed_plans: 15
+  total_plans: 27
+  completed_plans: 12
 ---
 
 # Project State
@@ -18,21 +18,21 @@ progress:
 See: .planning/PROJECT.md (updated 2026-02-28)
 
 **Core value:** Make it easy for visitors to discover CBA's sound and convert into beat or studio-booking leads through a premium, trustworthy experience.
-**Current focus:** Phase 4: Backend Foundation
+**Current focus:** Phase 4: Supabase Foundation
 
 ## Current Position
 
-Phase: 4 of 8 (Backend Foundation)
-Plan: 4 of 4 in current phase
-Status: In progress
-Last activity: 2026-05-21 — Plan 04-03 complete: Beat catalog API with server-side filtering/sorting, public GET /beats + GET /beats/:id, admin CRUD (GET/POST/PUT/DELETE) behind requireAuth JWT guard. fullKey excluded from all public responses.
+Phase: 4 of 7 (Supabase Foundation)
+Plan: 1 of 4 in current phase
+Status: Not started (replanning after architecture pivot)
+Last activity: 2026-05-21 — Architecture pivot: switched from custom Express/Node.js API to Supabase. Express implementation archived at /Users/bird/CBA-api-archived-express. Roadmap restructured from 8 phases to 7 (Admin Backend API + Admin Dashboard Frontend collapsed into single Phase 6 since Supabase eliminates the separate API server layer).
 
-Progress: [█████░░░░░] 48%
+Progress: [████░░░░░░] 43%
 
 ## Performance Metrics
 
 **Velocity:**
-- Total plans completed: 15
+- Total plans completed: 12 (Phases 1–3)
 - Average duration: 22.5 min
 - Total execution time: ~1.9 hours
 
@@ -43,7 +43,7 @@ Progress: [█████░░░░░] 48%
 | 1 | 4 | 99 min | 24.75 min |
 | 2 | 5 | completed | n/a |
 | 3 | 3 | completed | n/a |
-| 4 | 3/4 complete | ~46 min | ~15 min |
+| 4 | 0/4 | not started (replanning) | - |
 
 **Recent Trend:**
 - Last 5 plans: 24 min, 18 min, 22 min, 18 min, 8 min
@@ -66,23 +66,24 @@ Recent decisions affecting current work:
 - Phase 1 execution: Admin access uses a preview-cookie gate until real internal authentication is implemented.
 - Phase 2 execution: Beat data, featured selections, filters, and playback all share one local catalog/domain module.
 - Phase 2 execution: One-track playback is mounted at the root layout through a shared audio provider and mini-player.
-- 2026-05-21 roadmap restructure: Roadmap rebuilt around real backend (Node.js, Express, Prisma, PostgreSQL, Stripe). Studio booking, DJ services, and calendar system deferred to Milestone 2. Stripe for beats + tickets promoted from v2 to v1. No public user accounts (PRD confirmed admin-only auth). Traffic baseline: under 1k/month — backend scoped lean (no analytics API, no CSV export, no slot engine yet).
-- Phase 4 plan 01: prisma kept in dependencies (not devDependencies) — Railway/Render prune devDependencies before pre-deploy migrate step. S3 keys stored in Beat model, never public URLs. Beat prices as three separate Decimal columns. IAM user (not role) required for stable AWS credentials on managed platforms.
-- Phase 4 plan 02: loginLimiter scoped to POST /login only — not all admin routes. adminAuthRouter mounted without requireAuth so login is publicly reachable. Comment block in index.ts marks where Plans 03+ mount protected admin routers.
-- Phase 4 plan 03: fullKey excluded from all public beat endpoints via explicit select — reserved for post-purchase download generation in Phase 5. Admin PUT uses beatBodySchema.partial() for partial updates. Two app.use('/admin') calls stack correctly in Express (auth router for login, beats router for CRUD behind requireAuth).
+- 2026-05-21 roadmap restructure (Express): Roadmap rebuilt around real backend (Node.js, Express, Prisma, PostgreSQL, Stripe). Studio booking, DJ services, and calendar system deferred to Milestone 2. Stripe for beats + tickets promoted from v2 to v1. No public user accounts (PRD confirmed admin-only auth).
+- 2026-05-21 architecture pivot (Supabase): Switched from custom Express/Node.js API to Supabase. No separate backend server. Supabase handles PostgreSQL + Storage + Auth. Stripe webhooks and transactional email handled via Next.js API routes. Traffic baseline under 1k/month — Supabase free tier is right-sized. PIPEDA note: no Canadian region, US East is closest — accepted tradeoff. Express implementation archived at /Users/bird/CBA-api-archived-express. Roadmap reduced from 8 to 7 phases (old Phase 6 Admin Backend API + Phase 7 Admin Dashboard collapsed into new Phase 6 Admin Dashboard).
+- Phase 4 (Supabase): full_key column must never appear in public Supabase queries — use column-level select to exclude it. Preview audio served from public bucket; full audio from private bucket via time-limited signed URLs. Service role key used for admin writes; anon key for public reads with RLS.
 
 ### Pending Todos
 
-None yet.
+- Wire "Radio page V2" button (deferred — needs V2 page to link to)
+- Audit UI with sparse/empty data states (flagged from earlier session)
 
 ### Blockers/Concerns
 
 - Brand/style PDF exists in the repo but has not yet been parsed into implementation-ready design tokens.
 - Consumer auth depth remains intentionally deferred; later phases must avoid implying more backend functionality than exists.
 - The homepage currently uses strong placeholder and reference-driven content; later phases should replace placeholders without weakening the visual bar.
+- Supabase has no Canadian region (US East is closest) — PIPEDA compliance is a known tradeoff accepted by user.
 
 ## Session Continuity
 
-Last session: 2026-05-21 22:24
-Stopped at: Phase 4 plan 03 complete; next is 04-04 (S3 signed URLs)
+Last session: 2026-05-21 23:00
+Stopped at: Architecture pivot to Supabase complete; ROADMAP.md and STATE.md updated; Phase 4 Express plans archived (stale); next is to plan Phase 4 for Supabase via /gsd plan-phase 4
 Resume file: None
