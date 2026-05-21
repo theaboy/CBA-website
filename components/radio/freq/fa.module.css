@@ -1,0 +1,793 @@
+/* ─── CBA Frequency Archive — CSS Module ────────────────────────────── */
+
+/* All design tokens scoped to .page so they cascade to every descendant,
+   including the fixed mini-player (CSS vars inherit through DOM, not layout) */
+
+.page {
+  --walnut:        oklch(24% 0.04 55);
+  --walnut-deep:   oklch(18% 0.035 55);
+  --walnut-dark:   oklch(13% 0.025 55);
+  --espresso:      oklch(11% 0.02 50);
+  --pitch:         oklch(7% 0.01 50);
+  --brass:         oklch(68% 0.11 78);
+  --brass-deep:    oklch(52% 0.10 70);
+  --gold:          oklch(76% 0.13 80);
+  --gold-faded:    oklch(60% 0.09 75);
+  --cream:         oklch(92% 0.035 85);
+  --cream-warm:    oklch(85% 0.05 75);
+  --beige:         oklch(75% 0.045 75);
+  --beige-dust:    oklch(62% 0.04 70);
+  --amber:         oklch(80% 0.18 70);
+  --amber-soft:    oklch(70% 0.15 65);
+  --amber-deep:    oklch(55% 0.13 55);
+  --orange-faded:  oklch(65% 0.12 50);
+  --burgundy:      oklch(34% 0.10 22);
+  --burgundy-lt:   oklch(45% 0.13 25);
+  --led-red:       oklch(64% 0.24 25);
+  --led-red-glow:  oklch(70% 0.22 28);
+  --ivory:         oklch(94% 0.025 90);
+  --ink:           oklch(15% 0.02 50);
+  --grill-dark:    oklch(15% 0.015 50);
+  --font-display:  "Big Shoulders", "Big Shoulders Display", sans-serif;
+  --font-body:     "DM Sans", "DM Sans Variable", sans-serif;
+  --font-mono:     "JetBrains Mono", ui-monospace, monospace;
+  --shadow-deep:   0 30px 60px -20px rgba(0,0,0,0.7), 0 12px 30px -10px rgba(0,0,0,0.5);
+  --shadow-mid:    0 12px 28px -8px rgba(0,0,0,0.55), 0 4px 10px -2px rgba(0,0,0,0.4);
+  --inset-screen:  inset 0 2px 12px rgba(0,0,0,0.8), inset 0 -1px 2px rgba(255,180,90,0.08);
+  --bevel-up:      inset 0 1px 0 rgba(255,230,180,0.12), inset 0 -1px 0 rgba(0,0,0,0.6);
+
+  /* Page */
+  font-family: var(--font-body);
+  color: var(--cream);
+  position: relative;
+  min-height: 100vh;
+  background:
+    radial-gradient(ellipse 80% 60% at 50% 0%, oklch(20% 0.04 50) 0%, transparent 70%),
+    radial-gradient(ellipse 60% 40% at 50% 100%, oklch(8% 0.015 50) 0%, transparent 70%),
+    oklch(11% 0.02 50);
+  overflow: hidden;
+  padding-bottom: 120px;
+  font-size: 15px;
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Walnut wood grain */
+.page::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image:
+    repeating-linear-gradient(
+      92deg,
+      transparent 0, transparent 22px,
+      rgba(80,50,30,0.04) 22px, rgba(80,50,30,0.04) 24px,
+      transparent 24px, transparent 60px,
+      rgba(40,25,15,0.05) 60px, rgba(40,25,15,0.05) 63px
+    ),
+    repeating-linear-gradient(
+      88deg,
+      transparent 0, transparent 130px,
+      rgba(120,80,50,0.025) 130px, rgba(120,80,50,0.025) 135px
+    );
+  pointer-events: none;
+  opacity: 0.7;
+  z-index: 0;
+}
+
+/* Film grain */
+.page::after {
+  content: "";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 100;
+  opacity: 0.18;
+  mix-blend-mode: overlay;
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='200' height='200'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.95' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 0.7 0'/></filter><rect width='100%25' height='100%25' filter='url(%23n)'/></svg>");
+}
+
+.page > * { position: relative; z-index: 1; }
+
+/* ── Container ─────────────────────────────────────────────────── */
+
+.wrap {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 0 32px;
+}
+
+@media (max-width: 720px) {
+  .wrap { padding: 0 18px; }
+}
+
+/* ── Surface textures ───────────────────────────────────────────── */
+
+.brushed {
+  background:
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' seed='5' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.32 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E"),
+    radial-gradient(ellipse 28% 25% at 25% 28%, rgba(255,225,180,0.07), transparent 70%),
+    radial-gradient(ellipse 24% 20% at 78% 75%, rgba(80,50,30,0.22), transparent 70%),
+    radial-gradient(ellipse 18% 30% at 60% 18%, rgba(0,0,0,0.18), transparent 70%),
+    radial-gradient(ellipse 110% 90% at 50% 50%, transparent 45%, rgba(0,0,0,0.4) 100%),
+    repeating-linear-gradient(
+      89deg,
+      transparent 0, transparent 180px,
+      rgba(255,240,210,0.045) 180px, rgba(255,240,210,0.045) 181px,
+      transparent 181px, transparent 340px,
+      rgba(0,0,0,0.10) 340px, rgba(0,0,0,0.10) 341px,
+      transparent 341px, transparent 540px
+    ),
+    repeating-linear-gradient(
+      90deg,
+      rgba(255,255,255,0.05) 0 1px,
+      transparent 1px 3px,
+      rgba(0,0,0,0.055) 3px 4px,
+      transparent 4px 6px
+    ),
+    linear-gradient(180deg, oklch(48% 0.012 60) 0%, oklch(35% 0.012 60) 48%, oklch(26% 0.012 60) 100%);
+}
+
+.matteBlack {
+  background:
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' seed='3' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.28 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E"),
+    radial-gradient(ellipse 30% 25% at 75% 30%, rgba(120,90,60,0.13), transparent 65%),
+    radial-gradient(ellipse 20% 18% at 18% 80%, rgba(60,40,20,0.18), transparent 60%),
+    radial-gradient(ellipse 110% 90% at 50% 50%, transparent 50%, rgba(0,0,0,0.55) 100%),
+    repeating-linear-gradient(
+      89deg, transparent 0, transparent 220px,
+      rgba(220,200,170,0.04) 220px, rgba(220,200,170,0.04) 221px,
+      transparent 221px, transparent 420px
+    ),
+    linear-gradient(180deg, oklch(18% 0.005 50) 0%, oklch(10% 0.005 50) 100%);
+}
+
+.woodPanel {
+  background:
+    radial-gradient(ellipse 30% 30% at 82% 28%, rgba(20,10,5,0.42), transparent 70%),
+    radial-gradient(ellipse 22% 25% at 12% 75%, rgba(40,20,12,0.35), transparent 70%),
+    radial-gradient(ellipse 14% 18% at 50% 60%, rgba(80,50,30,0.18), transparent 70%),
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='260' height='260'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.7' numOctaves='3' seed='9' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.34 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E"),
+    radial-gradient(ellipse 110% 90% at 50% 50%, transparent 55%, rgba(0,0,0,0.5) 100%),
+    repeating-linear-gradient(
+      89deg,
+      transparent 0, transparent 6px,
+      rgba(0,0,0,0.14) 6px, rgba(0,0,0,0.14) 7px,
+      transparent 7px, transparent 13px,
+      rgba(255,210,150,0.045) 13px, rgba(255,210,150,0.045) 14px
+    ),
+    repeating-linear-gradient(
+      88deg,
+      transparent 0, transparent 70px,
+      rgba(255,200,130,0.065) 70px, rgba(255,200,130,0.065) 72px,
+      transparent 72px, transparent 160px,
+      rgba(40,20,10,0.16) 160px, rgba(40,20,10,0.16) 163px
+    ),
+    linear-gradient(180deg, oklch(34% 0.06 45) 0%, oklch(22% 0.05 45) 100%);
+}
+
+.creamPlastic {
+  background:
+    radial-gradient(ellipse 28% 28% at 80% 28%, rgba(170,120,50,0.22), transparent 70%),
+    radial-gradient(ellipse 24% 26% at 18% 78%, rgba(170,130,60,0.15), transparent 70%),
+    radial-gradient(ellipse 10% 12% at 50% 55%, rgba(120,80,40,0.12), transparent 70%),
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.95' numOctaves='2' seed='7' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.22 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E"),
+    radial-gradient(ellipse 105% 90% at 50% 50%, transparent 60%, rgba(120,70,30,0.28) 100%),
+    linear-gradient(180deg, oklch(92% 0.035 85) 0%, oklch(82% 0.04 78) 100%);
+  color: oklch(15% 0.02 50);
+}
+
+.consoleMetal {
+  background:
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='260' height='260'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='2' seed='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.3 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E"),
+    radial-gradient(ellipse 35% 25% at 22% 25%, rgba(255,210,160,0.05), transparent 70%),
+    radial-gradient(ellipse 28% 22% at 82% 80%, rgba(80,50,30,0.28), transparent 70%),
+    radial-gradient(ellipse 110% 90% at 50% 50%, transparent 50%, rgba(0,0,0,0.5) 100%),
+    repeating-linear-gradient(
+      89deg, transparent 0, transparent 240px,
+      rgba(255,230,200,0.035) 240px, rgba(255,230,200,0.035) 241px,
+      transparent 241px, transparent 480px
+    ),
+    linear-gradient(180deg, oklch(28% 0.04 55) 0%, oklch(18% 0.025 50) 70%, oklch(13% 0.015 50) 100%);
+}
+
+/* ── Grill patterns ─────────────────────────────────────────────── */
+
+.grillDots {
+  background-image: radial-gradient(circle at center, oklch(15% 0.015 50) 1.6px, transparent 2px);
+  background-size: 8px 8px;
+  background-color: oklch(20% 0.015 50);
+  box-shadow: inset 0 2px 6px rgba(0,0,0,0.6), inset 0 -1px 0 rgba(255,255,255,0.04);
+}
+
+.grillDotsFine {
+  background-image: radial-gradient(circle at center, oklch(15% 0.015 50) 1px, transparent 1.4px);
+  background-size: 5px 5px;
+  background-color: oklch(18% 0.015 50);
+  box-shadow: inset 0 2px 6px rgba(0,0,0,0.6);
+}
+
+.grillMesh {
+  background-image:
+    linear-gradient(0deg, rgba(0,0,0,0.5) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(0,0,0,0.5) 1px, transparent 1px);
+  background-size: 4px 4px;
+  background-color: oklch(22% 0.02 60);
+  box-shadow: inset 0 2px 6px rgba(0,0,0,0.6);
+}
+
+.grillCreamDots {
+  background-image: radial-gradient(circle at center, oklch(60% 0.04 75) 1.5px, transparent 2px);
+  background-size: 7px 7px;
+  background-color: oklch(92% 0.035 85);
+  box-shadow: inset 0 1px 3px rgba(0,0,0,0.15);
+}
+
+/* ── Display screen ─────────────────────────────────────────────── */
+
+.displayScreen {
+  background:
+    radial-gradient(ellipse at 50% 40%, oklch(28% 0.10 60) 0%, oklch(15% 0.04 50) 75%),
+    linear-gradient(180deg, oklch(20% 0.06 55) 0%, oklch(10% 0.02 50) 100%);
+  box-shadow: var(--inset-screen);
+  color: var(--amber);
+  position: relative;
+  overflow: hidden;
+}
+
+.displayScreen::after {
+  content: "";
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 30%;
+  background: linear-gradient(180deg, rgba(255,255,255,0.06), transparent);
+  pointer-events: none;
+}
+
+.amberGlow {
+  color: oklch(80% 0.18 70);
+  text-shadow:
+    0 0 6px oklch(75% 0.18 65 / 0.7),
+    0 0 16px oklch(70% 0.18 60 / 0.4),
+    0 0 2px oklch(95% 0.10 80 / 0.8);
+}
+
+/* ── LED ────────────────────────────────────────────────────────── */
+
+.led {
+  display: inline-block;
+  flex-shrink: 0;
+  border-radius: 50%;
+  background: radial-gradient(circle at 30% 30%, oklch(80% 0.22 25), oklch(55% 0.22 25));
+  box-shadow:
+    0 0 8px oklch(65% 0.22 25 / 0.8),
+    0 0 16px oklch(60% 0.22 25 / 0.4),
+    inset 0 -1px 1px rgba(0,0,0,0.4);
+}
+
+.ledAmber {
+  background: radial-gradient(circle at 30% 30%, oklch(90% 0.16 80), oklch(70% 0.18 65));
+  box-shadow: 0 0 8px oklch(75% 0.18 65 / 0.8), 0 0 16px oklch(70% 0.18 60 / 0.5);
+}
+
+.ledGreen {
+  background: radial-gradient(circle at 30% 30%, oklch(90% 0.20 145), oklch(65% 0.20 145));
+  box-shadow: 0 0 8px oklch(70% 0.20 145 / 0.8);
+}
+
+.ledDim {
+  background: radial-gradient(circle at 30% 30%, oklch(35% 0.08 25), oklch(22% 0.06 25));
+  box-shadow: none;
+}
+
+.ledPulse { animation: pulseLed 1.8s ease-in-out infinite; }
+
+@keyframes pulseLed {
+  0%, 100% { filter: brightness(1); }
+  50%       { filter: brightness(1.35); }
+}
+
+/* ── Knob ───────────────────────────────────────────────────────── */
+
+.knob {
+  position: relative;
+  border-radius: 50%;
+  transition: transform 0.4s cubic-bezier(.2,.7,.2,1);
+  flex-shrink: 0;
+}
+
+.knobBrass {
+  background:
+    radial-gradient(circle at 35% 30%, oklch(88% 0.10 80) 0%, oklch(68% 0.12 78) 35%, oklch(45% 0.09 70) 75%, oklch(30% 0.06 65) 100%);
+  box-shadow: 0 6px 14px rgba(0,0,0,0.6), inset 0 1px 0 rgba(255,240,200,0.4), inset 0 -3px 6px rgba(0,0,0,0.5);
+}
+
+.knobChrome {
+  background:
+    radial-gradient(circle at 35% 30%, oklch(95% 0.005 240) 0%, oklch(75% 0.005 240) 35%, oklch(50% 0.01 240) 70%, oklch(25% 0.005 240) 100%);
+  box-shadow: 0 6px 14px rgba(0,0,0,0.6), inset 0 1px 0 rgba(255,255,255,0.5), inset 0 -3px 6px rgba(0,0,0,0.5);
+}
+
+.knobBlack {
+  background:
+    radial-gradient(circle at 35% 30%, oklch(35% 0.01 50) 0%, oklch(20% 0.01 50) 50%, oklch(8% 0.005 50) 100%);
+  box-shadow: 0 6px 14px rgba(0,0,0,0.6), inset 0 1px 0 rgba(255,255,255,0.1), inset 0 -3px 6px rgba(0,0,0,0.7);
+}
+
+.knobCream {
+  background:
+    radial-gradient(circle at 35% 30%, oklch(96% 0.02 85) 0%, oklch(88% 0.04 80) 50%, oklch(70% 0.05 75) 100%);
+  box-shadow: 0 6px 14px rgba(0,0,0,0.4), inset 0 1px 0 rgba(255,255,255,0.6), inset 0 -3px 6px rgba(0,0,0,0.2);
+}
+
+.knobBrass::before {
+  content: "";
+  position: absolute;
+  inset: 8%;
+  border-radius: 50%;
+  pointer-events: none;
+  background: repeating-conic-gradient(
+    from 0deg,
+    rgba(0,0,0,0.0) 0deg 6deg,
+    rgba(0,0,0,0.25) 6deg 8deg
+  );
+}
+
+.knobChrome::before {
+  content: "";
+  position: absolute;
+  inset: 8%;
+  border-radius: 50%;
+  pointer-events: none;
+  background: repeating-conic-gradient(
+    from 0deg,
+    rgba(0,0,0,0.0) 0deg 5deg,
+    rgba(0,0,0,0.25) 5deg 7deg
+  );
+}
+
+.knobBlack::before {
+  content: "";
+  position: absolute;
+  inset: 8%;
+  border-radius: 50%;
+  pointer-events: none;
+  background: repeating-conic-gradient(
+    from 0deg,
+    rgba(255,255,255,0.0) 0deg 8deg,
+    rgba(255,255,255,0.06) 8deg 10deg
+  );
+}
+
+.knobCream::before {
+  content: "";
+  position: absolute;
+  inset: 8%;
+  border-radius: 50%;
+  pointer-events: none;
+  background: repeating-conic-gradient(
+    from 0deg,
+    rgba(0,0,0,0.0) 0deg 6deg,
+    rgba(0,0,0,0.12) 6deg 8deg
+  );
+}
+
+.knobNotch {
+  position: absolute;
+  top: 8%; left: 50%;
+  width: 3px;
+  height: 22%;
+  background: rgba(0,0,0,0.7);
+  border-radius: 2px;
+  transform-origin: 50% 232%;
+  transform: translateX(-50%) rotate(var(--rot, -45deg));
+  transition: transform 0.5s cubic-bezier(.2,.7,.2,1);
+}
+
+.knobBrass .knobNotch { background: oklch(20% 0.03 60); }
+.knobCream .knobNotch { background: oklch(15% 0.02 50); }
+.knobBlack .knobNotch { background: oklch(75% 0.05 75); }
+.knobChrome .knobNotch { background: oklch(15% 0.02 50); }
+
+.knobWrap:hover .knobNotch {
+  transform: translateX(-50%) rotate(calc(var(--rot, -45deg) + 35deg));
+}
+
+/* ── Play button ────────────────────────────────────────────────── */
+
+.btnPlay {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: none;
+  cursor: pointer;
+  color: oklch(15% 0.02 50);
+  border-radius: 50%;
+  background:
+    radial-gradient(circle at 35% 30%, oklch(95% 0.02 85), oklch(82% 0.04 80) 60%, oklch(65% 0.06 75));
+  box-shadow: 0 6px 14px rgba(0,0,0,0.55), inset 0 1px 0 rgba(255,255,255,0.7), inset 0 -3px 6px rgba(0,0,0,0.25);
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+  padding: 0;
+  flex-shrink: 0;
+}
+
+.btnPlay:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 9px 18px rgba(0,0,0,0.6), inset 0 1px 0 rgba(255,255,255,0.8), inset 0 -3px 6px rgba(0,0,0,0.25);
+}
+
+.btnPlay:active {
+  transform: translateY(2px);
+  box-shadow: 0 1px 4px rgba(0,0,0,0.5), inset 0 2px 4px rgba(0,0,0,0.4), inset 0 -1px 0 rgba(255,255,255,0.4);
+}
+
+.btnPlayBrass {
+  background:
+    radial-gradient(circle at 35% 30%, oklch(88% 0.10 80), oklch(68% 0.12 78) 60%, oklch(45% 0.09 70));
+  color: oklch(15% 0.02 50);
+}
+
+/* ── Radio card ──────────────────────────────────────────────────── */
+
+.radio {
+  position: relative;
+  border-radius: 14px;
+  padding: 18px;
+  box-shadow: var(--shadow-deep);
+  transition: transform 0.4s cubic-bezier(.2,.7,.2,1), box-shadow 0.4s;
+  border: 1px solid rgba(0,0,0,0.5);
+  isolation: isolate;
+  cursor: pointer;
+}
+
+.radio::after {
+  content: "";
+  position: absolute;
+  inset: 8px;
+  border-radius: 10px;
+  pointer-events: none;
+  box-shadow: inset 0 1px 0 rgba(255,230,180,0.06), inset 0 -1px 0 rgba(0,0,0,0.4);
+}
+
+.radio:hover {
+  transform: translateY(-3px);
+  box-shadow:
+    0 40px 70px -20px rgba(0,0,0,0.8),
+    0 18px 38px -10px rgba(0,0,0,0.6),
+    0 0 0 1px rgba(255,180,90,0.05);
+}
+
+.radio:hover .displayScreen {
+  box-shadow: var(--inset-screen), 0 0 24px oklch(70% 0.18 60 / 0.15);
+}
+
+.radioPlaying {
+  box-shadow:
+    0 40px 70px -20px rgba(0,0,0,0.8),
+    0 0 0 1px oklch(70% 0.18 60 / 0.4),
+    0 0 32px oklch(65% 0.18 60 / 0.25);
+}
+
+/* ── Screw decorations ──────────────────────────────────────────── */
+
+.screw {
+  position: absolute;
+  width: 8px; height: 8px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 30% 30%, oklch(70% 0.005 60), oklch(35% 0.005 60));
+  box-shadow: 0 1px 2px rgba(0,0,0,0.5), inset 0 -1px 1px rgba(0,0,0,0.4);
+}
+
+.screw::before {
+  content: "";
+  position: absolute;
+  inset: 2px;
+  border-top: 1px solid rgba(0,0,0,0.5);
+  transform: rotate(35deg);
+}
+
+/* ── Horizontal archive row ─────────────────────────────────────── */
+
+.radioHoriz { padding: 18px 20px; }
+
+.horizGrid {
+  display: grid;
+  grid-template-columns: 220px 1fr auto;
+  align-items: center;
+  gap: 24px;
+}
+
+@media (max-width: 820px) {
+  .horizGrid { grid-template-columns: 1fr; gap: 16px; }
+}
+
+/* ── Waveform ───────────────────────────────────────────────────── */
+
+@keyframes waveShift {
+  0%   { transform: translateX(0); }
+  100% { transform: translateX(-40px); }
+}
+
+.waveAnim     { animation: waveShift 2.4s linear infinite; }
+.waveAnimFast { animation: waveShift 1.2s linear infinite; }
+
+/* ── Tuning needle ──────────────────────────────────────────────── */
+
+@keyframes needleSway {
+  0%, 100% { transform: translateX(0) rotate(0deg); }
+  50%       { transform: translateX(2px) rotate(0.6deg); }
+}
+
+.needleSway { animation: needleSway 5s ease-in-out infinite; transform-origin: top center; }
+
+/* ── VU meter needle ────────────────────────────────────────────── */
+
+@keyframes vuBounce {
+  0%   { transform: rotate(-42deg); }
+  10%  { transform: rotate(-12deg); }
+  20%  { transform: rotate(-28deg); }
+  35%  { transform: rotate(8deg); }
+  50%  { transform: rotate(-18deg); }
+  65%  { transform: rotate(15deg); }
+  80%  { transform: rotate(-8deg); }
+  100% { transform: rotate(-30deg); }
+}
+
+.vuNeedleAnim { animation: vuBounce 3.2s ease-in-out infinite; transform-origin: center bottom; }
+
+/* ── Cassette reel ──────────────────────────────────────────────── */
+
+@keyframes reelSpin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+
+.reelSpinning        { animation: reelSpin 2.5s linear infinite; }
+.reelSpinningReverse { animation: reelSpin 2.5s linear infinite reverse; }
+
+/* ── Tape label ─────────────────────────────────────────────────── */
+
+.tapeLabel {
+  background: linear-gradient(180deg, oklch(92% 0.035 85) 0%, oklch(85% 0.05 75) 100%);
+  color: oklch(20% 0.04 45);
+  position: relative;
+  padding: 14px 16px;
+  border-radius: 2px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.5), inset 0 0 0 1px rgba(0,0,0,0.05);
+  font-family: var(--font-mono);
+}
+
+.tapeLabel::before,
+.tapeLabel::after {
+  content: "";
+  position: absolute;
+  width: 36px; height: 14px;
+  background: linear-gradient(180deg, rgba(255,230,180,0.85), rgba(220,180,130,0.75));
+  box-shadow: 0 2px 4px rgba(0,0,0,0.3);
+}
+
+.tapeLabel::before { top: -7px; left: -10px; transform: rotate(-8deg); }
+.tapeLabel::after  { bottom: -7px; right: -10px; transform: rotate(-6deg); }
+
+/* ── Tick scale ─────────────────────────────────────────────────── */
+
+.tickScale { display: flex; align-items: flex-end; height: 18px; gap: 2px; }
+.tickMajor { display: block; width: 1px; height: 100%; background: oklch(80% 0.18 70); }
+.tickMid   { display: block; width: 1px; height: 70%;  background: oklch(55% 0.10 60 / 0.55); }
+.tickMinor { display: block; width: 1px; height: 45%;  background: oklch(55% 0.10 60 / 0.55); }
+
+/* ── Section heading ────────────────────────────────────────────── */
+
+.sectionHead {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 24px;
+  padding-bottom: 12px;
+  margin-bottom: 28px;
+  border-bottom: 1px solid oklch(30% 0.03 55);
+}
+
+.sectionHead h2 {
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: clamp(28px, 4vw, 44px);
+  text-transform: uppercase;
+  letter-spacing: -0.005em;
+  color: oklch(92% 0.035 85);
+  margin: 0;
+}
+
+.sectionMarker {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: oklch(60% 0.09 75);
+  white-space: nowrap;
+}
+
+/* ── Archive list ───────────────────────────────────────────────── */
+
+.archiveGrid { display: flex; flex-direction: column; gap: 22px; }
+
+.noSignal {
+  padding: 48px;
+  text-align: center;
+  border: 1px dashed oklch(35% 0.04 60);
+  border-radius: 10px;
+  color: oklch(62% 0.04 70);
+  font-family: var(--font-mono);
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  font-size: 11px;
+}
+
+/* ── Type eyebrow chip ──────────────────────────────────────────── */
+
+.typeEyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-family: var(--font-display);
+  font-size: 13px;
+  font-weight: 800;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: oklch(80% 0.18 70);
+  text-shadow: 0 0 8px oklch(70% 0.18 65 / 0.45);
+  padding: 5px 12px 4px;
+  background: linear-gradient(180deg, oklch(28% 0.06 60), oklch(18% 0.04 55));
+  border: 1px solid oklch(45% 0.10 65);
+  border-radius: 2px;
+  box-shadow: inset 0 1px 0 rgba(255,230,180,0.15), 0 1px 3px rgba(0,0,0,0.4);
+  align-self: flex-start;
+  width: fit-content;
+}
+
+/* ── Title ──────────────────────────────────────────────────────── */
+
+.titleBig {
+  font-family: var(--font-display);
+  font-size: clamp(24px, 2.8vw, 34px);
+  font-weight: 800;
+  line-height: 0.98;
+  letter-spacing: -0.005em;
+  text-transform: uppercase;
+  color: oklch(92% 0.035 85);
+  margin: 0;
+  text-wrap: balance;
+}
+
+.titleBigDark { color: oklch(15% 0.02 50); }
+
+/* ── Duration display ───────────────────────────────────────────── */
+
+.durScreen { min-width: 96px; padding: 10px 14px; display: flex; flex-direction: column; align-items: center; gap: 2px; }
+.durNum    { font-family: var(--font-mono); font-size: 22px; font-weight: 700; letter-spacing: 0.04em; font-feature-settings: "tnum"; }
+.durUnit   { font-family: var(--font-mono); font-size: 9px; letter-spacing: 0.22em; opacity: 0.7; }
+
+/* ── Preset buttons ─────────────────────────────────────────────── */
+
+.presetBtn {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  padding: 10px 16px;
+  border-radius: 4px;
+  border: 1px solid oklch(35% 0.04 60);
+  background: linear-gradient(180deg, oklch(28% 0.03 55), oklch(18% 0.02 50));
+  color: oklch(75% 0.045 75);
+  cursor: pointer;
+  box-shadow: var(--bevel-up);
+  transition: all 0.15s ease;
+}
+
+.presetBtn:hover { color: oklch(92% 0.035 85); border-color: oklch(52% 0.10 70); }
+
+.presetBtnActive {
+  background: linear-gradient(180deg, oklch(40% 0.08 70), oklch(28% 0.06 60));
+  color: oklch(80% 0.18 70);
+  border-color: oklch(68% 0.11 78);
+  box-shadow: 0 0 12px oklch(65% 0.18 60 / 0.25), inset 0 1px 0 rgba(255,230,180,0.2), inset 0 -1px 0 rgba(0,0,0,0.5);
+  text-shadow: 0 0 8px oklch(75% 0.18 65 / 0.6);
+}
+
+/* ── Mood pills ─────────────────────────────────────────────────── */
+
+.pill {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  padding: 6px 12px;
+  border-radius: 999px;
+  border: 1px solid oklch(40% 0.05 55);
+  background: oklch(20% 0.02 50);
+  color: oklch(62% 0.04 70);
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.pill:hover { color: oklch(92% 0.035 85); border-color: oklch(60% 0.09 75); }
+
+.pillActive {
+  background: oklch(34% 0.10 22);
+  color: oklch(85% 0.05 75);
+  border-color: oklch(45% 0.13 25);
+}
+
+/* ── CTA button ─────────────────────────────────────────────────── */
+
+.cta {
+  font-family: var(--font-display);
+  font-size: 16px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  padding: 16px 28px;
+  border: none;
+  border-radius: 4px;
+  background:
+    radial-gradient(ellipse at 30% 20%, oklch(78% 0.13 80), oklch(58% 0.12 70) 60%, oklch(40% 0.08 65));
+  color: oklch(15% 0.02 50);
+  cursor: pointer;
+  box-shadow: 0 8px 18px rgba(0,0,0,0.5), inset 0 1px 0 rgba(255,255,255,0.5), inset 0 -2px 4px rgba(0,0,0,0.25);
+  transition: transform 0.15s, box-shadow 0.15s;
+}
+
+.cta:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 12px 24px rgba(0,0,0,0.55), inset 0 1px 0 rgba(255,255,255,0.6), inset 0 -2px 4px rgba(0,0,0,0.25);
+}
+.cta:active { transform: translateY(1px); }
+
+/* ── Search input ───────────────────────────────────────────────── */
+
+.freqInput {
+  width: 100%;
+  background: transparent;
+  border: none;
+  outline: none;
+  font-family: var(--font-mono);
+  font-size: 16px;
+  letter-spacing: 0.15em;
+  color: oklch(80% 0.18 70);
+  text-shadow: 0 0 8px oklch(70% 0.18 65 / 0.7);
+  caret-color: oklch(80% 0.18 70);
+  text-transform: uppercase;
+}
+
+.freqInput::placeholder { color: oklch(55% 0.10 60 / 0.6); }
+
+/* ── Mini player ────────────────────────────────────────────────── */
+
+.miniPlayer {
+  position: fixed;
+  left: 50%;
+  bottom: 18px;
+  transform: translateX(-50%);
+  z-index: 50;
+  width: min(720px, calc(100vw - 32px));
+  background: linear-gradient(180deg, oklch(28% 0.03 55), oklch(15% 0.02 50));
+  border: 1px solid oklch(40% 0.05 60);
+  border-top: 1px solid oklch(55% 0.06 65);
+  border-radius: 10px;
+  box-shadow: var(--shadow-deep);
+  padding: 12px 14px;
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  align-items: center;
+  gap: 14px;
+}
+
+@media (max-width: 600px) {
+  .miniPlayer { grid-template-columns: auto 1fr; grid-template-rows: auto auto; }
+  .mpTrack { grid-column: span 2; }
+}
+
+/* ── Utility ────────────────────────────────────────────────────── */
+
+.mono    { font-family: var(--font-mono); font-feature-settings: "tnum"; }
+.display { font-family: var(--font-display); font-weight: 800; letter-spacing: -0.01em; line-height: 0.92; text-transform: uppercase; }
+.labelTech { font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.18em; text-transform: uppercase; color: oklch(62% 0.04 70); }
+.faded { opacity: 0.7; }

@@ -162,7 +162,7 @@ export function ScrollHero() {
           top: 0,
           height: "100vh",
           overflow: "hidden",
-          background: "#080808",
+          background: "#131816",
         }}
       >
         {/* ── DJ video (back layer, revealed by the curtain split) ── */}
@@ -250,9 +250,16 @@ export function ScrollHero() {
             bottom: 0,
             left: 0,
             right: 0,
-            height: "38%",
-            background: "linear-gradient(to bottom, transparent 0%, #0a0a0a 100%)", // matches BG in editorial-catalog.tsx
-            zIndex: 1,
+            height: "45%",
+            background: `linear-gradient(to bottom,
+              transparent                0%,
+              rgba(19,24,22,0.04)       25%,
+              rgba(19,24,22,0.14)       48%,
+              rgba(19,24,22,0.42)       66%,
+              rgba(19,24,22,0.72)       80%,
+              rgba(19,24,22,0.92)       91%,
+              #131816                  100%)`,
+            zIndex: 10,
             pointerEvents: "none",
           }}
         />
