@@ -13,13 +13,16 @@ export const siteConfig = {
   location: "Montréal, Canada",
   adminPreviewCookie: "cba_admin_preview",
   nav: [
-    { href: "/",           label: "Accueil",         icon: "⌂",  shortLabel: "Home"    },
-    { href: "/beats",      label: "Nos Beats",        icon: "◈",  shortLabel: "Beats"   },
-    { href: "/events",     label: "Agenda",           icon: "◷",  shortLabel: "Agenda"  },
-    { href: "/studio",     label: "Session Studio",   icon: "⬡",  shortLabel: "Studio"  },
-    { href: "/dj-services",label: "Book un DJ",       icon: "↝",  shortLabel: "DJ"      },
-    { href: "/about",      label: "Notre ADN",        icon: "◉",  shortLabel: "ADN"     },
-    { href: "/contact",    label: "Nous écrire",      icon: "✦",  shortLabel: "Contact" },
+    { href: "/",            label: "Accueil",             icon: "⌂", shortLabel: "Accueil" },
+    { href: "/beats",       label: "Nos Beats",           icon: "◈", shortLabel: "Beats"   },
+    { href: "/dj-services", label: "Réserver un DJ",      icon: "↝", shortLabel: "DJ"      },
+    { href: "/events",      label: "Nos Événements",      icon: "◷", shortLabel: "Agenda"  },
+    { href: "/studio",      label: "Réserver le Studio",  icon: "⬡", shortLabel: "Studio"  },
+    { href: "/radio",       label: "Écouter la Radio",    icon: "◉", shortLabel: "Radio"   },
+  ] satisfies NavLink[],
+  secondaryNav: [
+    { href: "/about",   label: "Notre ADN",   icon: "◉", shortLabel: "ADN"     },
+    { href: "/contact", label: "Nous écrire", icon: "✦", shortLabel: "Contact" },
   ] satisfies NavLink[],
   social: [
     { label: "Instagram", href: "https://instagram.com/" },
