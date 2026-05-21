@@ -263,6 +263,9 @@ export function ScrollHero() {
             pointerEvents: "none",
           }}
         />
+
+        {/* Sentinel used by SiteNav to know when the hero has scrolled past the viewport */}
+        <div id="hero-sentinel" aria-hidden style={{ position: "absolute", bottom: 0, left: 0, right: 0, height: 1, pointerEvents: "none" }} />
       </div>
     </section>
   );
