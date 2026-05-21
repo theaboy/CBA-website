@@ -59,6 +59,17 @@ export function SiteFooter() {
               <li><Link href="/contact">Nous Contacter</Link></li>
             </ul>
           </div>
+
+          <div className="footer-col">
+            <h4>À propos</h4>
+            <ul>
+              {siteConfig.secondaryNav.map((link) => (
+                <li key={link.href}>
+                  <Link href={link.href}>{link.label}</Link>
+                </li>
+              ))}
+            </ul>
+          </div>
         </div>
       </div>
 
