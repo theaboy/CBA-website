@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import Image from "next/image";
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { siteConfig } from "@/lib/site";
 import { NavLinkItem } from "@/components/navigation/nav-link";
 import { MobileMenu } from "@/components/navigation/mobile-menu";
@@ -11,6 +11,7 @@ import styles from "./site-nav.module.css";
 export function SiteNav() {
   const [isHidden] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
+  const burgerRef = useRef<HTMLButtonElement>(null);
 
   return (
     <>
@@ -34,6 +35,7 @@ export function SiteNav() {
         <div className={styles.actions}>
           <Link href="/admin" className={styles.adminChip}>Admin</Link>
           <button
+            ref={burgerRef}
             type="button"
             className={styles.burger}
             aria-label="Ouvrir le menu"
@@ -45,7 +47,7 @@ export function SiteNav() {
         </div>
       </header>
 
-      <MobileMenu open={menuOpen} onClose={() => setMenuOpen(false)} />
+      <MobileMenu open={menuOpen} onClose={() => setMenuOpen(false)} triggerRef={burgerRef} />
     </>
   );
 }

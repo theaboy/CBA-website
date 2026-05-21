@@ -1,16 +1,17 @@
 "use client";
 
 import Link from "next/link";
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, type RefObject } from "react";
 import { siteConfig } from "@/lib/site";
 import styles from "./mobile-menu.module.css";
 
 type Props = {
   open: boolean;
   onClose: () => void;
+  triggerRef: RefObject<HTMLButtonElement | null>;
 };
 
-export function MobileMenu({ open, onClose }: Props) {
+export function MobileMenu({ open, onClose, triggerRef }: Props) {
   const firstLinkRef = useRef<HTMLAnchorElement>(null);
 
   useEffect(() => {
@@ -26,12 +27,13 @@ export function MobileMenu({ open, onClose }: Props) {
 
     return () => {
       document.body.style.overflow = "";
+      triggerRef.current?.focus();
       window.removeEventListener("keydown", onKey);
     };
   }, [open, onClose]);
 
   return (
-    <div className={`${styles.overlay} ${open ? styles.open : ""}`} aria-hidden={!open}>
+    <div className={`${styles.overlay} ${open ? styles.open : ""}`} aria-hidden={!open} inert={!open || undefined}>
       <div className={styles.topBar}>
         <span className={styles.brandLabel}>{siteConfig.title}</span>
         <button type="button" className={styles.close} aria-label="Fermer le menu" onClick={onClose}>
