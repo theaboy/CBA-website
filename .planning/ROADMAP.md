@@ -93,7 +93,7 @@ Plans:
 Plans:
 - [x] 04-01: Project setup — Node.js, TypeScript, Express, Prisma, PostgreSQL, env structure, health check.
 - [x] 04-02: Admin authentication — JWT, bcrypt, login endpoint, rate limiting, protected middleware.
-- [ ] 04-03: Beat catalog API — metadata endpoints, server-side filtering, admin CRUD.
+- [x] 04-03: Beat catalog API — metadata endpoints, server-side filtering, admin CRUD.
 - [ ] 04-04: S3 integration — bucket setup, signed URLs, upload flow, wire into beat endpoints.
 
 ### Phase 5: Payments, Email and Ticketing
@@ -171,7 +171,7 @@ Plans:
 | 1. Foundation and Brand System | 4/4 | Complete | 2026-02-28 |
 | 2. Marketplace Browsing and Playback | 5/5 | Complete | 2026-02-28 |
 | 3. Beat Detail and Inquiry Conversion | 3/3 | Complete | 2026-02-28 |
-| 4. Backend Foundation | 2/4 | In progress | - |
+| 4. Backend Foundation | 3/4 | In progress | - |
 | 5. Payments, Email and Ticketing | 0/4 | Not started | - |
 | 6. Admin Backend API | 0/4 | Not started | - |
 | 7. Admin Dashboard Frontend | 0/4 | Not started | - |
