@@ -42,7 +42,7 @@ export function BeatsBento() {
           <div>
             <p className={styles.eyebrow}>Sélection CBA</p>
             <h2 id="beats-home-heading" className={styles.title}>
-              Catalogue éditorial
+              Nos Beats
             </h2>
             <p className={styles.lead}>
               Beats exclusifs, palettes sonores distinctes, énergie montréalaise.

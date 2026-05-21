@@ -1,99 +1,93 @@
 import Link from "next/link";
-import { ArrowRight, CalendarDays } from "lucide-react";
+import Image from "next/image";
+import { ArrowRight } from "lucide-react";
 import styles from "./events-section.module.css";
-import { MagicCard } from "@/components/ui/magic-card";
 
 const events = [
   {
+    image: "/cba/cba-hero-1.jpg",
     day: "24",
     month: "Avril",
     year: "2026",
-    name: "Session d'Écoute CBA",
+    name: "Session d'écoute CBA",
     venue: "Le Ministère, Montréal",
-    type: "Événement Collectif",
-    ticketLink: "/events",
   },
   {
+    image: "/cba/cba-photo-3.jpg",
     day: "08",
     month: "Mai",
     year: "2026",
     name: "Underground Frequency Vol. 4",
     venue: "Bar Le Ritz PDB, Montréal",
-    type: "Soirée DJ",
-    ticketLink: "/events",
   },
   {
+    image: "/cba/cba-photo-2.jpg",
     day: "22",
     month: "Mai",
     year: "2026",
     name: "Portes Ouvertes Studio",
     venue: "CBA Studio, Plateau-Mont-Royal",
-    type: "Session Studio",
-    ticketLink: "/events",
   },
 ];
 
 export function EventsSection() {
   return (
-    /* TODO: replace with real stream URL */
-    <section id="listen" className={`${styles.section} motion-safe:animate-fade-up`} aria-labelledby="events-home-heading">
+    <section id="events" className={styles.section} aria-labelledby="events-home-heading">
       <div className={styles.inner}>
+
+        {/* ── Header ─────────────────────────────────────────────── */}
         <header className={styles.header}>
           <div>
-            <p className={`${styles.eyebrow} motion-safe:animate-fade-up`}>Agenda CBA</p>
-            <h2
-              id="events-home-heading"
-              className={`${styles.title} motion-safe:animate-fade-up`}
-              style={{ animationDelay: "90ms" }}
-            >
-              Prochains rendez-vous
+            <p className={styles.eyebrow}>Agenda CBA</p>
+            <h2 id="events-home-heading" className={styles.title}>
+              Nos Dates
             </h2>
           </div>
-          <Link
-            href="/events"
-            className={`${styles.headerLink} motion-safe:animate-fade-left`}
-            style={{ animationDelay: "180ms" }}
-          >
-            Tous les événements <ArrowRight size={15} />
+          <Link href="/events" className={styles.headerLink}>
+            Tous les événements <ArrowRight size={13} />
           </Link>
         </header>
 
-        <div className={styles.grid} role="list">
-          {events.map((event, index) => (
-            <MagicCard
-              key={event.name}
-              className={`${styles.cardWrap} motion-safe:animate-fade-up`}
-              gradientSize={200}
-              gradientFrom="rgba(212, 163, 115, 0.92)"
-              gradientTo="rgba(62, 76, 63, 0.84)"
-              overlayColor="rgba(212, 163, 115, 0.16)"
-              overlayOpacity={0.75}
-            >
-              <article
-                className={styles.card}
-                style={{ animationDelay: `${220 + index * 100}ms` }}
-                role="listitem"
-              >
-                <div className={styles.dateBlock}>
+        {/* ── Cards ──────────────────────────────────────────────── */}
+        <div className={styles.grid}>
+          {events.map((event) => (
+            <article key={event.name} className={styles.card}>
+
+              {/* Photo */}
+              <div className={styles.cardPhoto}>
+                <Image
+                  src={event.image}
+                  alt={event.name}
+                  fill
+                  sizes="(max-width: 900px) 92vw, 33vw"
+                  className={styles.cardImg}
+                />
+                <div className={styles.photoOverlay} />
+              </div>
+
+              {/* Info strip */}
+              <div className={styles.cardInfo}>
+                <div className={styles.dateBox}>
                   <span className={styles.day}>{event.day}</span>
-                  <span className={styles.month}>
-                    {event.month} {event.year}
-                  </span>
+                  <span className={styles.month}>{event.month}</span>
+                  <span className={styles.year}>{event.year}</span>
                 </div>
-
-                <div className={styles.body}>
-                  <span className={styles.type}>{event.type}</span>
-                  <h3>{event.name}</h3>
-                  <p>{event.venue}</p>
+                <div className={styles.cardBody}>
+                  <h3 className={styles.eventName}>{event.name}</h3>
+                  <p className={styles.venue}>{event.venue}</p>
                 </div>
+              </div>
 
-                <Link href={event.ticketLink} className={styles.ticketAction}>
-                  <CalendarDays size={13} /> Billets
-                </Link>
-              </article>
-            </MagicCard>
+            </article>
           ))}
         </div>
+
+        {/* ── Nav arrows ─────────────────────────────────────────── */}
+        <div className={styles.nav}>
+          <button className={styles.navBtn} aria-label="Précédent">←</button>
+          <button className={styles.navBtn} aria-label="Suivant">→</button>
+        </div>
+
       </div>
     </section>
   );

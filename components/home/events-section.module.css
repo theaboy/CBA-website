@@ -1,12 +1,8 @@
+/* ── Section ─────────────────────────────────────────────────────── */
+
 .section {
   padding: clamp(4rem, 6.8vw, 6.1rem) 1.1rem;
-  background:
-    radial-gradient(
-      ellipse at 82% 24%,
-      rgba(212, 163, 115, 0.1),
-      transparent 44%
-    ),
-    #0d0f0e;
+  background: transparent;
 }
 
 .inner {
@@ -14,20 +10,22 @@
   margin-inline: auto;
 }
 
+/* ── Header ──────────────────────────────────────────────────────── */
+
 .header {
   display: flex;
   justify-content: space-between;
   align-items: flex-end;
   gap: 1.2rem;
-  margin-bottom: clamp(1.3rem, 2.8vw, 2.4rem);
+  margin-bottom: clamp(1.8rem, 3.2vw, 2.8rem);
   flex-wrap: wrap;
 }
 
 .eyebrow {
-  margin: 0 0 0.72rem;
+  margin: 0 0 0.6rem;
   font-family: "JetBrains Mono", monospace;
-  font-size: 0.64rem;
-  letter-spacing: 0.22em;
+  font-size: 0.62rem;
+  letter-spacing: 0.28em;
   text-transform: uppercase;
   color: #d4a373;
 }
@@ -36,168 +34,215 @@
   margin: 0;
   font-family: var(--font-title, "Cinzel", serif);
   font-style: italic;
-  font-size: clamp(1.85rem, 3.8vw, 2.9rem);
+  font-size: clamp(2.2rem, 5vw, 3.8rem);
   font-weight: 500;
   line-height: 1.02;
   color: #f5ebd8;
 }
 
 .headerLink {
-  min-height: 2.7rem;
+  flex-shrink: 0;
   border-radius: 999px;
-  border: 1px solid rgba(212, 163, 115, 0.24);
-  background: rgba(12, 13, 12, 0.5);
-  padding: 0.66rem 0.98rem;
+  border: 1px solid rgba(212, 163, 115, 0.38);
+  background: transparent;
+  padding: 0.72rem 1.2rem;
   display: inline-flex;
   align-items: center;
-  gap: 0.4rem;
-  font-size: 0.7rem;
-  letter-spacing: 0.13em;
+  gap: 0.5rem;
+  font-family: "JetBrains Mono", monospace;
+  font-size: 0.62rem;
+  letter-spacing: 0.18em;
   text-transform: uppercase;
   color: rgba(236, 202, 146, 0.9);
-  transition: transform 220ms ease;
+  transition: background 200ms ease, border-color 200ms ease, transform 200ms ease;
+  white-space: nowrap;
 }
 
 .headerLink:hover {
+  background: rgba(212, 163, 115, 0.08);
+  border-color: rgba(212, 163, 115, 0.65);
   transform: translateY(-2px);
 }
+
+/* ── Card grid ───────────────────────────────────────────────────── */
 
 .grid {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 0.9rem;
+  gap: clamp(0.7rem, 1.4vw, 1.1rem);
 }
 
-.cardWrap {
-  border-radius: 1rem;
-}
+/* ── Card ────────────────────────────────────────────────────────── */
 
 .card {
-  border-radius: inherit;
-  border: 1px solid transparent;
-  background:
-    linear-gradient(
-      160deg,
-      rgba(212, 163, 115, 0.08),
-      rgba(15, 16, 15, 0.82) 58%
-    );
-  padding: 1rem;
-  display: grid;
-  grid-template-columns: auto 1fr;
-  gap: 0.84rem;
-  align-items: start;
-  transition:
-    transform 220ms ease,
-    border-color 220ms ease;
+  position: relative;
+  border: 1px solid rgba(212, 163, 115, 0.22);
+  border-radius: 0.75rem;
+  overflow: hidden;
+  aspect-ratio: 3 / 4;
+  background: oklch(9% 0.01 50);
+  transition: border-color 240ms ease, transform 240ms ease;
 }
 
 .card:hover {
-  border-color: rgba(212, 163, 115, 0.26);
+  border-color: rgba(212, 163, 115, 0.46);
   transform: translateY(-3px);
 }
 
-.dateBlock {
-  border: 1px solid rgba(212, 163, 115, 0.34);
-  border-radius: 0.82rem;
-  min-width: 4.6rem;
-  padding: 0.55rem 0.5rem;
+/* ── Photo — fills the entire card ──────────────────────────────── */
+
+.cardPhoto {
+  position: absolute;
+  inset: 0;
+}
+
+.cardImg {
+  object-fit: cover;
+  object-position: center;
+  filter: contrast(1.04) saturate(0.85) brightness(0.80);
+  transition: transform 600ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.card:hover .cardImg {
+  transform: scale(1.04);
+}
+
+/* Dark gradient so bottom text is readable */
+.photoOverlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    to top,
+    rgba(5, 7, 6, 0.90) 0%,
+    rgba(5, 7, 6, 0.55) 38%,
+    transparent 65%
+  );
+  pointer-events: none;
+}
+
+/* ── Info strip — absolute over photo ───────────────────────────── */
+
+.cardInfo {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 1.1rem;
+  background: transparent;
+}
+
+/* ── Date box ────────────────────────────────────────────────────── */
+
+.dateBox {
+  flex-shrink: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid rgba(212, 163, 115, 0.40);
+  border-radius: 0.55rem;
+  padding: 0.55rem 0.65rem;
+  min-width: 62px;
   text-align: center;
-  background: rgba(11, 12, 11, 0.64);
+  background: rgba(0, 0, 0, 0.35);
 }
 
 .day {
   display: block;
   font-family: var(--font-title, "Cinzel", serif);
   font-style: italic;
-  font-size: 1.72rem;
+  font-size: 1.9rem;
   line-height: 1;
   color: #e3c789;
 }
 
 .month {
   display: block;
-  margin-top: 0.2rem;
+  margin-top: 0.25rem;
   font-family: "JetBrains Mono", monospace;
-  font-size: 0.53rem;
-  letter-spacing: 0.14em;
+  font-size: 0.50rem;
+  letter-spacing: 0.18em;
   text-transform: uppercase;
-  color: rgba(236, 202, 146, 0.78);
+  color: rgba(236, 202, 146, 0.75);
 }
 
-.body {
-  display: grid;
-  gap: 0.36rem;
-}
-
-.type {
+.year {
+  display: block;
   font-family: "JetBrains Mono", monospace;
-  font-size: 0.54rem;
-  letter-spacing: 0.16em;
-  text-transform: uppercase;
-  color: rgba(236, 202, 146, 0.72);
+  font-size: 0.50rem;
+  letter-spacing: 0.18em;
+  color: rgba(236, 202, 146, 0.55);
 }
 
-.body h3 {
+/* ── Event details ───────────────────────────────────────────────── */
+
+.cardBody {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+  min-width: 0;
+}
+
+.eventName {
   margin: 0;
   font-family: var(--font-title, "Cinzel", serif);
   font-style: italic;
-  font-size: clamp(1.02rem, 1.6vw, 1.26rem);
+  font-size: clamp(1rem, 1.55vw, 1.22rem);
   font-weight: 500;
-  line-height: 1.15;
+  line-height: 1.18;
   color: #f7efdf;
 }
 
-.body p {
+.venue {
   margin: 0;
-  color: rgba(247, 239, 224, 0.66);
-  font-size: 0.82rem;
-  line-height: 1.55;
+  color: rgba(247, 239, 224, 0.58);
+  font-size: 0.80rem;
+  line-height: 1.4;
 }
 
-.ticketAction {
-  grid-column: 1 / -1;
-  margin-top: 0.38rem;
-  justify-self: start;
-  min-height: 2.1rem;
-  border-radius: 999px;
-  border: 1px solid rgba(212, 163, 115, 0.3);
-  background: rgba(212, 163, 115, 0.16);
-  padding: 0.46rem 0.72rem;
-  display: inline-flex;
-  align-items: center;
-  gap: 0.35rem;
-  font-size: 0.62rem;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-  color: rgba(250, 243, 232, 0.92);
+/* ── Nav arrows ──────────────────────────────────────────────────── */
+
+.nav {
+  display: flex;
+  justify-content: center;
+  gap: 0.9rem;
+  margin-top: clamp(1.8rem, 3vw, 2.6rem);
 }
 
-@media (max-width: 1020px) {
+.navBtn {
+  width: 3rem;
+  height: 3rem;
+  border-radius: 50%;
+  border: 1px solid rgba(212, 163, 115, 0.42);
+  background: transparent;
+  color: #d4a373;
+  font-size: 1rem;
+  cursor: pointer;
+  display: grid;
+  place-items: center;
+  line-height: 1;
+  transition: background 200ms ease, border-color 200ms ease, transform 200ms ease;
+}
+
+.navBtn:hover {
+  background: rgba(212, 163, 115, 0.10);
+  border-color: rgba(212, 163, 115, 0.75);
+  transform: scale(1.06);
+}
+
+.navBtn:active {
+  transform: scale(0.94);
+}
+
+/* ── Mobile ──────────────────────────────────────────────────────── */
+
+@media (max-width: 900px) {
   .grid {
     grid-template-columns: 1fr;
-  }
-
-  .card {
-    grid-template-columns: auto minmax(0, 1fr) auto;
-    align-items: center;
-  }
-
-  .ticketAction {
-    grid-column: auto;
-    margin-top: 0;
-    justify-self: end;
-  }
-}
-
-@media (max-width: 680px) {
-  .card {
-    grid-template-columns: auto 1fr;
-    align-items: start;
-  }
-
-  .ticketAction {
-    grid-column: 1 / -1;
-    justify-self: start;
-    margin-top: 0.3rem;
+    max-width: 480px;
+    margin-inline: auto;
   }
 }

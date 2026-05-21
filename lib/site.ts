@@ -2,6 +2,7 @@ export type NavLink = {
   href: string;
   label: string;
   shortLabel?: string;
+  icon: string;
 };
 
 export const siteConfig = {
@@ -12,13 +13,13 @@ export const siteConfig = {
   location: "Montréal, Canada",
   adminPreviewCookie: "cba_admin_preview",
   nav: [
-    { href: "/", label: "Accueil" },
-    { href: "/beats", label: "Beats" },
-    { href: "/events", label: "Événements" },
-    { href: "/studio", label: "Studio" },
-    { href: "/dj-services", label: "Services DJ", shortLabel: "DJ" },
-    { href: "/about", label: "À propos" },
-    { href: "/contact", label: "Contact" }
+    { href: "/",           label: "Accueil",         icon: "⌂",  shortLabel: "Home"    },
+    { href: "/beats",      label: "Nos Beats",        icon: "◈",  shortLabel: "Beats"   },
+    { href: "/events",     label: "Agenda",           icon: "◷",  shortLabel: "Agenda"  },
+    { href: "/studio",     label: "Session Studio",   icon: "⬡",  shortLabel: "Studio"  },
+    { href: "/dj-services",label: "Book un DJ",       icon: "↝",  shortLabel: "DJ"      },
+    { href: "/about",      label: "Notre ADN",        icon: "◉",  shortLabel: "ADN"     },
+    { href: "/contact",    label: "Nous écrire",      icon: "✦",  shortLabel: "Contact" },
   ] satisfies NavLink[],
   social: [
     { label: "Instagram", href: "https://instagram.com/" },

@@ -324,23 +324,62 @@ main {
   display: flex;
   justify-content: center;
   flex-wrap: wrap;
-  gap: 0.45rem;
+  gap: 0.35rem;
 }
 
-.nav-link {
-  padding: 0.55rem 0.9rem;
-  border-radius: 999px;
+/* ── Nav tiles ───────────────────────────────────────────────────── */
+
+.nav-tile {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.42rem;
+  padding: 0.38rem 0.78rem;
+  border-radius: 8px;
+  border: 1px solid transparent;
+  background: transparent;
   color: var(--ink-1);
-  transition: 180ms ease;
+  font-size: 0.72rem;
+  letter-spacing: 0.04em;
+  transition: background 160ms ease, border-color 160ms ease, color 160ms ease, transform 160ms ease;
+  white-space: nowrap;
 }
 
-.nav-link.active,
-.nav-link:hover {
-  background: rgba(255, 255, 255, 0.05);
+.nav-tile-icon {
+  font-size: 0.80rem;
+  line-height: 1;
+  opacity: 0.55;
+  transition: opacity 160ms ease;
+}
+
+.nav-tile-label {
+  font-family: "JetBrains Mono", monospace;
+  text-transform: uppercase;
+  letter-spacing: 0.10em;
+  font-size: 0.60rem;
+}
+
+.nav-tile:hover {
+  background: rgba(201, 169, 97, 0.07);
+  border-color: rgba(201, 169, 97, 0.22);
   color: var(--ink-0);
+  transform: translateY(-1px);
 }
 
-.nav-link-mobile {
+.nav-tile:hover .nav-tile-icon {
+  opacity: 0.9;
+}
+
+.nav-tile.active {
+  background: rgba(201, 169, 97, 0.10);
+  border-color: rgba(201, 169, 97, 0.35);
+  color: #e3c789;
+}
+
+.nav-tile.active .nav-tile-icon {
+  opacity: 1;
+}
+
+.nav-tile-mobile {
   display: none;
 }
 
@@ -729,11 +768,11 @@ h3 {
     grid-template-columns: 1fr;
   }
 
-  .nav-link-desktop {
+  .nav-tile-desktop {
     display: none;
   }
 
-  .nav-link-mobile {
+  .nav-tile-mobile {
     display: inline;
   }
 
