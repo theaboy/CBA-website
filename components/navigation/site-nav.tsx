@@ -2,16 +2,36 @@
 
 import Link from "next/link";
 import Image from "next/image";
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { siteConfig } from "@/lib/site";
 import { NavLinkItem } from "@/components/navigation/nav-link";
 import { MobileMenu } from "@/components/navigation/mobile-menu";
 import styles from "./site-nav.module.css";
 
 export function SiteNav() {
-  const [isHidden] = useState(false);
+  const [isHidden, setIsHidden] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
   const burgerRef = useRef<HTMLButtonElement>(null);
+
+  useEffect(() => {
+    const sentinel = document.getElementById("hero-sentinel");
+    if (!sentinel) {
+      setIsHidden(false);
+      return;
+    }
+
+    setIsHidden(true);
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        setIsHidden(entry.isIntersecting);
+      },
+      { rootMargin: "0px", threshold: 0 }
+    );
+
+    observer.observe(sentinel);
+    return () => observer.disconnect();
+  }, []);
 
   return (
     <>
