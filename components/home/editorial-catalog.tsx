@@ -30,7 +30,7 @@ export function EditorialCatalog() {
     <section
       id="beats"
       aria-labelledby="editorial-catalog-heading"
-      className="px-6 py-16 md:px-16 md:py-24"
+      className="px-6 py-10 md:px-16 md:py-14"
       style={{ background: "transparent", color: PAPER }}
     >
       <div className="mx-auto max-w-7xl">

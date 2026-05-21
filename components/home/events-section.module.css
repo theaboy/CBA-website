@@ -1,7 +1,7 @@
 /* ── Section ─────────────────────────────────────────────────────── */
 
 .section {
-  padding: clamp(4rem, 6.8vw, 6.1rem) 1.1rem;
+  padding: clamp(2.2rem, 4vw, 3.4rem) 1.1rem;
   background: transparent;
 }
 
