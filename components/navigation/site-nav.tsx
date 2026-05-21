@@ -3,6 +3,7 @@
 import Link from "next/link";
 import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
+import { usePathname } from "next/navigation";
 import { siteConfig } from "@/lib/site";
 import { NavLinkItem } from "@/components/navigation/nav-link";
 import { MobileMenu } from "@/components/navigation/mobile-menu";
@@ -12,6 +13,7 @@ export function SiteNav() {
   const [isHidden, setIsHidden] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
   const burgerRef = useRef<HTMLButtonElement>(null);
+  const pathname = usePathname();
 
   useEffect(() => {
     const sentinel = document.getElementById("hero-sentinel");
@@ -31,7 +33,7 @@ export function SiteNav() {
 
     observer.observe(sentinel);
     return () => observer.disconnect();
-  }, []);
+  }, [pathname]);
 
   return (
     <>
