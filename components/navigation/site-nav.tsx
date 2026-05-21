@@ -38,14 +38,15 @@ export function SiteNav() {
   return (
     <>
       <header className={`${styles.bar} ${isHidden ? styles.isHidden : ""}`}>
-        <Link href="/" className={styles.brand}>
-          <span className={styles.brandBadge}>
-            <Image src="/cba/cba-logo.png" alt="CBA" width={36} height={36} style={{ borderRadius: "50%", objectFit: "cover" }} />
-          </span>
-          <span className={styles.brandCopy}>
-            <strong>{siteConfig.title}</strong>
-            <span>{siteConfig.location}</span>
-          </span>
+        <Link href="/" className={styles.brand} aria-label={siteConfig.title}>
+          <Image
+            src="/cba/cba-logo-full.png"
+            alt="CBA — Create · Build · Achieve"
+            width={60}
+            height={40}
+            priority
+            className={styles.brandLogo}
+          />
         </Link>
 
         <nav className={styles.links} aria-label="Primary">

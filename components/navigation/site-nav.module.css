@@ -34,33 +34,16 @@
   color: inherit;
 }
 
-.brandBadge {
-  width: 2.4rem;
-  height: 2.4rem;
-  border-radius: 50%;
-  overflow: hidden;
-  display: grid;
-  place-items: center;
-  border: 1px solid rgba(255, 255, 255, 0.10);
+.brandLogo {
+  height: 40px;
+  width: auto;
+  /* Logo is dark green on light bg — invert to white on the dark navbar */
+  filter: brightness(0) invert(1);
+  opacity: 0.92;
+  transition: opacity 180ms ease;
 }
 
-.brandCopy {
-  display: flex;
-  flex-direction: column;
-  line-height: 1.1;
-}
-
-.brandCopy strong {
-  font-weight: 600;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  font-size: 0.85rem;
-}
-
-.brandCopy span {
-  color: rgba(255, 255, 255, 0.55);
-  font-size: 0.7rem;
-}
+.brand:hover .brandLogo { opacity: 1; }
 
 .links {
   display: flex;
