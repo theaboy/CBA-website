@@ -81,7 +81,7 @@ export function RadioPlayerBar({ episode, onClose }: Props) {
       <RadioKnob
         isPlaying={isPlaying}
         onClick={togglePlay}
-        size="md"
+        size="lg"
       />
 
       {/* Scrub bar */}

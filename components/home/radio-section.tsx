@@ -311,9 +311,9 @@ export function RadioSection() {
               <Headphones size={13} />
               Toutes les émissions
             </Link>
-            <button type="button" className={styles.headerLinkAlt}>
+            <Link href="/desktop-fm" className={styles.headerLinkAlt}>
               Radio page V2
-            </button>
+            </Link>
           </div>
         </header>
 

@@ -31,7 +31,7 @@ export function EditorialCatalog() {
       id="beats"
       aria-labelledby="editorial-catalog-heading"
       className="px-6 py-16 md:px-16 md:py-24"
-      style={{ backgroundColor: BG, color: PAPER }}
+      style={{ background: "transparent", color: PAPER }}
     >
       <div className="mx-auto max-w-7xl">
         {/* Header */}
