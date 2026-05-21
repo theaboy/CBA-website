@@ -23,18 +23,18 @@ See: .planning/PROJECT.md (updated 2026-02-28)
 ## Current Position
 
 Phase: 4 of 8 (Backend Foundation)
-Plan: 1 of 4 in current phase
+Plan: 2 of 4 in current phase
 Status: In progress
-Last activity: 2026-05-21 — Plan 04-01 complete: Express 5 + Prisma 6 API skeleton with full PostgreSQL schema, health endpoint, admin seed script.
+Last activity: 2026-05-21 — Plan 04-02 complete: Admin JWT auth — POST /admin/login with timing-safe bcrypt, IP rate limiter (5/15min), and requireAuth middleware for protected routes.
 
-Progress: [████░░░░░░] 42%
+Progress: [████░░░░░░] 45%
 
 ## Performance Metrics
 
 **Velocity:**
-- Total plans completed: 12
-- Average duration: 24.75 min
-- Total execution time: 1.7 hours
+- Total plans completed: 13
+- Average duration: 23.7 min
+- Total execution time: ~1.8 hours
 
 **By Phase:**
 
@@ -68,6 +68,7 @@ Recent decisions affecting current work:
 - Phase 2 execution: One-track playback is mounted at the root layout through a shared audio provider and mini-player.
 - 2026-05-21 roadmap restructure: Roadmap rebuilt around real backend (Node.js, Express, Prisma, PostgreSQL, Stripe). Studio booking, DJ services, and calendar system deferred to Milestone 2. Stripe for beats + tickets promoted from v2 to v1. No public user accounts (PRD confirmed admin-only auth). Traffic baseline: under 1k/month — backend scoped lean (no analytics API, no CSV export, no slot engine yet).
 - Phase 4 plan 01: prisma kept in dependencies (not devDependencies) — Railway/Render prune devDependencies before pre-deploy migrate step. S3 keys stored in Beat model, never public URLs. Beat prices as three separate Decimal columns. IAM user (not role) required for stable AWS credentials on managed platforms.
+- Phase 4 plan 02: loginLimiter scoped to POST /login only — not all admin routes. adminAuthRouter mounted without requireAuth so login is publicly reachable. Comment block in index.ts marks where Plans 03+ mount protected admin routers.
 
 ### Pending Todos
 
@@ -81,6 +82,6 @@ None yet.
 
 ## Session Continuity
 
-Last session: 2026-05-21 22:23
-Stopped at: Phase 4 plan 01 complete; next is 04-02 (admin JWT auth)
+Last session: 2026-05-21 22:22
+Stopped at: Phase 4 plan 02 complete; next is 04-03 (beat catalog API)
 Resume file: None
