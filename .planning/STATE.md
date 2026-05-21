@@ -3,12 +3,12 @@ gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: Core Commerce
 status: active
-last_updated: "2026-05-21T00:00:00Z"
+last_updated: "2026-05-21T22:23:00Z"
 progress:
   total_phases: 8
   completed_phases: 3
   total_plans: 31
-  completed_plans: 12
+  completed_plans: 13
 ---
 
 # Project State
@@ -23,11 +23,11 @@ See: .planning/PROJECT.md (updated 2026-02-28)
 ## Current Position
 
 Phase: 4 of 8 (Backend Foundation)
-Plan: 0 of 4 in current phase
-Status: Ready for planning
-Last activity: 2026-05-21 — Roadmap restructured to add real backend (Node.js, Prisma, Stripe). Studio/DJ/calendar deferred to Milestone 2.
+Plan: 1 of 4 in current phase
+Status: In progress
+Last activity: 2026-05-21 — Plan 04-01 complete: Express 5 + Prisma 6 API skeleton with full PostgreSQL schema, health endpoint, admin seed script.
 
-Progress: [███░░░░░░░] 38%
+Progress: [████░░░░░░] 42%
 
 ## Performance Metrics
 
@@ -43,9 +43,10 @@ Progress: [███░░░░░░░] 38%
 | 1 | 4 | 99 min | 24.75 min |
 | 2 | 5 | completed | n/a |
 | 3 | 3 | completed | n/a |
+| 4 | 1/4 complete | 18 min | 18 min |
 
 **Recent Trend:**
-- Last 5 plans: 35 min, 24 min, 18 min, 22 min
+- Last 5 plans: 35 min, 24 min, 18 min, 22 min, 18 min
 - Trend: Stable
 
 *Updated after each plan completion*
@@ -66,6 +67,7 @@ Recent decisions affecting current work:
 - Phase 2 execution: Beat data, featured selections, filters, and playback all share one local catalog/domain module.
 - Phase 2 execution: One-track playback is mounted at the root layout through a shared audio provider and mini-player.
 - 2026-05-21 roadmap restructure: Roadmap rebuilt around real backend (Node.js, Express, Prisma, PostgreSQL, Stripe). Studio booking, DJ services, and calendar system deferred to Milestone 2. Stripe for beats + tickets promoted from v2 to v1. No public user accounts (PRD confirmed admin-only auth). Traffic baseline: under 1k/month — backend scoped lean (no analytics API, no CSV export, no slot engine yet).
+- Phase 4 plan 01: prisma kept in dependencies (not devDependencies) — Railway/Render prune devDependencies before pre-deploy migrate step. S3 keys stored in Beat model, never public URLs. Beat prices as three separate Decimal columns. IAM user (not role) required for stable AWS credentials on managed platforms.
 
 ### Pending Todos
 
@@ -79,6 +81,6 @@ None yet.
 
 ## Session Continuity
 
-Last session: 2026-02-28 00:00
-Stopped at: Phase 3 complete; Phase 4 planning is the next logical step
+Last session: 2026-05-21 22:23
+Stopped at: Phase 4 plan 01 complete; next is 04-02 (admin JWT auth)
 Resume file: None
