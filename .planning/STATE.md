@@ -3,14 +3,14 @@ gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
 status: planning
-stopped_at: Completed 04-01-PLAN.md (Supabase connection layer + vitest stubs)
-last_updated: "2026-05-22T03:45:53.965Z"
+stopped_at: "Checkpoint: 04-02 Task 2 — user must run migration in Supabase SQL Editor"
+last_updated: "2026-05-22T03:49:01.347Z"
 last_activity: "2026-05-21 — Architecture pivot: switched from custom Express/Node.js API to Supabase. Express implementation archived at /Users/bird/CBA-api-archived-express. Roadmap restructured from 8 phases to 7 (Admin Backend API + Admin Dashboard Frontend collapsed into single Phase 6 since Supabase eliminates the separate API server layer)."
 progress:
   total_phases: 7
   completed_phases: 3
   total_plans: 16
-  completed_plans: 13
+  completed_plans: 14
   percent: 43
 ---
 
@@ -54,6 +54,7 @@ Progress: [████░░░░░░] 43%
 
 *Updated after each plan completion*
 | Phase 04-supabase-foundation P01 | 12 | 2 tasks | 9 files |
+| Phase 04-supabase-foundation P02 | 4 | 1 tasks | 1 files |
 
 ## Accumulated Context
 
@@ -76,6 +77,8 @@ Recent decisions affecting current work:
 - [Phase 04-supabase-foundation]: Three-client pattern (browser/server/service-role) isolates runtime boundaries for Supabase clients
 - [Phase 04-supabase-foundation]: Service role key uses SUPABASE_SERVICE_ROLE_KEY (no NEXT_PUBLIC_ prefix) — never exposed to browser
 - [Phase 04-supabase-foundation]: vitest test stubs use it.todo() as Wave 0 TDD to define contract before implementation
+- [Phase 04-supabase-foundation]: beats.full_key must never appear in public Supabase .select() — always use explicit column list omitting it
+- [Phase 04-supabase-foundation]: Three price columns (price_basic, price_premium, price_exclusive) model licensing tiers directly in DB
 
 ### Pending Todos
 
@@ -91,6 +94,6 @@ Recent decisions affecting current work:
 
 ## Session Continuity
 
-Last session: 2026-05-22T03:45:53.956Z
-Stopped at: Completed 04-01-PLAN.md (Supabase connection layer + vitest stubs)
+Last session: 2026-05-22T03:49:01.301Z
+Stopped at: Checkpoint: 04-02 Task 2 — user must run migration in Supabase SQL Editor
 Resume file: None
