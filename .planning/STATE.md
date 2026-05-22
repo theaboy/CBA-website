@@ -3,14 +3,14 @@ gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
 status: planning
-stopped_at: Completed 04-supabase-foundation-04-02-PLAN.md
-last_updated: "2026-05-22T03:57:38.304Z"
+stopped_at: Completed 04-supabase-foundation-04-03-PLAN.md — awaiting Supabase dashboard Task 2 (RLS + bucket SQL run)
+last_updated: "2026-05-22T04:02:38.373Z"
 last_activity: "2026-05-21 — Architecture pivot: switched from custom Express/Node.js API to Supabase. Express implementation archived at /Users/bird/CBA-api-archived-express. Roadmap restructured from 8 phases to 7 (Admin Backend API + Admin Dashboard Frontend collapsed into single Phase 6 since Supabase eliminates the separate API server layer)."
 progress:
   total_phases: 7
   completed_phases: 3
   total_plans: 16
-  completed_plans: 14
+  completed_plans: 15
   percent: 43
 ---
 
@@ -56,6 +56,7 @@ Progress: [████░░░░░░] 43%
 | Phase 04-supabase-foundation P01 | 12 | 2 tasks | 9 files |
 | Phase 04-supabase-foundation P02 | 4 | 1 tasks | 1 files |
 | Phase 04-supabase-foundation P02 | 4min | 2 tasks | 1 files |
+| Phase 04-supabase-foundation P03 | 6min | 3 tasks | 3 files |
 
 ## Accumulated Context
 
@@ -81,6 +82,8 @@ Recent decisions affecting current work:
 - [Phase 04-supabase-foundation]: beats.full_key must never appear in public Supabase .select() — always use explicit column list omitting it
 - [Phase 04-supabase-foundation]: Three price columns (price_basic, price_premium, price_exclusive) model licensing tiers directly in DB
 - [Phase 04-supabase-foundation]: RLS enabled via Supabase warning dialog before running migration — all 6 tables have RLS active from creation (no gap period)
+- [Phase 04-supabase-foundation]: getPublicUrl() for preview-audio and artwork (public CDN, no token); createSignedUrl() for full-audio (time-limited, server-side only, post-purchase)
+- [Phase 04-supabase-foundation]: Storage helpers use server.ts createClient() (anon key) not service.ts — public reads don't need elevated permissions and RLS is enforced
 
 ### Pending Todos
 
@@ -96,6 +99,6 @@ Recent decisions affecting current work:
 
 ## Session Continuity
 
-Last session: 2026-05-22T03:57:38.296Z
-Stopped at: Completed 04-supabase-foundation-04-02-PLAN.md
+Last session: 2026-05-22T04:02:38.364Z
+Stopped at: Completed 04-supabase-foundation-04-03-PLAN.md — awaiting Supabase dashboard Task 2 (RLS + bucket SQL run)
 Resume file: None
