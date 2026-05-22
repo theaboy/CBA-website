@@ -70,11 +70,11 @@ completed: 2026-05-22
 
 ## Performance
 
-- **Duration:** 8 min
+- **Duration:** ~45 min (including visual verification and post-checkpoint fixes)
 - **Started:** 2026-05-22T04:37:14Z
-- **Completed:** 2026-05-22T04:45:07Z
-- **Tasks:** 3 of 4 complete (Task 4 is a human-verify checkpoint)
-- **Files modified:** 16
+- **Completed:** 2026-05-22
+- **Tasks:** 4 of 4 complete
+- **Files modified:** 18 (16 from Tasks 1-3 + proxy.ts rename + next.config.mjs)
 
 ## Accomplishments
 
@@ -94,7 +94,15 @@ Each task was committed atomically:
 1. **Task 1: Update Beat type and fix all downstream TypeScript errors** - `7bba6a7` (feat)
 2. **Task 2: Create queries.ts and implement beats-queries tests** - `eae6876` (feat)
 3. **Task 3: Wire pages and homepage components to Supabase** - `4ecd1db` (feat)
-4. **Task 4: Visual verification** - checkpoint:human-verify (pending)
+4. **Task 4: Visual verification** - User approved (checkpoint cleared)
+
+**Post-checkpoint fixes (visual verification surfaced these):**
+- `4c7fcdb` — fix: rename middleware.ts to proxy.ts for Next.js 16 compatibility
+- `b9ed130` — fix: rename middleware export to proxy for Next.js 16
+- `4491aeb` — fix: allow Supabase Storage images in next.config.mjs remotePatterns
+- `18694e1` — fix: redirect beat card links to /beats?beat=slug (catalog) instead of detail pages
+- `c1c85de` — feat: pre-select featured beat on catalog page via ?beat=slug param
+- `3f259d6` — fix: restore static /beats href on section CTA outside beat loop
 
 ## Files Created/Modified
 
@@ -152,16 +160,43 @@ Each task was committed atomically:
 - **Fix:** Created `lib/beats/queries.ts` as part of Task 1 to allow tsc to exit 0
 - **Commit:** eae6876
 
+**5. [Rule 3 - Blocking] Renamed middleware.ts to proxy.ts for Next.js 16**
+- **Found during:** Task 4 visual verification
+- **Issue:** Next.js 16 enforces strict middleware export naming. The existing file caused a runtime conflict on `npm run dev`
+- **Fix:** Renamed file to `proxy.ts`; renamed export from `middleware` to `proxy`
+- **Files modified:** `proxy.ts` (formerly `middleware.ts`)
+- **Commits:** 4c7fcdb, b9ed130
+
+**6. [Rule 2 - Missing Critical] Added Supabase Storage hostname to next.config.mjs remotePatterns**
+- **Found during:** Task 4 visual verification
+- **Issue:** next/image blocked CDN URLs from `*.supabase.co` — artwork images rendered as broken
+- **Fix:** Added `{ protocol: 'https', hostname: '*.supabase.co' }` to `images.remotePatterns` in `next.config.mjs`
+- **Files modified:** `next.config.mjs`
+- **Commit:** 4491aeb
+
+**7. [Rule 1 - Bug] Fixed homepage beat card navigation to use /beats?beat=slug**
+- **Found during:** Task 4 visual verification
+- **Issue:** Beat card links on the homepage pointed to `/beats/[slug]` (detail page); user expected clicking a card to open the catalog with that beat pre-selected. Additionally, the section CTA link outside the beat loop was incorrectly using `beat.slug` instead of static `/beats`
+- **Fix:** Changed beat card href to `/beats?beat=${beat.slug}` inside the loop; restored static `/beats` href on section CTA; added `featuredSlug` prop to `LightCatalog` so the catalog page can pre-select the beat when the `?beat=` param is present
+- **Files modified:** `components/home/editorial-catalog.tsx` (or beats-bento/featured-beats), `components/beats/light-catalog.tsx`
+- **Commits:** 18694e1, c1c85de, 3f259d6
+
+---
+
+**Total deviations:** 7 auto-fixed (2 missing critical, 4 blocking, 1 bug)
+**Impact on plan:** All fixes necessary for correctness in Next.js 16 and for the visual verification to pass. No scope creep.
+
 ## Issues Encountered
 
 None beyond the deviations noted above — all were auto-fixed per plan deviation rules.
 
 ## Next Phase Readiness
 
-- All beats pages are database-driven and ready for Task 4 human verification
-- `lib/beats/queries.ts` is complete and tested — Phase 5 can extend with additional filters
+- Beat catalog is fully database-driven and visually verified — Phase 5 (Payments, Email, Ticketing) can build directly on live Beat data
+- `lib/beats/queries.ts` is complete and tested — Phase 5 can extend `getPublishedBeats` with additional filters or add purchase-lock logic
 - Related beats functionality is intentionally deferred (Phase 5)
 - `featured` boolean filter can be re-enabled once catalog has more than 3 beats
+- Static `beatsCatalog` is fully removed — no legacy data paths remain
 
 ---
 *Phase: 04-supabase-foundation*
@@ -175,7 +210,9 @@ None beyond the deviations noted above — all were auto-fixed per plan deviatio
 - Task 1 commit 7bba6a7 — confirmed in git log
 - Task 2 commit eae6876 — confirmed in git log
 - Task 3 commit 4ecd1db — confirmed in git log
+- Post-checkpoint fix commits 4c7fcdb, b9ed130, 4491aeb, 18694e1, c1c85de, 3f259d6 — confirmed in git log
 - vitest run: 16/16 tests pass (7 new beats-queries tests + 9 existing signed-urls tests)
 - TypeScript: no errors (tsc --noEmit exits 0)
+- Visual verification: PASSED — user approved homepage beat cards navigate to /beats?beat=slug with correct beat pre-selected
 
 ## Self-Check: PASSED

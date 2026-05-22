@@ -3,8 +3,8 @@ gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
 status: executing
-stopped_at: Completed 04-supabase-foundation 04-04-PLAN.md — waiting for Task 4 human visual verification
-last_updated: "2026-05-22T04:46:51.775Z"
+stopped_at: Completed 04-supabase-foundation 04-04-PLAN.md — Phase 4 fully complete
+last_updated: "2026-05-22T06:00:00.000Z"
 last_activity: 2026-05-22 — Plan 04-03 complete. RLS live on all 6 tables, 3 storage buckets created (preview-audio public, full-audio private, artwork public), storage URL helpers tested and committed.
 progress:
   total_phases: 7
@@ -21,14 +21,14 @@ progress:
 See: .planning/PROJECT.md (updated 2026-02-28)
 
 **Core value:** Make it easy for visitors to discover CBA's sound and convert into beat or studio-booking leads through a premium, trustworthy experience.
-**Current focus:** Phase 4: Supabase Foundation
+**Current focus:** Phase 5: Payments, Email and Ticketing
 
 ## Current Position
 
 Phase: 4 of 7 (Supabase Foundation)
-Plan: 3 of 4 complete — ready for 04-04 (Wire frontend)
-Status: In progress
-Last activity: 2026-05-22 — Plan 04-03 complete. RLS live on all 6 tables, 3 storage buckets created (preview-audio public, full-audio private, artwork public), storage URL helpers tested and committed.
+Plan: 4 of 4 complete — Phase 4 fully complete
+Status: Complete — ready for Phase 5
+Last activity: 2026-05-22 — Plan 04-04 complete. Beat catalog fully database-driven. Live Supabase queries with full_key exclusion, homepage and beats pages wired to Supabase data. Visual verification passed.
 
 Progress: [█████████░] 92%
 
@@ -87,6 +87,9 @@ Recent decisions affecting current work:
 - [Phase 04-supabase-foundation]: Storage helpers use server.ts createClient() (anon key), not service.ts — public reads don't need elevated permissions and RLS is enforced
 - [Phase 04-supabase-foundation]: PUBLIC_BEAT_COLUMNS constant enforces full_key exclusion structurally at query level, not relying on RLS alone
 - [Phase 04-supabase-foundation]: getFeaturedBeats returns latest 6 published beats without featured=true filter — with 3 seed beats, the boolean filter would be too restrictive
+- [Phase 04-supabase-foundation 04-04]: Next.js 16 middleware.ts renamed to proxy.ts with export renamed to proxy() — Next.js 16 enforces strict middleware export naming
+- [Phase 04-supabase-foundation 04-04]: Supabase Storage CDN hostnames (*.supabase.co) must be in next.config.mjs remotePatterns for next/image to allow them
+- [Phase 04-supabase-foundation 04-04]: Homepage beat cards navigate to /beats?beat=slug (catalog pre-selected) not /beats/[slug] (detail) — keeps users in browsing flow; LightCatalog accepts featuredSlug prop
 
 ### Pending Todos
 
@@ -102,6 +105,6 @@ Recent decisions affecting current work:
 
 ## Session Continuity
 
-Last session: 2026-05-22T04:46:51.768Z
-Stopped at: Completed 04-supabase-foundation 04-04-PLAN.md — waiting for Task 4 human visual verification
+Last session: 2026-05-22T06:00:00.000Z
+Stopped at: Completed 04-supabase-foundation — Phase 4 fully complete. Ready for Phase 5.
 Resume file: None

@@ -93,10 +93,10 @@ Plans:
 **Plans**: 4 plans
 
 Plans:
-- [ ] 04-01: Supabase project setup — create project, configure env vars in Next.js, install `@supabase/supabase-js` and `@supabase/ssr`.
-- [ ] 04-02: Schema migrations — write SQL migration for all tables and enums; run via Supabase dashboard or CLI; seed dev data.
+- [x] 04-01: Supabase project setup — create project, configure env vars in Next.js, install `@supabase/supabase-js` and `@supabase/ssr`.
+- [x] 04-02: Schema migrations — write SQL migration for all tables and enums; run via Supabase dashboard or CLI; seed dev data.
 - [x] 04-03: RLS policies and Storage — configure row-level security for all tables; create Storage buckets; implement signed URL generation helper.
-- [ ] 04-04: Wire frontend — replace static beat data with Supabase client reads; update beat listing and detail pages to use live data and signed preview URLs.
+- [x] 04-04: Wire frontend — replace static beat data with Supabase client reads; update beat listing and detail pages to use live data and signed preview URLs.
 
 ### Phase 5: Payments, Email and Ticketing
 **Goal**: Implement Stripe payment for beat purchases and event tickets via Next.js API routes, transactional email for all purchase events, and QR token generation per ticket.
