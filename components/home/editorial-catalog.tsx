@@ -24,28 +24,74 @@ export function EditorialCatalog({ beats }: { beats: Beat[] }) {
     <section
       id="beats"
       aria-labelledby="editorial-catalog-heading"
-      className="px-6 py-16 md:px-16 md:py-24"
+      className="px-6 py-10 md:px-16 md:py-14"
       style={{ background: "transparent", color: PAPER }}
     >
       <div className="mx-auto max-w-7xl">
-        {/* Header */}
-        <div className="mb-12 flex flex-col items-start gap-6 md:flex-row md:items-end md:justify-between">
-          <div className="max-w-2xl">
-            <h2
-              id="editorial-catalog-heading"
-              className="mb-4 font-serif text-5xl"
-              style={{ color: GOLD }}
-            >
-              Catalogue éditorial
-            </h2>
-            <p
-              className="text-sm font-light uppercase tracking-wide"
-              style={{ color: "rgba(201,169,97,0.8)" }}
-            >
-              Beats exclusifs, palettes sonores distinctes, énergie montréalaise.
-            </p>
+        {/* Header (Studio-style) */}
+        <header
+          style={{
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
+            textAlign: "center",
+            padding: "0 1.25rem",
+            marginBottom: "clamp(2.6rem, 4.5vw, 4rem)",
+          }}
+        >
+          <p
+            style={{
+              margin: "0 0 0.9rem",
+              fontFamily: '"JetBrains Mono", monospace',
+              fontSize: "0.62rem",
+              letterSpacing: "0.28em",
+              textTransform: "uppercase",
+              color: "#d4a373",
+            }}
+          >
+            Catalogue
+          </p>
+          <h2
+            id="editorial-catalog-heading"
+            style={{
+              margin: 0,
+              fontFamily: 'var(--font-title, "Cinzel", serif)',
+              fontStyle: "italic",
+              fontSize: "clamp(1.85rem, 4.5vw, 3.4rem)",
+              fontWeight: 500,
+              lineHeight: 1.04,
+              color: "#f5ecd9",
+              letterSpacing: "0.01em",
+            }}
+          >
+            Catalogue éditorial
+          </h2>
+          <div
+            aria-hidden
+            style={{
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              gap: 10,
+              margin: "1.1rem auto 1.1rem",
+              width: "8rem",
+            }}
+          >
+            <span style={{ flex: 1, height: 1, background: "linear-gradient(to right, transparent, #c9965a, transparent)" }} />
+            <span style={{ display: "block", width: 5, height: 5, background: "#c9965a", transform: "rotate(45deg)", flexShrink: 0 }} />
+            <span style={{ flex: 1, height: 1, background: "linear-gradient(to right, transparent, #c9965a, transparent)" }} />
           </div>
-
+          <p
+            style={{
+              margin: "0 auto 1.6rem",
+              maxWidth: "42ch",
+              color: "rgba(245, 236, 222, 0.62)",
+              fontSize: "0.94rem",
+              lineHeight: 1.72,
+            }}
+          >
+            Beats exclusifs, palettes sonores distinctes, énergie montréalaise.
+          </p>
           <Link
             href="/beats"
             className="border px-8 py-3 text-xs font-semibold uppercase tracking-[0.22em] transition-all duration-300"
@@ -61,7 +107,7 @@ export function EditorialCatalog({ beats }: { beats: Beat[] }) {
           >
             Tout le catalogue →
           </Link>
-        </div>
+        </header>
 
         {/* Interactive Selector */}
         <div className="flex h-[520px] w-full gap-4 overflow-hidden md:h-[600px]">

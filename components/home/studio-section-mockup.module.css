@@ -1,7 +1,7 @@
 /* ── Section shell ───────────────────────────────────────────────── */
 
 .section {
-  padding: clamp(4rem, 7vw, 6.5rem) 0 clamp(3rem, 5vw, 5rem);
+  padding: clamp(2.2rem, 4vw, 3.6rem) 0 clamp(1.8rem, 3.2vw, 2.8rem);
   background: transparent;
   overflow: hidden; /* clips the outer cards that bleed past the edges */
 }

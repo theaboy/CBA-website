@@ -1,31 +1,10 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef } from "react";
 import styles from "./scroll-hero.module.css";
 
 const SCROLL_HEIGHT  = "300vh";
 const SPLIT_END      = 0.4;  // curtain finishes opening at 40 % of scroll progress
-const NAV_THRESHOLD  = 0.7;  // nav fades in once the video scrub is nearly done
-
-const NAV_ITEMS = [
-  { label: "EXPLORE BEATS", scrollTo: "beats"   },
-  { label: "BOOK SESSION",  scrollTo: "studio"  },
-  { label: "LISTEN LIVE",   scrollTo: "listen"  },
-];
-
-// ── Single nav button ─────────────────────────────────────────────────────────
-function NavLink({ label, scrollTo }: { label: string; scrollTo: string }) {
-  return (
-    <div className={styles.navItem}>
-      <button
-        className={styles.navButton}
-        onClick={() => document.getElementById(scrollTo)?.scrollIntoView({ behavior: "smooth" })}
-      >
-        {label}
-      </button>
-    </div>
-  );
-}
 
 // ── Hero ──────────────────────────────────────────────────────────────────────
 export function ScrollHero() {
@@ -38,7 +17,6 @@ export function ScrollHero() {
   const smoothProgressRef = useRef(0);   // exponentially smoothed [0,1]
   const lastTsRef         = useRef<number>(-1);
   const rafRef            = useRef<number>(0);
-  const [navVisible, setNavVisible] = useState(false);
 
   // Smoothing stiffness — forward feels cinematic, reverse snaps faster
   // so the browser skips intermediate backward keyframe decodes (less jank)
@@ -111,7 +89,6 @@ export function ScrollHero() {
       const scrollable = section.offsetHeight - window.innerHeight;
       const progress   = Math.min(1, Math.max(0, window.scrollY / scrollable));
       targetProgressRef.current = progress;
-      setNavVisible(progress >= NAV_THRESHOLD);
     }
 
     window.addEventListener("scroll", onScroll, { passive: true });
@@ -226,22 +203,6 @@ export function ScrollHero() {
           />
         </div>
 
-        {/* ── Ghost nav — fades in after NAV_THRESHOLD scroll progress ── */}
-        <nav
-          aria-label="Main navigation"
-          className={styles.nav}
-          style={{
-            opacity: navVisible ? 1 : 0,
-            transform: navVisible ? "translateY(0)" : "translateY(10px)",
-            transition: "opacity 0.7s ease, transform 0.7s ease",
-            pointerEvents: navVisible ? "auto" : "none",
-          }}
-        >
-          {NAV_ITEMS.map((item) => (
-            <NavLink key={item.scrollTo} {...item} />
-          ))}
-        </nav>
-
         {/* ── Hero → Beats gradient fade ── */}
         <div
           aria-hidden
@@ -263,6 +224,9 @@ export function ScrollHero() {
             pointerEvents: "none",
           }}
         />
+
+        {/* Sentinel used by SiteNav to know when the hero has scrolled past the viewport */}
+        <div id="hero-sentinel" aria-hidden style={{ position: "absolute", bottom: 0, left: 0, right: 0, height: 1, pointerEvents: "none" }} />
       </div>
     </section>
   );

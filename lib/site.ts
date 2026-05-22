@@ -13,13 +13,15 @@ export const siteConfig = {
   location: "Montréal, Canada",
   adminPreviewCookie: "cba_admin_preview",
   nav: [
-    { href: "/",           label: "Accueil",         icon: "⌂",  shortLabel: "Home"    },
-    { href: "/beats",      label: "Nos Beats",        icon: "◈",  shortLabel: "Beats"   },
-    { href: "/events",     label: "Agenda",           icon: "◷",  shortLabel: "Agenda"  },
-    { href: "/studio",     label: "Session Studio",   icon: "⬡",  shortLabel: "Studio"  },
-    { href: "/dj-services",label: "Book un DJ",       icon: "↝",  shortLabel: "DJ"      },
-    { href: "/about",      label: "Notre ADN",        icon: "◉",  shortLabel: "ADN"     },
-    { href: "/contact",    label: "Nous écrire",      icon: "✦",  shortLabel: "Contact" },
+    { href: "/",            label: "Accueil",             icon: "⌂", shortLabel: "Accueil" },
+    { href: "/beats",       label: "Nos Beats",           icon: "◈", shortLabel: "Beats"   },
+    { href: "/reservation", label: "Réserver",            icon: "⬡", shortLabel: "Réserver"},
+    { href: "/events",      label: "Nos Événements",      icon: "◷", shortLabel: "Agenda"  },
+    { href: "/radio",       label: "Écouter la Radio",    icon: "◉", shortLabel: "Radio"   },
+  ] satisfies NavLink[],
+  secondaryNav: [
+    { href: "/about",   label: "Notre ADN",   icon: "◉", shortLabel: "ADN"     },
+    { href: "/contact", label: "Nous écrire", icon: "✦", shortLabel: "Contact" },
   ] satisfies NavLink[],
   social: [
     { label: "Instagram", href: "https://instagram.com/" },
@@ -46,16 +48,6 @@ export const pageSummaries: Record<string, { eyebrow: string; title: string; bod
     eyebrow: "Événements Live",
     title: "Découverte d'événements et architecture de promotion de billets.",
     body: "Cette page pose le cadre de présentation des événements pour que les futures annonces gérées par l'admin soient cohérentes dès le premier jour."
-  },
-  "/studio": {
-    eyebrow: "Sessions Studio",
-    title: "Réservez du temps studio dans un espace conçu pour la précision, le son et l'élan créatif.",
-    body: "Choisissez un forfait, vérifiez les disponibilités et envoyez une demande de session que CBA confirmera manuellement."
-  },
-  "/dj-services": {
-    eyebrow: "Services DJ",
-    title: "Événements privés, son curatif et présence orientée production.",
-    body: "Le flux de demandes se connectera à cette base après l'établissement du premier shell public."
   },
   "/about": {
     eyebrow: "À propos de CBA",

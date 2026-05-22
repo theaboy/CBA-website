@@ -37,11 +37,14 @@ export function EventsSection() {
 
         {/* ── Header ─────────────────────────────────────────────── */}
         <header className={styles.header}>
-          <div>
-            <p className={styles.eyebrow}>Agenda CBA</p>
-            <h2 id="events-home-heading" className={styles.title}>
-              Nos Dates
-            </h2>
+          <p className={styles.eyebrow}>Agenda CBA</p>
+          <h2 id="events-home-heading" className={styles.title}>
+            Nos Dates
+          </h2>
+          <div className={styles.ornament} aria-hidden>
+            <span className={styles.ornLine} />
+            <span className={styles.ornDiamond} />
+            <span className={styles.ornLine} />
           </div>
           <Link href="/events" className={styles.headerLink}>
             Tous les événements <ArrowRight size={13} />

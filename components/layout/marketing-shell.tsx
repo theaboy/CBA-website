@@ -1,10 +1,12 @@
 "use client";
 
 import { ReactNode, useEffect } from "react";
-import { SiteFooter } from "@/components/layout/site-footer";
-import { SiteHeader } from "@/components/layout/site-header";
+import { usePathname } from "next/navigation";
 
 export function MarketingShell({ children }: { children: ReactNode }) {
+  const pathname = usePathname();
+  const isReservation = pathname === "/reservation";
+
   // Scroll reveal via IntersectionObserver
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -26,16 +28,10 @@ export function MarketingShell({ children }: { children: ReactNode }) {
 
   return (
     <div className="marketing-shell">
-      {/* Film grain overlay */}
-      <div className="grain-overlay" aria-hidden="true" />
-
-      {/* Ambient glows */}
-      <div className="ambient ambient-one" aria-hidden="true" />
-      <div className="ambient ambient-two" aria-hidden="true" />
-
-      <SiteHeader />
+      {!isReservation && <div className="grain-overlay" aria-hidden="true" />}
+      {!isReservation && <div className="ambient ambient-one" aria-hidden="true" />}
+      {!isReservation && <div className="ambient ambient-two" aria-hidden="true" />}
       <main>{children}</main>
-      <SiteFooter />
     </div>
   );
 }
