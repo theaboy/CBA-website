@@ -44,3 +44,4 @@ node_modules.corrupt/
 .DS_Store
 images /
 public/frames_old_*/
+.env.local

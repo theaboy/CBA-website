@@ -40,6 +40,7 @@ key-decisions:
   - "beats.full_key must never appear in public Supabase .select() — always use explicit column list omitting it"
   - "Three price columns (price_basic, price_premium, price_exclusive) model the licensing tiers directly in DB — not a JSON blob or lookup table"
   - "Seed data uses placeholder storage paths (preview/*, full/*, artwork/*) — real uploads happen in Phase 6 admin"
+  - "RLS enabled via Supabase warning dialog before running migration — all 6 tables have RLS active from creation"
 
 patterns-established:
   - "Migration files live in supabase/migrations/ and are run manually via Supabase Dashboard SQL Editor"
@@ -54,14 +55,14 @@ completed: 2026-05-22
 
 # Phase 4 Plan 02: Initial Schema Migration Summary
 
-**Complete PostgreSQL schema for all 6 CBA tables (beats, events, orders_beat, orders_ticket, tickets, bookings) with 3 enums, 6 indexes, and 3 seed beats — committed as reproducible migration file**
+**Complete PostgreSQL schema for all 6 CBA tables (beats, events, orders_beat, orders_ticket, tickets, bookings) with 3 enums, 6 indexes, and 3 seed beats — live in Supabase with RLS enabled on all tables**
 
 ## Performance
 
 - **Duration:** 4 min
 - **Started:** 2026-05-22T03:46:58Z
 - **Completed:** 2026-05-22T03:50:00Z
-- **Tasks:** 1 of 2 auto-completed (Task 2 is human-action: run in Supabase dashboard)
+- **Tasks:** 2 of 2 complete
 - **Files modified:** 1
 
 ## Accomplishments
@@ -69,16 +70,17 @@ completed: 2026-05-22
 - All 6 tables defined with correct column types, foreign key references, and constraints
 - beats table includes price_basic, price_premium, price_exclusive (tiered licensing model)
 - full_key column documented with inline SQL comment warning against public query exposure
-- 3 seed beats inserted: after-hours-anthem (Trap, featured), north-line (Drill, featured), golden-frequency (Afro)
+- 3 seed beats inserted and visible in Supabase Table Editor: after-hours-anthem (Trap, featured), north-line (Drill, featured), golden-frequency (Afro)
+- RLS enabled on all 6 tables via Supabase warning dialog before running the migration
 
 ## Task Commits
 
 Each task was committed atomically:
 
 1. **Task 1: Write complete SQL migration file** - `6230196` (feat)
-2. **Task 2: Run migration in Supabase dashboard** - human-action checkpoint (no commit — user runs SQL in dashboard)
+2. **Task 2: Run migration in Supabase dashboard** - human-action checkpoint (user confirmed: all 6 tables live, 3 seed beats visible, RLS enabled)
 
-**Plan metadata:** see docs commit below
+**Plan metadata:** `1d2130e` (docs: complete plan — checkpoint awaiting dashboard run)
 
 ## Files Created/Modified
 - `supabase/migrations/20260521000001_initial_schema.sql` - Complete schema: 3 enums, 6 tables, 6 indexes, 3 seed beats
@@ -87,6 +89,7 @@ Each task was committed atomically:
 - Seed data uses placeholder storage keys (e.g., `preview/after-hours-anthem.mp3`) because real audio/artwork uploads happen in Phase 6 admin. The frontend can render cards and prices without real files.
 - full_key column has an SQL block comment marking it server-side only — complements the 04-01 pattern where all public queries must use explicit column selects.
 - No Supabase CLI migration tooling set up — migration is manually run via dashboard SQL Editor. This is intentional for the free-tier Supabase project where direct CLI access may not be configured.
+- RLS was enabled via the Supabase warning dialog before running the migration — all 6 tables have Row Level Security active from the moment of creation (no gap period).
 
 ## Deviations from Plan
 
@@ -97,23 +100,19 @@ None
 
 ## User Setup Required
 
-**Manual action required.** Task 2 is a human-action checkpoint:
-
-1. Go to https://supabase.com/dashboard
-2. Open your CBA project
-3. Click "SQL Editor" in the left sidebar
-4. Click "New query"
-5. Copy the full contents of `supabase/migrations/20260521000001_initial_schema.sql` and paste it
-6. Click "Run" (or Cmd+Enter)
-7. Go to "Table Editor" — verify all 6 tables appear: beats, events, orders_beat, orders_ticket, tickets, bookings
-8. Click "beats" table — confirm 3 seed rows exist and columns include price_basic, price_premium, price_exclusive
+None - migration complete. All 6 tables are live in Supabase with RLS enabled and 3 seed beats visible in Table Editor.
 
 ## Next Phase Readiness
-- Migration file is in the repo and reproducible
-- Once user runs the migration in Supabase, the tables are live
-- Plan 04-03 (Storage buckets + RLS policies) can proceed after tables are confirmed live
-- Plan 04-04 (query layer) targets the beats and events tables defined here
+- All 6 tables are live in the Supabase project with correct schema, enums, indexes, and seed data
+- RLS is enabled on all tables — 04-03 can now layer in the actual RLS policies
+- Plan 04-03 (Storage buckets + RLS policies) can proceed immediately
+- Plan 04-04 (query layer) targets the beats and events tables confirmed live here
 
 ---
 *Phase: 04-supabase-foundation*
 *Completed: 2026-05-22*
+
+## Self-Check: PASSED
+- supabase/migrations/20260521000001_initial_schema.sql — confirmed exists (committed at 6230196)
+- Task 1 commit 6230196 — confirmed in git log
+- Migration confirmed live by user: all 6 tables visible, 3 seed beats present, RLS enabled
