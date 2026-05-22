@@ -11,9 +11,10 @@ export function FormulaCard({ formula, active, onClick }: Props) {
   return (
     <button
       type="button"
+      role="radio"
+      aria-checked={active}
       className={`${styles.formulaCard} ${active ? styles.active : ""}`}
       onClick={onClick}
-      aria-pressed={active}
     >
       <span className={styles.fTag}>
         <span className={styles.fMark} aria-hidden />

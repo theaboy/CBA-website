@@ -16,7 +16,7 @@ export function FormulaGrid({ service, formulaId, onSelect }: Props) {
         <span className={styles.cardEyebrow} id="formula-heading">01 · Formule</span>
         <span className={styles.cardStep}>Service</span>
       </div>
-      <div className={styles.formulaGrid}>
+      <div className={styles.formulaGrid} role="radiogroup" aria-labelledby="formula-heading">
         {formulas.map((f) => (
           <FormulaCard
             key={f.id}
