@@ -318,3 +318,168 @@
   text-transform: uppercase;
   color: var(--cream-dim);
 }
+
+/* ─── Calendar ─────────────────────────────────────────────────── */
+.calHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 18px;
+}
+
+.calMonth {
+  font-family: var(--font-display);
+  font-size: 28px;
+  color: var(--cream);
+}
+
+.calMonth em {
+  font-style: italic;
+  color: var(--gold-deep);
+  margin-left: 8px;
+}
+
+.calNav {
+  display: inline-flex;
+  gap: 8px;
+}
+
+.calNav button {
+  width: 40px;
+  height: 40px;
+  border-radius: 999px;
+  border: 1px solid var(--border);
+  background: transparent;
+  color: var(--cream-mute);
+  cursor: pointer;
+  display: grid;
+  place-items: center;
+  transition: all 240ms;
+}
+
+.calNav button:hover {
+  border-color: var(--gold-soft);
+  color: var(--gold-glow);
+}
+
+.calWeekRow {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 6px;
+  margin-bottom: 8px;
+}
+
+.calWeekRow span {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--cream-dim);
+  text-align: center;
+}
+
+.calGrid {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 6px;
+}
+
+.calCell {
+  aspect-ratio: 1 / 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  border: 1px solid var(--border-dim);
+  border-radius: 4px;
+  background: transparent;
+  color: var(--cream);
+  font: inherit;
+  cursor: pointer;
+  transition: all 220ms cubic-bezier(0.2, 0.7, 0.2, 1);
+}
+
+.calCell .calDay {
+  font-family: var(--font-display);
+  font-size: 22px;
+}
+
+.calCell .calMeta {
+  font-family: var(--font-mono);
+  font-size: 8.5px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--cream-dim);
+}
+
+.calCell.empty { border-color: transparent; cursor: default; }
+
+.calCell.past { opacity: 0.32; cursor: not-allowed; }
+
+.calCell.avail:hover {
+  transform: translateY(-1px);
+  border-color: var(--gold-soft);
+}
+
+.calCell.full {
+  border-style: dashed;
+  border-color: var(--border-dim);
+  cursor: not-allowed;
+  color: oklch(55% 0.08 30);
+}
+
+.calCell.full .calDay { text-decoration: line-through; }
+
+.calCell.today {
+  border-color: oklch(45% 0.08 110);
+  position: relative;
+}
+
+.calCell.today::after {
+  content: "";
+  position: absolute;
+  bottom: 6px;
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background: var(--gold-glow);
+}
+
+.calCell.selected {
+  background: linear-gradient(180deg, oklch(30% 0.12 60 / 0.65), oklch(18% 0.07 80 / 0.65));
+  border-color: oklch(76% 0.15 65 / 0.45);
+  box-shadow:
+    0 0 32px oklch(72% 0.17 65 / 0.34),
+    inset 0 0 0 1px oklch(76% 0.15 65 / 0.45);
+}
+
+@media (max-width: 640px) {
+  .calCell .calMeta { display: none; }
+  .calCell .calDay { font-size: 16px; }
+}
+
+/* ─── Calendar legend ──────────────────────────────────────────── */
+.calLegend {
+  display: flex;
+  gap: 18px;
+  margin-top: 14px;
+  font-family: var(--font-mono);
+  font-size: 9.5px;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--cream-dim);
+}
+
+.calLegend span {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.calLegend i {
+  display: inline-block;
+  width: 10px;
+  height: 10px;
+  border-radius: 2px;
+}

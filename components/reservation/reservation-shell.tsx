@@ -5,6 +5,7 @@ import { initialState, reducer } from "@/lib/reservation";
 import { ReservationHero } from "./reservation-hero";
 import { ServiceSwitch } from "./service-switch";
 import { FormulaGrid } from "./formula-grid";
+import { CalendarCard } from "./calendar-card";
 import styles from "./reservation.module.css";
 
 export function ReservationShell() {
@@ -25,7 +26,14 @@ export function ReservationShell() {
               formulaId={state.formulaId}
               onSelect={(id) => dispatch({ type: "SET_FORMULA", id })}
             />
-            {/* Calendar + slots in next tasks */}
+            <CalendarCard
+              viewYear={state.viewYear}
+              viewMonth={state.viewMonth}
+              selectedDate={state.selectedDate}
+              onNavMonth={(delta) => dispatch({ type: "NAV_MONTH", delta })}
+              onSelectDate={(date) => dispatch({ type: "SET_DATE", date })}
+            />
+            {/* Slot picker next task */}
           </div>
           {/* Summary in later task */}
         </div>
