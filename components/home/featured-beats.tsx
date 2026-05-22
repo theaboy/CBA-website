@@ -1,13 +1,5 @@
-"use client";
-
 import Link from "next/link";
-import { getFeaturedBeats } from "@/lib/beats";
-
-const artGradients = [
-  "linear-gradient(135deg, #0d3a1e 0%, #1e6539 40%, #0a4b2a 70%, #051a0f 100%)",
-  "linear-gradient(140deg, #1a0d2e 0%, #2d1a4a 40%, #1e0f38 70%, #0a0612 100%)",
-  "linear-gradient(130deg, #1a1200 0%, #3d2c00 40%, #2a1e00 70%, #0d0900 100%)",
-];
+import type { Beat } from "@/lib/beats";
 
 function PlayIcon() {
   return (
@@ -35,9 +27,14 @@ function ArrowIcon() {
   );
 }
 
-export function FeaturedBeats() {
-  const featured = getFeaturedBeats();
-  const displayBeats = featured.slice(0, 3);
+const artGradients = [
+  "linear-gradient(135deg, #0d3a1e 0%, #1e6539 40%, #0a4b2a 70%, #051a0f 100%)",
+  "linear-gradient(140deg, #1a0d2e 0%, #2d1a4a 40%, #1e0f38 70%, #0a0612 100%)",
+  "linear-gradient(130deg, #1a1200 0%, #3d2c00 40%, #2a1e00 70%, #0d0900 100%)",
+];
+
+export function FeaturedBeats({ beats }: { beats: Beat[] }) {
+  const displayBeats = beats.slice(0, 3);
 
   return (
     <section className="home-beats-section reveal">
@@ -83,7 +80,7 @@ export function FeaturedBeats() {
 
             {/* Footer */}
             <div className="home-beat-footer">
-              <span className="home-beat-price">${beat.price}</span>
+              <span className="home-beat-price">${beat.price_basic}</span>
               <Link href={`/beats/${beat.slug}`} className="home-beat-action">
                 View Beat <ArrowIcon />
               </Link>

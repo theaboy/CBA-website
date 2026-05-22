@@ -1,9 +1,7 @@
-"use client";
-
 import Image from "next/image";
 import Link from "next/link";
 import { ArrowRight, Play } from "lucide-react";
-import { beatsCatalog, getFeaturedBeats } from "@/lib/beats";
+import { type Beat } from "@/lib/beats";
 import styles from "./beats-bento.module.css";
 
 const CARD_VARIANTS = [
@@ -24,16 +22,8 @@ const CARD_REVEAL_DELAYS = [
   styles.delay5,
 ];
 
-function getHomepageBeats() {
-  const featured = getFeaturedBeats();
-  const remaining = beatsCatalog.filter(
-    (beat) => !featured.some((item) => item.id === beat.id),
-  );
-  return [...featured, ...remaining].slice(0, 6);
-}
-
-export function BeatsBento() {
-  const beats = getHomepageBeats();
+export function BeatsBento({ beats }: { beats: Beat[] }) {
+  const displayBeats = beats.slice(0, 6);
 
   return (
     <section className={styles.section} aria-labelledby="beats-home-heading">
@@ -55,7 +45,7 @@ export function BeatsBento() {
         </header>
 
         <div className={styles.grid} role="list">
-          {beats.map((beat, index) => (
+          {displayBeats.map((beat, index) => (
             <article
               key={beat.id}
               className={`${styles.card} ${CARD_VARIANTS[index] ?? styles.cardStandard} ${
@@ -64,7 +54,7 @@ export function BeatsBento() {
               role="listitem"
             >
               <Image
-                src={beat.artworkSrc}
+                src={beat.artwork_url}
                 alt={`Artwork du beat ${beat.title}`}
                 fill
                 sizes="(max-width: 640px) 78vw, (max-width: 1100px) 46vw, 30vw"
@@ -82,7 +72,7 @@ export function BeatsBento() {
                 <p>{beat.tagline}</p>
 
                 <div className={styles.cardActions}>
-                  <span className={styles.price}>${beat.price}</span>
+                  <span className={styles.price}>${beat.price_basic}</span>
                   <div className={styles.actionRow}>
                     <Link href={`/beats/${beat.slug}`} className={styles.listenAction}>
                       <Play size={13} /> Écouter
