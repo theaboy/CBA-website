@@ -74,10 +74,10 @@ export function BeatsBento({ beats }: { beats: Beat[] }) {
                 <div className={styles.cardActions}>
                   <span className={styles.price}>${beat.price_basic}</span>
                   <div className={styles.actionRow}>
-                    <Link href="/beats" className={styles.listenAction}>
+                    <Link href={`/beats?beat=${beat.slug}`} className={styles.listenAction}>
                       <Play size={13} /> Écouter
                     </Link>
-                    <Link href="/beats" className={styles.detailsAction}>
+                    <Link href={`/beats?beat=${beat.slug}`} className={styles.detailsAction}>
                       Détails
                     </Link>
                   </div>

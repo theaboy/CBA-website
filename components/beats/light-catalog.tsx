@@ -35,8 +35,11 @@ function makePeaks(seed: number, count = 80): number[] {
   return out;
 }
 
-export function LightCatalog({ beats }: { beats: Beat[] }) {
-  const [active, setActive] = useState(0);
+export function LightCatalog({ beats, featuredSlug }: { beats: Beat[]; featuredSlug?: string }) {
+  const initialIndex = featuredSlug
+    ? Math.max(0, beats.findIndex((b) => b.slug === featuredSlug))
+    : 0;
+  const [active, setActive] = useState(initialIndex);
   const [spinning, setSpinning] = useState(true);
   const beat = beats[active];
 

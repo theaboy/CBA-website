@@ -12,6 +12,7 @@ type SearchParams = {
   price_min?: string;
   price_max?: string;
   sort?: string;
+  beat?: string;
 };
 
 export default async function BeatsPage({
@@ -30,5 +31,5 @@ export default async function BeatsPage({
     sort: params.sort as BeatSort | undefined,
   });
 
-  return <LightCatalog beats={beats} />;
+  return <LightCatalog beats={beats} featuredSlug={params.beat} />;
 }
