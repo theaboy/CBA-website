@@ -56,7 +56,7 @@
 
 ### Backend API
 
-- [ ] **BE-01**: Supabase project configured with all tables (beats, events, orders, tickets, bookings), RLS policies, and Storage buckets for audio and artwork.
+- [x] **BE-01**: Supabase project configured with all tables (beats, events, orders, tickets, bookings), RLS policies, and Storage buckets for audio and artwork.
 - [ ] **BE-02**: Admin authenticated via Supabase Auth; all protected dashboard routes redirect unauthenticated requests to login.
 - [ ] **BE-03**: Beat catalog queryable from Next.js with server-side filtering by genre, mood, BPM range, price range, and sort; beat detail returns preview URL.
 - [ ] **BE-04**: Beat audio files stored in Supabase Storage; preview audio served from public bucket; full-quality audio delivered via time-limited signed URLs only.
@@ -134,7 +134,7 @@
 | ACCT-01 | Milestone 2 | Deferred |
 | ACCT-02 | Milestone 2 | Deferred |
 | ACCT-03 | Milestone 2 | Deferred |
-| BE-01 | Phase 4 | Pending |
+| BE-01 | Phase 4 | Complete |
 | BE-02 | Phase 4 | Pending |
 | BE-03 | Phase 4 | Pending |
 | BE-04 | Phase 4 | Pending |
