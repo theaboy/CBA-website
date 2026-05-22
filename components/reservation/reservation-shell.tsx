@@ -1,22 +1,55 @@
 "use client";
 
 import { useReducer, useState } from "react";
-import { initialState, reducer } from "@/lib/reservation";
+import {
+  initialState,
+  reducer,
+  submitReservation,
+  type ReservationPayload,
+} from "@/lib/reservation";
 import { ReservationHero } from "./reservation-hero";
 import { ServiceSwitch } from "./service-switch";
 import { FormulaGrid } from "./formula-grid";
 import { CalendarCard } from "./calendar-card";
 import { SlotPicker } from "./slot-picker";
 import { SummaryCard } from "./summary-card";
+import { ConfirmationModal } from "./confirmation-modal";
 import styles from "./reservation.module.css";
+
+function isoDate(d: Date): string {
+  const y = d.getFullYear();
+  const m = String(d.getMonth() + 1).padStart(2, "0");
+  const day = String(d.getDate()).padStart(2, "0");
+  return `${y}-${m}-${day}`;
+}
 
 export function ReservationShell() {
   const [state, dispatch] = useReducer(reducer, initialState);
-  const [pending, _setPending] = useState(false);  // wired in next task
+  const [pending, setPending] = useState(false);
+  const [reservationRef, setReservationRef] = useState<string | null>(null);
+  const [modalOpen, setModalOpen] = useState(false);
 
-  // Stubs — submit handler implemented in Task 10.
-  function handleSubmit() { /* Task 10 */ }
-  function handleReset()  { dispatch({ type: "RESET_ALL" }); }
+  async function handleSubmit() {
+    if (!state.formulaId || !state.selectedDate || !state.selectedSlot) return;
+    const payload: ReservationPayload = {
+      service: state.service,
+      formulaId: state.formulaId,
+      durationIdx: state.durationIdx,
+      date: isoDate(state.selectedDate),
+      time: state.selectedSlot,
+      contact: state.contact,
+    };
+    setPending(true);
+    try {
+      const { ref } = await submitReservation(payload);
+      setReservationRef(ref);
+      setModalOpen(true);
+    } finally {
+      setPending(false);
+    }
+  }
+
+  function handleReset() { dispatch({ type: "RESET_ALL" }); }
 
   return (
     <div className={styles.page} data-service={state.service}>
@@ -61,6 +94,12 @@ export function ReservationShell() {
           />
         </div>
       </div>
+
+      <ConfirmationModal
+        open={modalOpen}
+        reservationRef={reservationRef}
+        onClose={() => setModalOpen(false)}
+      />
     </div>
   );
 }
