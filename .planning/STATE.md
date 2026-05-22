@@ -3,15 +3,15 @@ gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
 status: planning
-stopped_at: Completed 04-supabase-foundation-04-03-PLAN.md — awaiting Supabase dashboard Task 2 (RLS + bucket SQL run)
-last_updated: "2026-05-22T04:02:38.373Z"
+stopped_at: Completed 04-supabase-foundation 04-03-PLAN.md — Plan 04-03 done, ready for 04-04
+last_updated: "2026-05-22T04:34:08.994Z"
 last_activity: "2026-05-21 — Architecture pivot: switched from custom Express/Node.js API to Supabase. Express implementation archived at /Users/bird/CBA-api-archived-express. Roadmap restructured from 8 phases to 7 (Admin Backend API + Admin Dashboard Frontend collapsed into single Phase 6 since Supabase eliminates the separate API server layer)."
 progress:
   total_phases: 7
   completed_phases: 3
-  total_plans: 16
-  completed_plans: 15
-  percent: 43
+  total_plans: 28
+  completed_plans: 16
+  percent: 92
 ---
 
 # Project State
@@ -26,11 +26,11 @@ See: .planning/PROJECT.md (updated 2026-02-28)
 ## Current Position
 
 Phase: 4 of 7 (Supabase Foundation)
-Plan: 1 of 4 in current phase
-Status: Not started (replanning after architecture pivot)
-Last activity: 2026-05-21 — Architecture pivot: switched from custom Express/Node.js API to Supabase. Express implementation archived at /Users/bird/CBA-api-archived-express. Roadmap restructured from 8 phases to 7 (Admin Backend API + Admin Dashboard Frontend collapsed into single Phase 6 since Supabase eliminates the separate API server layer).
+Plan: 3 of 4 complete — ready for 04-04 (Wire frontend)
+Status: In progress
+Last activity: 2026-05-22 — Plan 04-03 complete. RLS live on all 6 tables, 3 storage buckets created (preview-audio public, full-audio private, artwork public), storage URL helpers tested and committed.
 
-Progress: [████░░░░░░] 43%
+Progress: [█████████░] 92%
 
 ## Performance Metrics
 
@@ -83,7 +83,7 @@ Recent decisions affecting current work:
 - [Phase 04-supabase-foundation]: Three price columns (price_basic, price_premium, price_exclusive) model licensing tiers directly in DB
 - [Phase 04-supabase-foundation]: RLS enabled via Supabase warning dialog before running migration — all 6 tables have RLS active from creation (no gap period)
 - [Phase 04-supabase-foundation]: getPublicUrl() for preview-audio and artwork (public CDN, no token); createSignedUrl() for full-audio (time-limited, server-side only, post-purchase)
-- [Phase 04-supabase-foundation]: Storage helpers use server.ts createClient() (anon key) not service.ts — public reads don't need elevated permissions and RLS is enforced
+- [Phase 04-supabase-foundation]: Storage helpers use server.ts createClient() (anon key), not service.ts — public reads don't need elevated permissions and RLS is enforced
 
 ### Pending Todos
 
@@ -99,6 +99,6 @@ Recent decisions affecting current work:
 
 ## Session Continuity
 
-Last session: 2026-05-22T04:02:38.364Z
-Stopped at: Completed 04-supabase-foundation-04-03-PLAN.md — awaiting Supabase dashboard Task 2 (RLS + bucket SQL run)
+Last session: 2026-05-22T04:34:08.984Z
+Stopped at: Completed 04-supabase-foundation 04-03-PLAN.md — Plan 04-03 done, ready for 04-04
 Resume file: None

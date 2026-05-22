@@ -59,7 +59,7 @@
 - [x] **BE-01**: Supabase project configured with all tables (beats, events, orders, tickets, bookings), RLS policies, and Storage buckets for audio and artwork.
 - [ ] **BE-02**: Admin authenticated via Supabase Auth; all protected dashboard routes redirect unauthenticated requests to login.
 - [ ] **BE-03**: Beat catalog queryable from Next.js with server-side filtering by genre, mood, BPM range, price range, and sort; beat detail returns preview URL.
-- [ ] **BE-04**: Beat audio files stored in Supabase Storage; preview audio served from public bucket; full-quality audio delivered via time-limited signed URLs only.
+- [x] **BE-04**: Beat audio files stored in Supabase Storage; preview audio served from public bucket; full-quality audio delivered via time-limited signed URLs only.
 - [ ] **BE-05**: Visitor can complete a beat purchase via Stripe; license tier validated server-side; exclusive license locks on purchase.
 - [ ] **BE-06**: Visitor can purchase event tickets via Stripe; inventory tracked atomically; overselling prevented.
 - [ ] **BE-07**: Unique non-guessable QR token generated per ticket on successful payment and stored in database.
@@ -137,7 +137,7 @@
 | BE-01 | Phase 4 | Complete |
 | BE-02 | Phase 4 | Pending |
 | BE-03 | Phase 4 | Pending |
-| BE-04 | Phase 4 | Pending |
+| BE-04 | Phase 4 | Complete |
 | BE-05 | Phase 5 | Pending |
 | BE-06 | Phase 5 | Pending |
 | BE-07 | Phase 5 | Pending |
