@@ -81,7 +81,7 @@ export function FeaturedBeats({ beats }: { beats: Beat[] }) {
             {/* Footer */}
             <div className="home-beat-footer">
               <span className="home-beat-price">${beat.price_basic}</span>
-              <Link href={`/beats/${beat.slug}`} className="home-beat-action">
+              <Link href="/beats" className="home-beat-action">
                 View Beat <ArrowIcon />
               </Link>
             </div>

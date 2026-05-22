@@ -158,7 +158,7 @@ export function EditorialCatalog({ beats }: { beats: Beat[] }) {
                       </span>
                       <div className="flex gap-4">
                         <Link
-                          href={`/beats/${beat.slug}`}
+                          href="/beats"
                           onClick={(e) => e.stopPropagation()}
                           className="inline-flex items-center gap-2 rounded-sm px-6 py-2 text-xs font-bold uppercase tracking-[0.22em] transition-all hover:brightness-110"
                           style={{ backgroundColor: GOLD, color: BG }}
@@ -174,7 +174,7 @@ export function EditorialCatalog({ beats }: { beats: Beat[] }) {
                           Écouter
                         </Link>
                         <Link
-                          href={`/beats/${beat.slug}`}
+                          href="/beats"
                           onClick={(e) => e.stopPropagation()}
                           className="inline-flex items-center rounded-sm border px-6 py-2 text-xs font-bold uppercase tracking-[0.22em] transition-all"
                           style={{ borderColor: GOLD, color: GOLD }}
