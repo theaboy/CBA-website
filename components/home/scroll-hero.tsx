@@ -197,7 +197,7 @@ export function ScrollHero() {
           <div
             ref={logoRef}
             role="img"
-            aria-label="CBA — Create · Build · Achieve"
+            aria-label="CBA"
             className={styles.logo}
             style={{ willChange: "transform, filter" }}
           />
