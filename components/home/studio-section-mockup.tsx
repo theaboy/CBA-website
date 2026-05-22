@@ -1,4 +1,5 @@
 import Image from "next/image";
+import Link from "next/link";
 import styles from "./studio-section-mockup.module.css";
 
 const services = [
@@ -86,7 +87,7 @@ export function StudioSectionMockup() {
 
       {/* ── CTA ──────────────────────────────────────────────────── */}
       <div className={styles.nav}>
-        <button className={styles.navBtn}>Réserver</button>
+        <Link href="/reservation" className={styles.navBtn}>Réserver</Link>
       </div>
 
     </section>

@@ -15,9 +15,8 @@ export const siteConfig = {
   nav: [
     { href: "/",            label: "Accueil",             icon: "⌂", shortLabel: "Accueil" },
     { href: "/beats",       label: "Nos Beats",           icon: "◈", shortLabel: "Beats"   },
-    { href: "/dj-services", label: "Réserver un DJ",      icon: "↝", shortLabel: "DJ"      },
+    { href: "/reservation", label: "Réserver",            icon: "⬡", shortLabel: "Réserver"},
     { href: "/events",      label: "Nos Événements",      icon: "◷", shortLabel: "Agenda"  },
-    { href: "/studio",      label: "Réserver le Studio",  icon: "⬡", shortLabel: "Studio"  },
     { href: "/radio",       label: "Écouter la Radio",    icon: "◉", shortLabel: "Radio"   },
   ] satisfies NavLink[],
   secondaryNav: [
@@ -49,16 +48,6 @@ export const pageSummaries: Record<string, { eyebrow: string; title: string; bod
     eyebrow: "Événements Live",
     title: "Découverte d'événements et architecture de promotion de billets.",
     body: "Cette page pose le cadre de présentation des événements pour que les futures annonces gérées par l'admin soient cohérentes dès le premier jour."
-  },
-  "/studio": {
-    eyebrow: "Sessions Studio",
-    title: "Réservez du temps studio dans un espace conçu pour la précision, le son et l'élan créatif.",
-    body: "Choisissez un forfait, vérifiez les disponibilités et envoyez une demande de session que CBA confirmera manuellement."
-  },
-  "/dj-services": {
-    eyebrow: "Services DJ",
-    title: "Événements privés, son curatif et présence orientée production.",
-    body: "Le flux de demandes se connectera à cette base après l'établissement du premier shell public."
   },
   "/about": {
     eyebrow: "À propos de CBA",
