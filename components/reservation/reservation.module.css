@@ -604,3 +604,218 @@
   border-color: var(--gold-soft);
   color: var(--gold-glow);
 }
+
+/* ─── Summary card (right column, sticky) ──────────────────────── */
+.summary {
+  position: sticky;
+  top: 32px;
+}
+
+@media (max-width: 1080px) {
+  .summary { position: static; }
+}
+
+.summaryEyebrow {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 14px;
+}
+
+.summaryTitle {
+  font-family: var(--font-display);
+  font-size: 36px;
+  margin: 0;
+  color: var(--cream);
+}
+
+.summarySub {
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-size: 16px;
+  color: var(--cream-mute);
+  margin: 6px 0 22px;
+}
+
+.summaryRows { display: grid; gap: 12px; margin-bottom: 24px; }
+
+.summaryRow {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 16px;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+}
+
+.summaryRow span { color: var(--cream-dim); }
+.summaryRow strong { font-weight: normal; color: var(--cream); }
+.summaryRow .empty {
+  font-family: var(--font-serif);
+  font-style: italic;
+  text-transform: none;
+  letter-spacing: 0;
+  color: var(--cream-dim);
+}
+
+/* ─── Contact form ─────────────────────────────────────────────── */
+.formGrid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px;
+  margin-bottom: 22px;
+}
+
+.formGridFull { grid-column: 1 / -1; }
+
+@media (max-width: 640px) {
+  .formGrid { grid-template-columns: 1fr; }
+}
+
+.formField {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.formField label {
+  font-family: var(--font-mono);
+  font-size: 9.5px;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--cream-dim);
+}
+
+.formField input,
+.formField textarea {
+  background: oklch(13% 0.035 150 / 0.7);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 12px 14px;
+  color: var(--cream);
+  font-family: var(--font-sans);
+  font-size: 14px;
+  transition: border-color 200ms, box-shadow 200ms;
+}
+
+.formField textarea {
+  resize: vertical;
+  min-height: 100px;
+  font-family: var(--font-serif);
+  font-style: italic;
+}
+
+.formField input:focus,
+.formField textarea:focus {
+  outline: none;
+  border-color: var(--gold-soft);
+  box-shadow: 0 0 0 3px oklch(60% 0.15 65 / 0.12);
+}
+
+/* ─── Totals + CTA ─────────────────────────────────────────────── */
+.totalsBox {
+  background: oklch(11% 0.03 148 / 0.7);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 22px;
+  margin-bottom: 18px;
+}
+
+.totalsRow {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 8px;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--cream-mute);
+}
+
+.totalsGrand {
+  border-top: 1px dashed var(--border-dim);
+  margin-top: 14px;
+  padding-top: 14px;
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+}
+
+.totalsGrand span:first-child {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--gold);
+}
+
+.totalsGrand .totalsAmount {
+  font-family: var(--font-display);
+  font-size: 38px;
+  color: var(--gold-glow);
+}
+
+.totalsGrand .totalsCcy {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 0.18em;
+  margin-left: 6px;
+  vertical-align: super;
+  color: var(--cream-dim);
+}
+
+.ctaPrimary {
+  width: 100%;
+  padding: 18px 22px;
+  border: 0;
+  border-radius: 4px;
+  background: linear-gradient(180deg, oklch(80% 0.17 68), oklch(64% 0.16 55));
+  color: #1a0e02;
+  font-family: var(--font-mono);
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+  cursor: pointer;
+  box-shadow: 0 0 28px oklch(72% 0.17 65 / 0.32);
+  transition: all 240ms;
+}
+
+.ctaPrimary:hover { box-shadow: 0 0 36px oklch(72% 0.17 65 / 0.52); }
+
+.ctaPrimary:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+  box-shadow: none;
+}
+
+.ctaSecondary {
+  width: 100%;
+  padding: 14px 22px;
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  background: transparent;
+  color: var(--cream-mute);
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  cursor: pointer;
+  margin-top: 12px;
+  transition: all 240ms;
+}
+
+.ctaSecondary:hover { border-color: var(--gold-soft); color: var(--cream); }
+
+.fineprint {
+  margin-top: 18px;
+  text-align: center;
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-size: 13px;
+  color: var(--cream-dim);
+}
