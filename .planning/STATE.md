@@ -2,14 +2,14 @@
 gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
-status: planning
-stopped_at: Completed 04-supabase-foundation 04-03-PLAN.md — Plan 04-03 done, ready for 04-04
-last_updated: "2026-05-22T04:34:08.994Z"
-last_activity: "2026-05-21 — Architecture pivot: switched from custom Express/Node.js API to Supabase. Express implementation archived at /Users/bird/CBA-api-archived-express. Roadmap restructured from 8 phases to 7 (Admin Backend API + Admin Dashboard Frontend collapsed into single Phase 6 since Supabase eliminates the separate API server layer)."
+status: executing
+stopped_at: Completed 04-supabase-foundation 04-04-PLAN.md — waiting for Task 4 human visual verification
+last_updated: "2026-05-22T04:46:51.775Z"
+last_activity: 2026-05-22 — Plan 04-03 complete. RLS live on all 6 tables, 3 storage buckets created (preview-audio public, full-audio private, artwork public), storage URL helpers tested and committed.
 progress:
   total_phases: 7
-  completed_phases: 3
-  total_plans: 28
+  completed_phases: 4
+  total_plans: 16
   completed_plans: 16
   percent: 92
 ---
@@ -57,6 +57,7 @@ Progress: [█████████░] 92%
 | Phase 04-supabase-foundation P02 | 4 | 1 tasks | 1 files |
 | Phase 04-supabase-foundation P02 | 4min | 2 tasks | 1 files |
 | Phase 04-supabase-foundation P03 | 6min | 3 tasks | 3 files |
+| Phase 04-supabase-foundation P04 | 8min | 3 tasks | 16 files |
 
 ## Accumulated Context
 
@@ -84,6 +85,8 @@ Recent decisions affecting current work:
 - [Phase 04-supabase-foundation]: RLS enabled via Supabase warning dialog before running migration — all 6 tables have RLS active from creation (no gap period)
 - [Phase 04-supabase-foundation]: getPublicUrl() for preview-audio and artwork (public CDN, no token); createSignedUrl() for full-audio (time-limited, server-side only, post-purchase)
 - [Phase 04-supabase-foundation]: Storage helpers use server.ts createClient() (anon key), not service.ts — public reads don't need elevated permissions and RLS is enforced
+- [Phase 04-supabase-foundation]: PUBLIC_BEAT_COLUMNS constant enforces full_key exclusion structurally at query level, not relying on RLS alone
+- [Phase 04-supabase-foundation]: getFeaturedBeats returns latest 6 published beats without featured=true filter — with 3 seed beats, the boolean filter would be too restrictive
 
 ### Pending Todos
 
@@ -99,6 +102,6 @@ Recent decisions affecting current work:
 
 ## Session Continuity
 
-Last session: 2026-05-22T04:34:08.984Z
-Stopped at: Completed 04-supabase-foundation 04-03-PLAN.md — Plan 04-03 done, ready for 04-04
+Last session: 2026-05-22T04:46:51.768Z
+Stopped at: Completed 04-supabase-foundation 04-04-PLAN.md — waiting for Task 4 human visual verification
 Resume file: None
