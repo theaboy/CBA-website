@@ -6,6 +6,7 @@ import { ReservationHero } from "./reservation-hero";
 import { ServiceSwitch } from "./service-switch";
 import { FormulaGrid } from "./formula-grid";
 import { CalendarCard } from "./calendar-card";
+import { SlotPicker } from "./slot-picker";
 import styles from "./reservation.module.css";
 
 export function ReservationShell() {
@@ -33,7 +34,15 @@ export function ReservationShell() {
               onNavMonth={(delta) => dispatch({ type: "NAV_MONTH", delta })}
               onSelectDate={(date) => dispatch({ type: "SET_DATE", date })}
             />
-            {/* Slot picker next task */}
+            <SlotPicker
+              service={state.service}
+              formulaId={state.formulaId}
+              durationIdx={state.durationIdx}
+              selectedDate={state.selectedDate}
+              selectedSlot={state.selectedSlot}
+              onSelectSlot={(time) => dispatch({ type: "SET_SLOT", time })}
+              onSelectDuration={(idx) => dispatch({ type: "SET_DURATION", idx })}
+            />
           </div>
           {/* Summary in later task */}
         </div>

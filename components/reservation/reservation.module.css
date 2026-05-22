@@ -483,3 +483,124 @@
   height: 10px;
   border-radius: 2px;
 }
+
+/* ─── Slot picker ──────────────────────────────────────────────── */
+.slotEmpty {
+  padding: 32px;
+  border: 1px dashed var(--border-dim);
+  border-radius: 4px;
+  text-align: center;
+  font-family: var(--font-serif);
+  font-style: italic;
+  color: var(--cream-dim);
+}
+
+.slotMeta {
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+  margin-bottom: 12px;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+}
+
+.slotMeta strong { color: var(--gold); font-weight: normal; }
+.slotMeta span  { color: var(--cream-dim); }
+
+.slotGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+  gap: 10px;
+}
+
+.slot {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  padding: 14px 10px;
+  border: 1px solid var(--border-dim);
+  border-radius: 4px;
+  background: transparent;
+  color: inherit;
+  cursor: pointer;
+  font: inherit;
+  transition: all 240ms cubic-bezier(0.2, 0.7, 0.2, 1);
+}
+
+.slot:hover {
+  transform: translateY(-1px);
+  border-color: var(--gold-soft);
+}
+
+.slot.taken { opacity: 0.35; cursor: not-allowed; }
+.slot.taken .slotTime { text-decoration: line-through; }
+
+.slot.selected {
+  background: linear-gradient(180deg, oklch(30% 0.12 60 / 0.65), oklch(18% 0.07 80 / 0.65));
+  border-color: oklch(76% 0.15 65 / 0.45);
+  box-shadow: 0 0 24px oklch(72% 0.17 65 / 0.28);
+}
+
+.slotTime {
+  font-family: var(--font-mono);
+  font-size: 13px;
+  letter-spacing: 0.12em;
+  color: var(--cream);
+}
+
+.slotPeriod {
+  font-family: var(--font-mono);
+  font-size: 9px;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--cream-dim);
+}
+
+/* ─── Duration row ─────────────────────────────────────────────── */
+.durationRow {
+  margin-top: 18px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.durationLabel {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+  color: var(--cream-dim);
+}
+
+.durationPills {
+  display: inline-flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.durationPill {
+  padding: 8px 14px;
+  border-radius: 999px;
+  border: 1px solid var(--border-dim);
+  background: transparent;
+  color: var(--cream-mute);
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: all 240ms;
+}
+
+.durationPill:hover { border-color: var(--gold-soft); color: var(--cream); }
+
+.durationPill.active {
+  background: linear-gradient(180deg, oklch(30% 0.12 60 / 0.5), oklch(18% 0.07 80 / 0.5));
+  border-color: var(--gold-soft);
+  color: var(--gold-glow);
+}
