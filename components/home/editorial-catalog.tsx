@@ -47,7 +47,7 @@ export function EditorialCatalog({ beats }: { beats: Beat[] }) {
           </div>
 
           <Link
-            href={`/beats?beat=${beat.slug}`}
+            href="/beats"
             className="border px-8 py-3 text-xs font-semibold uppercase tracking-[0.22em] transition-all duration-300"
             style={{ borderColor: GOLD, color: GOLD }}
             onMouseEnter={(e) => {
