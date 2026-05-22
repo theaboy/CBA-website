@@ -166,3 +166,155 @@
   background: var(--gold-glow);
   box-shadow: 0 0 8px var(--gold-glow);
 }
+
+/* ─── Booking grid ─────────────────────────────────────────────── */
+.bookingGrid {
+  display: grid;
+  grid-template-columns: 1fr 420px;
+  gap: 28px;
+  align-items: start;
+}
+
+.leftCol { display: flex; flex-direction: column; gap: 28px; }
+
+@media (max-width: 1080px) {
+  .bookingGrid { grid-template-columns: 1fr; }
+}
+
+/* ─── Card primitive ───────────────────────────────────────────── */
+.card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: clamp(22px, 2.5vw, 32px);
+}
+
+.cardHead {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 18px;
+}
+
+.cardEyebrow {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+  color: var(--gold);
+}
+
+.cardStep {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+  color: var(--cream-dim);
+}
+
+/* ─── Formula grid ─────────────────────────────────────────────── */
+.formulaGrid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 14px;
+}
+
+@media (max-width: 1080px) {
+  .formulaGrid { grid-template-columns: 1fr; }
+}
+
+.formulaCard {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding: 22px;
+  border-radius: 4px;
+  border: 1px solid oklch(30% 0.05 130 / 0.6);
+  background: transparent;
+  text-align: left;
+  cursor: pointer;
+  transition: all 240ms cubic-bezier(0.2, 0.7, 0.2, 1);
+  font: inherit;
+  color: inherit;
+}
+
+.formulaCard:hover {
+  transform: translateY(-1px);
+  border-color: var(--border-hi);
+  background: radial-gradient(ellipse 80% 200% at 0% 50%, oklch(60% 0.15 65 / 0.08), transparent 60%);
+}
+
+.formulaCard.active {
+  border-color: var(--gold-soft);
+  background: linear-gradient(180deg, oklch(30% 0.12 60 / 0.18), oklch(18% 0.07 80 / 0.18));
+  box-shadow: 0 0 24px oklch(72% 0.17 65 / 0.18);
+}
+
+.fTag {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-family: var(--font-mono);
+  font-size: 9.5px;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+  color: var(--gold-soft);
+}
+
+.fMark {
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  border: 1px solid var(--gold-soft);
+  position: relative;
+}
+
+.formulaCard.active .fMark::after {
+  content: "";
+  position: absolute;
+  inset: 3px;
+  border-radius: 50%;
+  background: var(--gold-glow);
+  box-shadow: 0 0 6px var(--gold-glow);
+}
+
+.fName {
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: 22px;
+  color: var(--cream);
+}
+
+.fDesc {
+  margin: 0;
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-size: 14px;
+  line-height: 1.5;
+  color: var(--cream-mute);
+}
+
+.fPrice {
+  margin-top: auto;
+  padding-top: 14px;
+  border-top: 1px dashed var(--border-dim);
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+}
+
+.fPriceAmount {
+  font-family: var(--font-display);
+  font-size: 26px;
+  color: var(--gold-glow);
+}
+
+.fPriceUnit {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--cream-dim);
+}
