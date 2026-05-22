@@ -1,6 +1,7 @@
 "use server";
 
-import { getBeatBySlug, getBeatLicenseOptions } from "@/lib/beats";
+import { getBeatBySlug } from "@/lib/beats/queries";
+import { getBeatLicenseOptions } from "@/lib/beats/catalog";
 import {
   BeatInquiryActionState,
   dispatchBeatInquiry,
@@ -21,7 +22,7 @@ export async function submitBeatInquiry(
     };
   }
 
-  const beat = getBeatBySlug(validation.draft.beatSlug);
+  const beat = await getBeatBySlug(validation.draft.beatSlug);
 
   if (!beat) {
     return {
