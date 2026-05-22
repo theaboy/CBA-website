@@ -1,36 +1,36 @@
-import { NextRequest, NextResponse } from "next/server";
-import { siteConfig } from "@/lib/site";
+import { createServerClient } from '@supabase/ssr'
+import { NextResponse, type NextRequest } from 'next/server'
 
-export function proxy(request: NextRequest) {
-  const { pathname, searchParams } = request.nextUrl;
+export async function middleware(request: NextRequest) {
+  let supabaseResponse = NextResponse.next({ request })
 
-  if (!pathname.startsWith("/admin")) {
-    return NextResponse.next();
-  }
-
-  if (pathname === "/admin/sign-in") {
-    if (searchParams.get("preview") === "1") {
-      const response = NextResponse.redirect(new URL("/admin", request.url));
-      response.cookies.set(siteConfig.adminPreviewCookie, "granted", {
-        httpOnly: true,
-        sameSite: "lax",
-        path: "/"
-      });
-      return response;
+  const supabase = createServerClient(
+    process.env.NEXT_PUBLIC_SUPABASE_URL!,
+    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
+    {
+      cookies: {
+        getAll() {
+          return request.cookies.getAll()
+        },
+        setAll(cookiesToSet) {
+          cookiesToSet.forEach(({ name, value }) =>
+            request.cookies.set(name, value)
+          )
+          supabaseResponse = NextResponse.next({ request })
+          cookiesToSet.forEach(({ name, value, options }) =>
+            supabaseResponse.cookies.set(name, value, options)
+          )
+        },
+      },
     }
+  )
 
-    return NextResponse.next();
-  }
+  // Refresh session — required for Phase 6 auth to work correctly
+  await supabase.auth.getUser()
 
-  const hasAccess = request.cookies.get(siteConfig.adminPreviewCookie)?.value === "granted";
-
-  if (!hasAccess) {
-    return NextResponse.redirect(new URL("/admin/sign-in", request.url));
-  }
-
-  return NextResponse.next();
+  return supabaseResponse
 }
 
 export const config = {
-  matcher: ["/admin/:path*"]
-};
+  matcher: ['/((?!_next/static|_next/image|favicon.ico).*)'],
+}
