@@ -45,3 +45,4 @@ node_modules.corrupt/
 images /
 public/frames_old_*/
 .env.local
+.worktrees/
