@@ -1,0 +1,154 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Beat {
+  id              String      @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  slug            String      @unique
+  title           String
+  tagline         String
+  description     String
+  bpm             Int
+  musicalKey      String      @map("musical_key")
+  genre           String
+  mood            String
+  priceBasic      Decimal     @map("price_basic") @db.Decimal(10, 2)
+  pricePremium    Decimal     @map("price_premium") @db.Decimal(10, 2)
+  priceExclusive  Decimal     @map("price_exclusive") @db.Decimal(10, 2)
+  previewKey      String      @map("preview_key")
+  fullKey         String      @map("full_key")
+  artworkKey      String      @map("artwork_key")
+  tags            String[]    @default([])
+  bestFor         String[]    @default([]) @map("best_for")
+  mixPalette      String[]    @default([]) @map("mix_palette")
+  featured        Boolean     @default(false)
+  isExclusiveSold Boolean     @default(false) @map("is_exclusive_sold")
+  playCount       Int         @default(0) @map("play_count")
+  published       Boolean     @default(false)
+  createdAt       DateTime    @default(now()) @map("created_at") @db.Timestamptz(6)
+  orders          OrderBeat[]
+
+  @@index([featured])
+  @@index([genre])
+  @@index([mood])
+  @@index([published])
+  @@map("beats")
+}
+
+model AdminUser {
+  id           String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  email        String   @unique
+  passwordHash String   @map("password_hash")
+  createdAt    DateTime @default(now()) @map("created_at") @db.Timestamptz(6)
+
+  @@map("admin_users")
+}
+
+model Event {
+  id           String        @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  name         String        @map("title")
+  slug         String        @unique
+  description  String?
+  date         DateTime      @db.Timestamptz(6)
+  venue        String?
+  location     String
+  posterKey    String?       @map("poster_key")
+  ticketPrice  Decimal       @map("ticket_price") @db.Decimal(10, 2)
+  totalTickets Int           @map("ticket_capacity")
+  ticketsSold  Int           @default(0) @map("tickets_sold")
+  isPublished  Boolean       @default(false) @map("published")
+  createdAt    DateTime      @default(now()) @map("created_at") @db.Timestamptz(6)
+  orders       OrderTicket[]
+
+  @@index([date])
+  @@index([isPublished])
+  @@map("events")
+}
+
+model OrderBeat {
+  id              String      @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  beatId          String      @map("beat_id") @db.Uuid
+  beat            Beat        @relation(fields: [beatId], references: [id])
+  licenseType     LicenseType @map("license_type")
+  amountPaid      Decimal     @map("amount_paid") @db.Decimal(10, 2)
+  customerEmail   String      @map("buyer_email")
+  customerName    String      @map("buyer_name")
+  stripePaymentId String?     @map("stripe_payment_intent_id")
+  downloadKey     String      @unique @default(dbgenerated("gen_random_uuid()")) @map("full_download_token") @db.Uuid
+  downloadExpiry  DateTime?   @map("download_expiry") @db.Timestamptz(6)
+  downloadCount   Int         @default(0) @map("download_count")
+  createdAt       DateTime    @default(now()) @map("created_at") @db.Timestamptz(6)
+
+  @@map("orders_beat")
+}
+
+model OrderTicket {
+  id              String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  eventId         String   @map("event_id") @db.Uuid
+  event           Event    @relation(fields: [eventId], references: [id])
+  customerEmail   String   @map("buyer_email")
+  customerName    String   @map("buyer_name")
+  quantity        Int
+  amountPaid      Decimal  @map("amount_paid") @db.Decimal(10, 2)
+  stripePaymentId String?  @map("stripe_payment_intent_id")
+  createdAt       DateTime @default(now()) @map("created_at") @db.Timestamptz(6)
+  tickets         Ticket[]
+
+  @@map("orders_ticket")
+}
+
+model Ticket {
+  id        String      @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  orderId   String      @map("order_ticket_id") @db.Uuid
+  order     OrderTicket @relation(fields: [orderId], references: [id])
+  qrToken   String      @unique @default(dbgenerated("gen_random_uuid()")) @map("qr_token") @db.Uuid
+  checkedIn Boolean     @default(false) @map("checked_in")
+  usedAt    DateTime?   @map("checked_in_at") @db.Timestamptz(6)
+  createdAt DateTime    @default(now()) @map("created_at") @db.Timestamptz(6)
+
+  @@map("tickets")
+}
+
+model Booking {
+  id             String        @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  bookingType    BookingType   @map("type")
+  customerName   String        @map("name")
+  customerEmail  String        @map("email")
+  customerPhone  String?       @map("phone")
+  message        String?
+  eventDate      DateTime?     @map("event_date") @db.Timestamptz(6)
+  durationHours  Int?          @map("duration_hours")
+  notes          String?
+  status         BookingStatus @default(PENDING)
+  createdAt      DateTime      @default(now()) @map("created_at") @db.Timestamptz(6)
+
+  @@map("bookings")
+}
+
+enum LicenseType {
+  BASIC     @map("basic")
+  PREMIUM   @map("premium")
+  EXCLUSIVE @map("exclusive")
+
+  @@map("license_type")
+}
+
+enum BookingType {
+  STUDIO @map("studio")
+  DJ     @map("dj")
+
+  @@map("booking_type")
+}
+
+enum BookingStatus {
+  PENDING   @map("pending")
+  CONFIRMED @map("confirmed")
+  CANCELLED @map("cancelled")
+
+  @@map("booking_status")
+}
