@@ -101,3 +101,42 @@ adminEventsRouter.delete('/:id', async (req, res, next) => {
     next(err);
   }
 });
+
+// GET /admin/events/:id/attendees — list ticket holders for one event
+adminEventsRouter.get('/:id/attendees', async (req, res, next) => {
+  try {
+    const event = await prisma.event.findUnique({
+      where: { id: req.params.id },
+      include: {
+        orders: {
+          orderBy: { createdAt: 'desc' },
+          include: { tickets: true },
+        },
+      },
+    });
+
+    if (!event) throw createError('Event not found', 404);
+
+    res.json({
+      event: {
+        id: event.id,
+        name: event.name,
+        date: event.date,
+        location: event.location,
+      },
+      attendees: event.orders.flatMap((order) =>
+        order.tickets.map((ticket) => ({
+          ticketId: ticket.id,
+          qrToken: ticket.qrToken,
+          checkedIn: ticket.checkedIn,
+          usedAt: ticket.usedAt,
+          customerName: order.customerName,
+          customerEmail: order.customerEmail,
+          orderId: order.id,
+        }))
+      ),
+    });
+  } catch (err) {
+    next(err);
+  }
+});
