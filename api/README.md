@@ -8,7 +8,7 @@ Node.js/TypeScript Express API for the CBA (Chris Brown Audio) platform.
 - **Framework**: Express 5
 - **ORM**: Prisma 6 + PostgreSQL
 - **Auth**: JWT (jsonwebtoken + bcrypt)
-- **Storage**: AWS S3 (signed URLs — never public bucket access)
+- **Storage**: Supabase Storage (signed URLs for private full-audio downloads)
 - **Validation**: Zod
 
 ## Getting Started
@@ -40,9 +40,9 @@ Node.js/TypeScript Express API for the CBA (Chris Brown Audio) platform.
 
 The API runs on `http://localhost:3001` by default.
 
-## AWS Credentials Note
+## Supabase Storage Note
 
-**Use IAM user credentials (not IAM role) for AWS.** Role session credentials (from instance profiles, assumed roles, etc.) expire independently of the configured `expiresIn` when deployed on Railway or Render. This causes silent S3 failures mid-session. Set `AWS_ACCESS_KEY_ID` and `AWS_SECRET_ACCESS_KEY` explicitly from a dedicated IAM user with minimal S3 permissions.
+The API uses `SUPABASE_SERVICE_ROLE_KEY` server-side to generate short-lived signed URLs from the private `full-audio` bucket. Keep the service role key out of frontend code and only expose public bucket URLs from the Next.js app.
 
 ## Scripts
 
