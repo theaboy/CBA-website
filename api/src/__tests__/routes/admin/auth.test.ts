@@ -12,6 +12,8 @@ vi.mock('../../../lib/prisma', () => ({
 }));
 
 const JWT_SECRET = process.env.JWT_SECRET!;
+const JWT_ISSUER = process.env.JWT_ISSUER ?? 'cba-api';
+const JWT_AUDIENCE = process.env.JWT_AUDIENCE ?? 'cba-admin';
 let passwordHash: string;
 
 // Counter for unique IPs — isolates rate limiter state between tests
@@ -112,9 +114,29 @@ describe('POST /admin/login', () => {
         .set('X-Forwarded-For', uniqueIp())
         .send({ email: 'admin@cba.com', password: 'correct-password' });
 
-      const payload = jwt.verify(res.body.token, JWT_SECRET) as jwt.JwtPayload;
+      const payload = jwt.verify(res.body.token, JWT_SECRET, {
+        audience: JWT_AUDIENCE,
+        issuer: JWT_ISSUER,
+      }) as jwt.JwtPayload;
       expect(payload.sub).toBe('admin-uuid');
       expect(payload.email).toBe('admin@cba.com');
+      expect(payload.aud).toBe(JWT_AUDIENCE);
+      expect(payload.iss).toBe(JWT_ISSUER);
+    });
+
+    it('normalizes email before looking up the admin user', async () => {
+      const { prisma } = await import('../../../lib/prisma');
+      vi.mocked(prisma.adminUser.findUnique).mockResolvedValue(mockAdmin() as any);
+
+      const res = await request(app)
+        .post('/admin/login')
+        .set('X-Forwarded-For', uniqueIp())
+        .send({ email: '  ADMIN@CBA.COM  ', password: 'correct-password' });
+
+      expect(res.status).toBe(200);
+      expect(prisma.adminUser.findUnique).toHaveBeenCalledWith({
+        where: { email: 'admin@cba.com' },
+      });
     });
 
     it('does not expose passwordHash in the response', async () => {
@@ -165,13 +187,13 @@ describe('POST /admin/login', () => {
         await request(app)
           .post('/admin/login')
           .set('X-Forwarded-For', rateLimitIp)
-          .send({ email: 'ratelimit@cba.com', password: 'bad' });
+          .send({ email: 'ratelimit@cba.com', password: 'bad-password' });
       }
 
       const res = await request(app)
         .post('/admin/login')
         .set('X-Forwarded-For', rateLimitIp)
-        .send({ email: 'ratelimit@cba.com', password: 'bad' });
+        .send({ email: 'ratelimit@cba.com', password: 'bad-password' });
 
       expect(res.status).toBe(429);
     });

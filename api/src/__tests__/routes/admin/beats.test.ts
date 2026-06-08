@@ -1,7 +1,7 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest';
 import request from 'supertest';
-import jwt from 'jsonwebtoken';
 import app from '../../../app';
+import { signAdminToken } from '../../../lib/adminJwt';
 
 vi.mock('../../../lib/prisma', () => ({
   prisma: {
@@ -16,10 +16,8 @@ vi.mock('../../../lib/prisma', () => ({
   },
 }));
 
-const JWT_SECRET = process.env.JWT_SECRET!;
-
 function authHeader() {
-  const token = jwt.sign({ sub: 'admin-uuid', email: 'admin@cba.com' }, JWT_SECRET, { expiresIn: '1h' });
+  const token = signAdminToken({ sub: 'admin-uuid', email: 'admin@cba.com' });
   return { Authorization: `Bearer ${token}` };
 }
 
