@@ -9,7 +9,7 @@ const bodySchema = z.object({
   eventId: z.string().uuid(),
   quantity: z.number().int().min(1).max(10),
   customerName: z.string().min(1).max(120),
-  customerEmail: z.string().email(),
+  customerEmail: z.string().trim().toLowerCase().email(),
 });
 
 // POST /checkout/tickets
@@ -30,7 +30,7 @@ checkoutTicketsRouter.post('/', async (req, res, next) => {
       return;
     }
 
-    const remaining = event.totalTickets - event.ticketsSold;
+    const remaining = Math.max(0, event.totalTickets - event.ticketsSold);
     if (remaining < quantity) {
       res.status(409).json({
         error: 'Not enough tickets available',
@@ -71,7 +71,7 @@ checkoutTicketsRouter.post('/', async (req, res, next) => {
           customerEmail,
         },
         success_url: `${process.env.FRONTEND_URL}/checkout/success?session_id={CHECKOUT_SESSION_ID}`,
-        cancel_url: `${process.env.FRONTEND_URL}/events/${eventId}`,
+        cancel_url: `${process.env.FRONTEND_URL}/events/${event.slug}`,
       },
       {
         idempotencyKey: `ticket-checkout-${eventId}-${quantity}-${customerEmail}-${Date.now()}`,
