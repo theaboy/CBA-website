@@ -54,6 +54,20 @@
 - [ ] **ADMIN-05**: Admin can review incoming DJ service inquiries.
 - [ ] **ADMIN-06**: Admin can create and edit beat metadata records so real audio uploads can be attached later.
 
+### Backend API
+
+- [x] **BE-01**: Supabase project configured with all tables (beats, events, orders, tickets, bookings), RLS policies, and Storage buckets for audio and artwork.
+- [ ] **BE-02**: Admin authenticated via Supabase Auth; all protected dashboard routes redirect unauthenticated requests to login.
+- [x] **BE-03**: Beat catalog queryable from Next.js with server-side filtering by genre, mood, BPM range, price range, and sort; beat detail returns preview URL.
+- [x] **BE-04**: Beat audio files stored in Supabase Storage; preview audio served from public bucket; full-quality audio delivered via time-limited signed URLs only.
+- [ ] **BE-05**: Visitor can complete a beat purchase via Stripe; license tier validated server-side; exclusive license locks on purchase.
+- [ ] **BE-06**: Visitor can purchase event tickets via Stripe; inventory tracked atomically; overselling prevented.
+- [ ] **BE-07**: Unique non-guessable QR token generated per ticket on successful payment and stored in database.
+- [ ] **BE-08**: Transactional emails sent via Resend or SendGrid for all purchase events (beat purchase, ticket purchase, booking notifications).
+- [ ] **BE-09**: Admin can create, edit, and delete beat metadata records via API.
+- [ ] **BE-10**: Admin can create, edit, publish, and unpublish event records via API.
+- [ ] **BE-11**: Admin can list and view all orders (beat purchases + ticket purchases) via API.
+
 ### SEO, Legal, and Operations
 
 - [ ] **OPS-01**: Public pages include SEO-ready metadata structure for music, location, and event discovery.
@@ -64,10 +78,8 @@
 
 ### Payments and Fulfillment
 
-- **PAY-01**: Visitor can complete beat purchases through Stripe checkout.
-- **PAY-02**: Visitor can pay studio deposits through Stripe.
-- **PAY-03**: Visitor can complete ticket purchases through secure checkout.
-- **PAY-04**: Customer automatically receives licensed downloads or ticket assets after successful payment.
+- **PAY-02**: Visitor can pay studio deposits through Stripe. *(deferred to Milestone 2)*
+- **PAY-04**: Waveform data generated automatically from uploaded audio. *(deferred)*
 
 ### User Accounts
 
@@ -105,36 +117,48 @@
 | FND-03 | Phase 1 | Complete |
 | HOME-01 | Phase 2 | Complete |
 | HOME-02 | Phase 2 | Complete |
-| HOME-03 | Phase 5 | Pending |
+| HOME-03 | Milestone 2 | Deferred |
 | BEAT-01 | Phase 2 | Complete |
 | BEAT-02 | Phase 2 | Complete |
 | BEAT-03 | Phase 2 | Complete |
 | BEAT-04 | Phase 2 | Complete |
 | BEAT-05 | Phase 3 | Complete |
 | BEAT-06 | Phase 3 | Complete |
-| STUD-01 | Phase 4 | Pending |
-| STUD-02 | Phase 4 | Pending |
-| STUD-03 | Phase 4 | Pending |
+| STUD-01 | Milestone 2 | Deferred |
+| STUD-02 | Milestone 2 | Deferred |
+| STUD-03 | Milestone 2 | Deferred |
 | EVNT-01 | Phase 5 | Pending |
 | EVNT-02 | Phase 5 | Pending |
-| DJ-01 | Phase 5 | Pending |
-| DJ-02 | Phase 5 | Pending |
-| ACCT-01 | Phase 6 | Pending |
-| ACCT-02 | Phase 6 | Pending |
-| ACCT-03 | Phase 6 | Pending |
-| ADMIN-01 | Phase 7 | Pending |
-| ADMIN-02 | Phase 8 | Pending |
-| ADMIN-03 | Phase 8 | Pending |
-| ADMIN-04 | Phase 8 | Pending |
-| ADMIN-05 | Phase 8 | Pending |
-| ADMIN-06 | Phase 8 | Pending |
-| OPS-01 | Phase 9 | Pending |
-| OPS-02 | Phase 9 | Pending |
-| OPS-03 | Phase 8 | Pending |
+| DJ-01 | Milestone 2 | Deferred |
+| DJ-02 | Milestone 2 | Deferred |
+| ACCT-01 | Milestone 2 | Deferred |
+| ACCT-02 | Milestone 2 | Deferred |
+| ACCT-03 | Milestone 2 | Deferred |
+| BE-01 | Phase 4 | Complete |
+| BE-02 | Phase 4 | Pending |
+| BE-03 | Phase 4 | Complete |
+| BE-04 | Phase 4 | Complete |
+| BE-05 | Phase 5 | Pending |
+| BE-06 | Phase 5 | Pending |
+| BE-07 | Phase 5 | Pending |
+| BE-08 | Phase 5 | Pending |
+| BE-09 | Phase 6 | Pending |
+| BE-10 | Phase 6 | Pending |
+| BE-11 | Phase 6 | Pending |
+| ADMIN-01 | Phase 6 | Pending |
+| ADMIN-02 | Phase 6 | Pending |
+| ADMIN-03 | Phase 6 | Pending |
+| ADMIN-04 | Milestone 2 | Deferred |
+| ADMIN-05 | Phase 6 | Pending |
+| ADMIN-06 | Phase 6 | Pending |
+| OPS-01 | Phase 7 | Pending |
+| OPS-02 | Phase 7 | Pending |
+| OPS-03 | Phase 5 | Pending |
 
 **Coverage:**
-- v1 requirements: 31 total
-- Mapped to phases: 31
+- Milestone 1 v1 requirements: 30 active
+- Mapped to phases: 30
+- Deferred to Milestone 2: 11
 - Unmapped: 0 ✓
 
 ---

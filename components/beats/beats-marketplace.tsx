@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { Beat, beatsCatalog, beatBpmRange, beatPriceRange, sortBeats } from "@/lib/beats";
+import { Beat, beatBpmRange, beatPriceRange, BeatSort } from "@/lib/beats";
 import { BeatCard } from "@/components/beats/beat-card";
 import { MarketplaceFilters, MarketplaceFiltersState } from "@/components/beats/marketplace-filters";
 
@@ -13,14 +13,33 @@ const initialState: MarketplaceFiltersState = {
   bpmRange: [beatBpmRange[0], beatBpmRange[1]]
 };
 
-export function BeatsMarketplace() {
+function sortBeats(beats: Beat[], sort: BeatSort): Beat[] {
+  const sorted = [...beats];
+  switch (sort) {
+    case 'price-low':
+      return sorted.sort((a, b) => a.price_basic - b.price_basic);
+    case 'price-high':
+      return sorted.sort((a, b) => b.price_basic - a.price_basic);
+    case 'popular':
+      return sorted.sort((a, b) => b.play_count - a.play_count);
+    case 'bpm-low':
+      return sorted.sort((a, b) => a.bpm - b.bpm);
+    case 'bpm-high':
+      return sorted.sort((a, b) => b.bpm - a.bpm);
+    case 'latest':
+    default:
+      return sorted.sort((a, b) => new Date(b.created_at).getTime() - new Date(a.created_at).getTime());
+  }
+}
+
+export function BeatsMarketplace({ beats }: { beats: Beat[] }) {
   const [filters, setFilters] = useState<MarketplaceFiltersState>(initialState);
 
   const filteredBeats = sortBeats(
-    beatsCatalog.filter((beat: Beat) => {
+    beats.filter((beat: Beat) => {
       if (filters.genre !== "All" && beat.genre !== filters.genre) return false;
       if (filters.mood !== "All" && beat.mood !== filters.mood) return false;
-      if (beat.price > filters.maxPrice) return false;
+      if (beat.price_basic > filters.maxPrice) return false;
       if (beat.bpm < filters.bpmRange[0] || beat.bpm > filters.bpmRange[1]) return false;
       return true;
     }),

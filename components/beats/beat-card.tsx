@@ -9,10 +9,10 @@ export function BeatCard({ beat }: { beat: Beat }) {
   return (
     <article className="beat-card">
       <div className="beat-card-art">
-        <Image src={beat.artworkSrc} alt={beat.title} width={640} height={480} />
+        <Image src={beat.artwork_url} alt={beat.title} width={640} height={480} />
         <div className="beat-card-overlay">
           <PlayToggle beat={beat} />
-          <span className="beat-price">${beat.price}</span>
+          <span className="beat-price">${beat.price_basic}</span>
         </div>
       </div>
       <div className="beat-card-copy">
@@ -33,7 +33,6 @@ export function BeatCard({ beat }: { beat: Beat }) {
         <div className="beat-card-meta">
           <span>{beat.bpm} BPM</span>
           <span>{beat.mood}</span>
-          <span>{beat.duration}</span>
         </div>
         <div className="beat-card-actions">
           <span className="ghost-chip">Add to Cart</span>

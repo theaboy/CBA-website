@@ -72,12 +72,12 @@ export function AudioProvider({ children }: { children: ReactNode }) {
     const audio = audioRef.current;
     if (!audio) return;
 
-    if (audio.src !== new URL(beat.audioSrc, window.location.origin).toString()) {
-      audio.src = beat.audioSrc;
+    if (audio.src !== new URL(beat.audio_src, window.location.origin).toString()) {
+      audio.src = beat.audio_src;
       audio.currentTime = 0;
       setCurrentBeat(beat);
       setProgress(0);
-      setDuration(beat.durationSeconds);
+      // Duration will be set by the loadedmetadata event handler
     }
 
     await audio.play();

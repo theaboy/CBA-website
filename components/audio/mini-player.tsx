@@ -22,7 +22,7 @@ export function MiniPlayer() {
   return (
     <aside className="mini-player">
       <div className="mini-player-art">
-        <Image src={currentBeat.artworkSrc} alt={currentBeat.title} width={84} height={84} />
+        <Image src={currentBeat.artwork_url} alt={currentBeat.title} width={84} height={84} />
       </div>
       <div className="mini-player-copy">
         <p className="eyebrow">Now Playing</p>
@@ -33,7 +33,7 @@ export function MiniPlayer() {
         </div>
         <div className="mini-player-meta">
           <span>{formatTime(progress)}</span>
-          <span>{currentBeat.duration}</span>
+          <span>{formatTime(duration)}</span>
         </div>
       </div>
       <div className="mini-player-actions">

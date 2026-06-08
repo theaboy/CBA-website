@@ -16,7 +16,6 @@ export function BeatWaveform({ beat }: { beat: Beat }) {
       </div>
       <div className="beat-waveform-meta">
         <span>Waveform-ready visual lane</span>
-        <span>{beat.duration} runtime</span>
       </div>
     </div>
   );

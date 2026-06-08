@@ -2,13 +2,16 @@
 gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
-status: active
-last_updated: "2026-02-28T09:28:44Z"
+status: completed
+stopped_at: Completed 04-supabase-foundation — Phase 4 fully complete. Ready for Phase 5.
+last_updated: "2026-05-22T05:18:10.697Z"
+last_activity: 2026-05-22 — Plan 04-04 complete. Beat catalog fully database-driven. Live Supabase queries with full_key exclusion, homepage and beats pages wired to Supabase data. Visual verification passed.
 progress:
-  total_phases: 9
-  completed_phases: 3
-  total_plans: 35
-  completed_plans: 12
+  total_phases: 7
+  completed_phases: 4
+  total_plans: 16
+  completed_plans: 16
+  percent: 92
 ---
 
 # Project State
@@ -18,23 +21,23 @@ progress:
 See: .planning/PROJECT.md (updated 2026-02-28)
 
 **Core value:** Make it easy for visitors to discover CBA's sound and convert into beat or studio-booking leads through a premium, trustworthy experience.
-**Current focus:** Phase 4: Studio Booking Flow
+**Current focus:** Phase 5: Payments, Email and Ticketing
 
 ## Current Position
 
-Phase: 4 of 9 (Studio Booking Flow)
-Plan: 0 of 4 in current phase
-Status: Ready for planning
-Last activity: 2026-02-28 — Planned Phase 4 studio booking flow using the established inquiry/request architecture
+Phase: 4 of 7 (Supabase Foundation)
+Plan: 4 of 4 complete — Phase 4 fully complete
+Status: Complete — ready for Phase 5
+Last activity: 2026-05-22 — Plan 04-04 complete. Beat catalog fully database-driven. Live Supabase queries with full_key exclusion, homepage and beats pages wired to Supabase data. Visual verification passed.
 
-Progress: [███░░░░░░░] 33%
+Progress: [█████████░] 92%
 
 ## Performance Metrics
 
 **Velocity:**
-- Total plans completed: 12
-- Average duration: 24.75 min
-- Total execution time: 1.7 hours
+- Total plans completed: 12 (Phases 1–3)
+- Average duration: 22.5 min
+- Total execution time: ~1.9 hours
 
 **By Phase:**
 
@@ -43,12 +46,18 @@ Progress: [███░░░░░░░] 33%
 | 1 | 4 | 99 min | 24.75 min |
 | 2 | 5 | completed | n/a |
 | 3 | 3 | completed | n/a |
+| 4 | 0/4 | not started (replanning) | - |
 
 **Recent Trend:**
-- Last 5 plans: 35 min, 24 min, 18 min, 22 min
-- Trend: Stable
+- Last 5 plans: 24 min, 18 min, 22 min, 18 min, 8 min
+- Trend: Improving
 
 *Updated after each plan completion*
+| Phase 04-supabase-foundation P01 | 12 | 2 tasks | 9 files |
+| Phase 04-supabase-foundation P02 | 4 | 1 tasks | 1 files |
+| Phase 04-supabase-foundation P02 | 4min | 2 tasks | 1 files |
+| Phase 04-supabase-foundation P03 | 6min | 3 tasks | 3 files |
+| Phase 04-supabase-foundation P04 | 8min | 3 tasks | 16 files |
 
 ## Accumulated Context
 
@@ -65,19 +74,37 @@ Recent decisions affecting current work:
 - Phase 1 execution: Admin access uses a preview-cookie gate until real internal authentication is implemented.
 - Phase 2 execution: Beat data, featured selections, filters, and playback all share one local catalog/domain module.
 - Phase 2 execution: One-track playback is mounted at the root layout through a shared audio provider and mini-player.
+- 2026-05-21 roadmap restructure (Express): Roadmap rebuilt around real backend (Node.js, Express, Prisma, PostgreSQL, Stripe). Studio booking, DJ services, and calendar system deferred to Milestone 2. Stripe for beats + tickets promoted from v2 to v1. No public user accounts (PRD confirmed admin-only auth).
+- 2026-05-21 architecture pivot (Supabase): Switched from custom Express/Node.js API to Supabase. No separate backend server. Supabase handles PostgreSQL + Storage + Auth. Stripe webhooks and transactional email handled via Next.js API routes. Traffic baseline under 1k/month — Supabase free tier is right-sized. PIPEDA note: no Canadian region, US East is closest — accepted tradeoff. Express implementation archived at /Users/bird/CBA-api-archived-express. Roadmap reduced from 8 to 7 phases (old Phase 6 Admin Backend API + Phase 7 Admin Dashboard collapsed into new Phase 6 Admin Dashboard).
+- Phase 4 (Supabase): full_key column must never appear in public Supabase queries — use column-level select to exclude it. Preview audio served from public bucket; full audio from private bucket via time-limited signed URLs. Service role key used for admin writes; anon key for public reads with RLS.
+- [Phase 04-supabase-foundation]: Three-client pattern (browser/server/service-role) isolates runtime boundaries for Supabase clients
+- [Phase 04-supabase-foundation]: Service role key uses SUPABASE_SERVICE_ROLE_KEY (no NEXT_PUBLIC_ prefix) — never exposed to browser
+- [Phase 04-supabase-foundation]: vitest test stubs use it.todo() as Wave 0 TDD to define contract before implementation
+- [Phase 04-supabase-foundation]: beats.full_key must never appear in public Supabase .select() — always use explicit column list omitting it
+- [Phase 04-supabase-foundation]: Three price columns (price_basic, price_premium, price_exclusive) model licensing tiers directly in DB
+- [Phase 04-supabase-foundation]: RLS enabled via Supabase warning dialog before running migration — all 6 tables have RLS active from creation (no gap period)
+- [Phase 04-supabase-foundation]: getPublicUrl() for preview-audio and artwork (public CDN, no token); createSignedUrl() for full-audio (time-limited, server-side only, post-purchase)
+- [Phase 04-supabase-foundation]: Storage helpers use server.ts createClient() (anon key), not service.ts — public reads don't need elevated permissions and RLS is enforced
+- [Phase 04-supabase-foundation]: PUBLIC_BEAT_COLUMNS constant enforces full_key exclusion structurally at query level, not relying on RLS alone
+- [Phase 04-supabase-foundation]: getFeaturedBeats returns latest 6 published beats without featured=true filter — with 3 seed beats, the boolean filter would be too restrictive
+- [Phase 04-supabase-foundation 04-04]: Next.js 16 middleware.ts renamed to proxy.ts with export renamed to proxy() — Next.js 16 enforces strict middleware export naming
+- [Phase 04-supabase-foundation 04-04]: Supabase Storage CDN hostnames (*.supabase.co) must be in next.config.mjs remotePatterns for next/image to allow them
+- [Phase 04-supabase-foundation 04-04]: Homepage beat cards navigate to /beats?beat=slug (catalog pre-selected) not /beats/[slug] (detail) — keeps users in browsing flow; LightCatalog accepts featuredSlug prop
 
 ### Pending Todos
 
-None yet.
+- Wire "Radio page V2" button (deferred — needs V2 page to link to)
+- Audit UI with sparse/empty data states (flagged from earlier session)
 
 ### Blockers/Concerns
 
 - Brand/style PDF exists in the repo but has not yet been parsed into implementation-ready design tokens.
 - Consumer auth depth remains intentionally deferred; later phases must avoid implying more backend functionality than exists.
 - The homepage currently uses strong placeholder and reference-driven content; later phases should replace placeholders without weakening the visual bar.
+- Supabase has no Canadian region (US East is closest) — PIPEDA compliance is a known tradeoff accepted by user.
 
 ## Session Continuity
 
-Last session: 2026-02-28 00:00
-Stopped at: Phase 3 complete; Phase 4 planning is the next logical step
+Last session: 2026-05-22T06:00:00.000Z
+Stopped at: Completed 04-supabase-foundation — Phase 4 fully complete. Ready for Phase 5.
 Resume file: None

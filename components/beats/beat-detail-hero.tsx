@@ -2,12 +2,12 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { Beat, getRelatedBeats } from "@/lib/beats";
+import { Beat } from "@/lib/beats";
 import { PlayToggle } from "@/components/audio/play-toggle";
 import { BeatWaveform } from "@/components/beats/beat-waveform";
 
 export function BeatDetailHero({ beat }: { beat: Beat }) {
-  const relatedBeats = getRelatedBeats(beat);
+  const relatedBeats: Beat[] = [];
 
   return (
     <div className="beat-detail-shell">
@@ -20,12 +20,12 @@ export function BeatDetailHero({ beat }: { beat: Beat }) {
       <section className="beat-detail-hero">
         <div className="beat-detail-media">
           <div className="beat-detail-art">
-            <Image src={beat.artworkSrc} alt={beat.title} width={960} height={960} priority />
+            <Image src={beat.artwork_url} alt={beat.title} width={960} height={960} priority />
             <div className="beat-detail-art-overlay">
               <PlayToggle beat={beat} />
               <div className="beat-detail-price">
                 <span>Starting at</span>
-                <strong>${beat.price}</strong>
+                <strong>${beat.price_basic}</strong>
               </div>
             </div>
           </div>
@@ -44,12 +44,12 @@ export function BeatDetailHero({ beat }: { beat: Beat }) {
               <strong>{beat.bpm}</strong>
             </article>
             <article>
-              <span>Runtime</span>
-              <strong>{beat.duration}</strong>
+              <span>Key</span>
+              <strong>{beat.musical_key}</strong>
             </article>
             <article>
               <span>Best for</span>
-              <strong>{beat.bestFor[0]}</strong>
+              <strong>{beat.best_for[0]}</strong>
             </article>
           </div>
 
@@ -63,7 +63,7 @@ export function BeatDetailHero({ beat }: { beat: Beat }) {
             <article className="beat-detail-panel">
               <p className="eyebrow">Mix Palette</p>
               <ul>
-                {beat.mixPalette.map((entry) => (
+                {beat.mix_palette.map((entry) => (
                   <li key={entry}>{entry}</li>
                 ))}
               </ul>
@@ -71,7 +71,7 @@ export function BeatDetailHero({ beat }: { beat: Beat }) {
             <article className="beat-detail-panel">
               <p className="eyebrow">Ideal Uses</p>
               <ul>
-                {beat.bestFor.map((entry) => (
+                {beat.best_for.map((entry) => (
                   <li key={entry}>{entry}</li>
                 ))}
               </ul>
@@ -80,26 +80,28 @@ export function BeatDetailHero({ beat }: { beat: Beat }) {
         </div>
       </section>
 
-      <section className="beat-detail-related">
-        <div className="beat-detail-related-head">
-          <div>
-            <p className="eyebrow">Keep Browsing</p>
-            <h2>Adjacent moods from the catalog.</h2>
+      {relatedBeats.length > 0 && (
+        <section className="beat-detail-related">
+          <div className="beat-detail-related-head">
+            <div>
+              <p className="eyebrow">Keep Browsing</p>
+              <h2>Adjacent moods from the catalog.</h2>
+            </div>
+            <p className="section-body">
+              The detail route stays connected to the marketplace instead of feeling like a dead end.
+            </p>
           </div>
-          <p className="section-body">
-            The detail route stays connected to the marketplace instead of feeling like a dead end.
-          </p>
-        </div>
-        <div className="beat-detail-related-grid">
-          {relatedBeats.map((relatedBeat) => (
-            <Link key={relatedBeat.id} href={`/beats/${relatedBeat.slug}`} className="beat-detail-related-card">
-              <span>{relatedBeat.genre}</span>
-              <strong>{relatedBeat.title}</strong>
-              <em>{relatedBeat.bpm} BPM / {relatedBeat.mood}</em>
-            </Link>
-          ))}
-        </div>
-      </section>
+          <div className="beat-detail-related-grid">
+            {relatedBeats.map((relatedBeat) => (
+              <Link key={relatedBeat.id} href={`/beats/${relatedBeat.slug}`} className="beat-detail-related-card">
+                <span>{relatedBeat.genre}</span>
+                <strong>{relatedBeat.title}</strong>
+                <em>{relatedBeat.bpm} BPM / {relatedBeat.mood}</em>
+              </Link>
+            ))}
+          </div>
+        </section>
+      )}
     </div>
   );
 }

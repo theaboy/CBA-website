@@ -2,7 +2,14 @@
 
 ## Overview
 
-This roadmap moves from brand and architecture foundations into the two core business flows first: beats and studio booking. It then layers in supporting public pages, account-ready UX, and the real internal admin dashboard before closing with launch hardening for SEO, legal, analytics, and content quality. The structure deliberately keeps payments and full consumer-auth backend work out of the first milestone while preserving a clean path to add them later.
+This roadmap moves from brand and architecture foundations into the two core business flows first: beats and studio booking. It then layers in Supabase (database, storage, auth), payments, and the admin dashboard before launch hardening. Studio booking, DJ services, and the calendar system are scoped to Milestone 2 once the core commerce and admin infrastructure is proven.
+
+**Architecture decision (2026-05-21):** Pivoted from a custom Express/Node.js API to Supabase. No separate backend server. Supabase provides hosted PostgreSQL (with RLS), Storage (for audio and artwork files), and Auth (for admin). Stripe webhooks and transactional email are handled via Next.js API routes. This eliminates infrastructure overhead and is right-sized for the current traffic baseline (under 1k/month). The archived Express implementation lives at `/Users/bird/CBA-api-archived-express` for reference.
+
+## Milestones
+
+- **Milestone 1 (current):** Core commerce — beats, events/ticketing, admin dashboard, launch hardening
+- **Milestone 2 (planned):** Bookings & Services — studio booking, DJ services, calendar system
 
 ## Phases
 
@@ -15,12 +22,10 @@ Decimal phases appear between their surrounding integers in numeric order.
 - [x] **Phase 1: Foundation and Brand System** - Establish the design language, app structure, and shared layout foundations. (completed 2026-02-28)
 - [x] **Phase 2: Marketplace Browsing and Playback** - Deliver the public beats browsing experience and persistent audio player. (completed 2026-02-28)
 - [x] **Phase 3: Beat Detail and Inquiry Conversion** - Turn beat discovery into structured lead capture with license-aware detail pages. (completed 2026-02-28)
-- [ ] **Phase 4: Studio Booking Flow** - Ship the second primary business path with availability and booking requests.
-- [ ] **Phase 5: Secondary Public Pages and Trust Content** - Complete the broader public site for events, DJ services, story, and contact.
-- [ ] **Phase 6: Accounts and Favorites UX** - Add account-ready surfaces and favorite interactions without making backend auth a blocker.
-- [ ] **Phase 7: Admin Auth and Dashboard Foundation** - Secure the internal area and establish stable admin data boundaries.
-- [ ] **Phase 8: Admin Operations and Content Management** - Deliver the real management tools CBA needs to run the site.
-- [ ] **Phase 9: Launch Hardening and Discoverability** - Finish SEO, legal, analytics, QA, and launch polish.
+- [x] **Phase 4: Supabase Foundation** - Configure Supabase project, run schema migrations, set RLS policies, set up Storage buckets, and wire the Next.js frontend to live Supabase data. (completed 2026-05-22)
+- [ ] **Phase 5: Payments, Email and Ticketing** - Implement Stripe payment for beat purchases and event tickets via Next.js API routes, transactional email, and QR token generation per ticket.
+- [ ] **Phase 6: Admin Dashboard** - Build the protected admin UI with Supabase Auth, full beat and event management, and order/submission views.
+- [ ] **Phase 7: Launch Hardening** - SEO, legal pages, analytics instrumentation, performance, and launch QA.
 
 ## Phase Details
 
@@ -75,119 +80,93 @@ Plans:
 - [x] 03-02: Design and implement license-selection and inquiry form UX.
 - [x] 03-03: Wire submission handling, confirmations, and admin notification path.
 
-### Phase 4: Studio Booking Flow
-**Goal**: Deliver the studio booking surface for availability discovery and request capture.
-**Depends on**: Phase 2
-**Requirements**: [STUD-01, STUD-02, STUD-03]
+### Phase 4: Supabase Foundation
+**Goal**: Configure the Supabase project, run SQL schema migrations for all tables, set Row Level Security policies, configure Storage buckets for audio and artwork, and wire the Next.js frontend to read live beat data from Supabase.
+**Depends on**: Phase 3
+**Requirements**: [BE-01, BE-03, BE-04]
 **Success Criteria** (what must be TRUE):
-  1. Visitor can understand studio offerings, pricing, and package options from the Studio page.
-  2. Visitor can view available dates and time slots.
-  3. Visitor can submit a studio booking request with the required scheduling and contact details.
-  4. Studio requests create records that can later be managed from admin tooling.
+  1. Supabase project is configured with all tables (beats, events, orders_beat, orders_ticket, tickets, bookings) and correct column types.
+  2. RLS policies are in place: public can read published beats/events; service role key required for writes.
+  3. Storage buckets configured: `preview-audio` (public), `full-audio` (private, signed URLs only), `artwork` (public).
+  4. Next.js beats listing and detail pages fetch live data from Supabase — static placeholder data replaced.
+  5. Beat preview audio URLs are signed and time-limited; `full_key` is never exposed in public responses.
 **Plans**: 4 plans
 
 Plans:
-- [ ] 04-01: Define studio data model for packages, availability, and booking requests.
-- [ ] 04-02: Build the Studio marketing page and package presentation.
-- [ ] 04-03: Implement availability browsing and booking request form flow.
-- [ ] 04-04: Add confirmations, validations, and responsive/mobile polish.
+- [x] 04-01: Supabase project setup — create project, configure env vars in Next.js, install `@supabase/supabase-js` and `@supabase/ssr`.
+- [x] 04-02: Schema migrations — write SQL migration for all tables and enums; run via Supabase dashboard or CLI; seed dev data.
+- [x] 04-03: RLS policies and Storage — configure row-level security for all tables; create Storage buckets; implement signed URL generation helper.
+- [x] 04-04: Wire frontend — replace static beat data with Supabase client reads; update beat listing and detail pages to use live data and signed preview URLs.
 
-### Phase 5: Secondary Public Pages and Trust Content
-**Goal**: Complete the broader brand website with events, DJ services, story, contact, and trust-building content.
-**Depends on**: Phase 1
-**Requirements**: [HOME-03, EVNT-01, EVNT-02, DJ-01, DJ-02]
+### Phase 5: Payments, Email and Ticketing
+**Goal**: Implement Stripe payment for beat purchases and event tickets via Next.js API routes, transactional email for all purchase events, and QR token generation per ticket.
+**Depends on**: Phase 4
+**Requirements**: [BE-05, BE-06, BE-07, BE-08, EVNT-01, EVNT-02]
 **Success Criteria** (what must be TRUE):
-  1. Visitor can explore events with intentional placeholder or live-event presentation.
-  2. Visitor can submit ticket inquiries or reservation requests.
-  3. Visitor can understand DJ services and submit a DJ booking inquiry.
-  4. Visitor can access About and Contact experiences that reinforce brand credibility and Montreal roots.
+  1. Visitor can complete a beat purchase via Stripe; license type validated server-side; exclusive license locks on purchase.
+  2. Visitor can purchase event tickets; inventory decremented atomically in Supabase; overselling prevented.
+  3. Unique non-guessable QR token generated per ticket and stored in database.
+  4. Purchase confirmation emails sent: beat buyer receives download link + license info, ticket buyer receives QR code + event details.
 **Plans**: 4 plans
 
 Plans:
-- [ ] 05-01: Build events listing/promo surfaces and request flow.
-- [ ] 05-02: Build DJ services page and inquiry flow.
-- [ ] 05-03: Build About, Contact, testimonials, newsletter, and social sections.
-- [ ] 05-04: Refine public trust cues and placeholder content strategy across all secondary pages.
+- [ ] 05-01: Stripe beat purchase — Next.js API route for PaymentIntent creation, webhook handler with signature verification, license tier validation, exclusive lock on purchase.
+- [ ] 05-02: Event and ticket system — event records in Supabase, inventory tracking, Stripe checkout for tickets, QR token generation, atomic decrement.
+- [ ] 05-03: Transactional email — Resend setup, templates for all 5 trigger types (beat purchase, ticket purchase, booking inquiry × 3), wired to webhook events.
+- [ ] 05-04: Frontend checkout integration — Stripe Elements on beat and ticket pages, replace inquiry forms where applicable.
 
-### Phase 6: Accounts and Favorites UX
-**Goal**: Add account-ready public UX and favorites behavior without blocking launch on full auth implementation.
-**Depends on**: Phase 2
-**Requirements**: [ACCT-01, ACCT-02, ACCT-03]
+### Phase 6: Admin Dashboard
+**Goal**: Build the protected admin UI using Supabase Auth — login, beat management, event management, and order/submission views — all talking directly to Supabase via the service role key.
+**Depends on**: Phase 5
+**Requirements**: [ADMIN-01, ADMIN-02, ADMIN-03, ADMIN-05, ADMIN-06, BE-09, BE-10, BE-11]
 **Success Criteria** (what must be TRUE):
-  1. Visitor can open polished signup and login screens from the public site.
-  2. Visitor can favorite beats from marketplace surfaces.
-  3. Favorites and account UI are structured so real backend auth can be integrated later without redesign.
-**Plans**: 3 plans
+  1. Admin can sign in via Supabase Auth and access all protected dashboard routes; unauthenticated requests redirect to login.
+  2. Admin can create, edit, and delete beats; upload audio to Supabase Storage; view per-beat sales.
+  3. Admin can create, edit, publish, and unpublish events.
+  4. Admin can view all orders (beat purchases + ticket purchases) and booking/DJ inquiry submissions.
+**Plans**: 4 plans
 
 Plans:
-- [ ] 06-01: Design account-ready navigation states and auth screen UI.
-- [ ] 06-02: Implement favorite interactions and local/session persistence strategy.
-- [ ] 06-03: Add account-area shell and future-auth integration boundaries.
+- [ ] 06-01: Admin auth — Supabase Auth login screen, session management via `@supabase/ssr`, protected route middleware, session expiry handling.
+- [ ] 06-02: Beat management dashboard — list, create, edit, delete beats; audio upload to Supabase Storage; per-beat sales view.
+- [ ] 06-03: Event management dashboard — list, create, edit, publish/unpublish events.
+- [ ] 06-04: Orders, tickets, and booking request views — all purchases and incoming inquiry submissions.
 
-### Phase 7: Admin Auth and Dashboard Foundation
-**Goal**: Establish secure admin access and the structural backbone for internal operations.
-**Depends on**: Phase 1
-**Requirements**: [ADMIN-01]
-**Success Criteria** (what must be TRUE):
-  1. Authorized admin can access a protected dashboard area.
-  2. Core admin navigation and dashboard information architecture are in place.
-  3. Shared data models exist for the content and operations features scheduled next.
-**Plans**: 3 plans
-
-Plans:
-- [ ] 07-01: Decide and implement admin authentication approach appropriate for v1.
-- [ ] 07-02: Build protected admin route handling and dashboard shell.
-- [ ] 07-03: Define stable schemas and server actions/endpoints for admin-managed entities.
-
-### Phase 8: Admin Operations and Content Management
-**Goal**: Make the site operationally manageable by CBA without code edits.
-**Depends on**: Phase 7
-**Requirements**: [ADMIN-02, ADMIN-03, ADMIN-04, ADMIN-05, ADMIN-06, OPS-03]
-**Success Criteria** (what must be TRUE):
-  1. Admin can manage homepage content sections from the dashboard.
-  2. Admin can create and edit events, including placeholders.
-  3. Admin can manage studio availability and review booking requests.
-  4. Admin can review DJ inquiries and beat purchase inquiries.
-  5. Admin can create and edit beat metadata records in preparation for future uploads.
-**Plans**: 5 plans
-
-Plans:
-- [ ] 08-01: Build homepage content-management forms and preview workflows.
-- [ ] 08-02: Build events CRUD and placeholder-event management.
-- [ ] 08-03: Build studio availability management and booking request review.
-- [ ] 08-04: Build DJ/beat inquiry review tooling and notifications surfaces.
-- [ ] 08-05: Build beat metadata management and upload-ready admin fields.
-
-### Phase 9: Launch Hardening and Discoverability
-**Goal**: Prepare the site for a credible public launch with stronger discoverability, compliance, analytics, and QA.
-**Depends on**: Phase 8
-**Requirements**: [OPS-01, OPS-02]
+### Phase 7: Launch Hardening
+**Goal**: Prepare the site for a credible public launch with strong discoverability, compliance, analytics, and QA.
+**Depends on**: Phase 6
+**Requirements**: [OPS-01, OPS-02, OPS-03]
 **Success Criteria** (what must be TRUE):
   1. Public pages ship with strong metadata and launch-ready SEO foundations.
-  2. Legal and licensing pages are accessible and aligned with manual inquiry flows.
+  2. Legal and licensing pages are accessible and aligned with the Stripe purchase flows.
   3. Analytics cover key public conversion and playback behaviors.
-  4. Performance, accessibility, and placeholder content quality are reviewed before launch.
+  4. Performance, accessibility, and content quality are reviewed before launch.
 **Plans**: 4 plans
 
 Plans:
-- [ ] 09-01: Implement metadata, schema groundwork, and SEO surface checks.
-- [ ] 09-02: Add legal, privacy, refund, and licensing content.
-- [ ] 09-03: Instrument analytics for key browsing and inquiry events.
-- [ ] 09-04: Run QA, accessibility, performance, and launch-content hardening.
+- [ ] 07-01: SEO metadata, Open Graph, schema markup for music and event discovery.
+- [ ] 07-02: Legal pages — Terms, Privacy Policy, Refund Policy, Licensing information.
+- [ ] 07-03: Analytics instrumentation — key browsing, playback, and purchase events.
+- [ ] 07-04: QA, accessibility, performance audit, and launch-content hardening.
 
 ## Progress
-
-**Execution Order:**
-Phases execute in numeric order: 2 → 2.1 → 2.2 → 3 → 3.1 → 4
 
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
 | 1. Foundation and Brand System | 4/4 | Complete | 2026-02-28 |
 | 2. Marketplace Browsing and Playback | 5/5 | Complete | 2026-02-28 |
 | 3. Beat Detail and Inquiry Conversion | 3/3 | Complete | 2026-02-28 |
-| 4. Studio Booking Flow | 0/4 | Not started | - |
-| 5. Secondary Public Pages and Trust Content | 0/4 | Not started | - |
-| 6. Accounts and Favorites UX | 0/3 | Not started | - |
-| 7. Admin Auth and Dashboard Foundation | 0/3 | Not started | - |
-| 8. Admin Operations and Content Management | 0/5 | Not started | - |
-| 9. Launch Hardening and Discoverability | 0/4 | Not started | - |
+| 4. Supabase Foundation | 4/4 | Complete   | 2026-05-22 |
+| 5. Payments, Email and Ticketing | 0/4 | Not started | - |
+| 6. Admin Dashboard | 0/4 | Not started | - |
+| 7. Launch Hardening | 0/4 | Not started | - |
+
+## Milestone 2 (Planned)
+
+Deferred phases for after Milestone 1 ships:
+
+- **M2-Phase 1**: Studio & DJ pages — marketing pages, package info, service details
+- **M2-Phase 2**: Booking backend — availability records, lean booking DB, admin notification
+- **M2-Phase 3**: Calendar system — frontend availability picker, slot management, admin calendar UI
+- **M2-Phase 4**: Studio booking flow — form, deposit payment (Stripe), confirmation
+- **M2-Phase 5**: Admin booking management — review requests, update status, DJ inquiry review

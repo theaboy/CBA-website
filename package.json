@@ -6,11 +6,20 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "typecheck": "tsc --noEmit"
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run",
+    "api:dev": "npm --prefix api run dev",
+    "api:build": "npm --prefix api run build",
+    "api:test": "npm --prefix api test",
+    "api:typecheck": "npm --prefix api exec tsc -- --noEmit",
+    "api:migrate": "npm --prefix api run db:migrate",
+    "api:seed": "npm --prefix api run db:seed"
   },
   "dependencies": {
     "@react-three/drei": "^10.7.7",
     "@react-three/fiber": "^9.6.1",
+    "@supabase/ssr": "^0.10.3",
+    "@supabase/supabase-js": "^2.106.1",
     "@types/three": "^0.183.1",
     "clsx": "^2.1.1",
     "framer-motion": "^12.36.0",
@@ -29,6 +38,7 @@
     "@types/react": "^19.2.14",
     "@types/react-dom": "^19.2.3",
     "tailwindcss": "^4.2.1",
-    "typescript": "^5.9.3"
+    "typescript": "^5.9.3",
+    "vitest": "^4.1.7"
   }
 }

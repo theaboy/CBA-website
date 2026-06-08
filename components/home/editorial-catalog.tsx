@@ -2,29 +2,23 @@
 
 import Link from "next/link";
 import { useEffect, useState } from "react";
-import { beatsCatalog, getFeaturedBeats, type Beat } from "@/lib/beats";
+import { type Beat } from "@/lib/beats";
 
 const GOLD = "#c9a961";
 const PAPER = "#f5f0e6";
 const BG = "#0a0a0a";
 
-function pickCatalog(): Beat[] {
-  const featured = getFeaturedBeats();
-  const rest = beatsCatalog.filter((b) => !featured.some((f) => f.id === b.id));
-  return [...featured, ...rest].slice(0, 5);
-}
-
-export function EditorialCatalog() {
-  const beats = pickCatalog();
-  const [activeId, setActiveId] = useState(beats[0]?.id);
+export function EditorialCatalog({ beats }: { beats: Beat[] }) {
+  const displayBeats = beats.slice(0, 5);
+  const [activeId, setActiveId] = useState(displayBeats[0]?.id);
   const [entered, setEntered] = useState<number[]>([]);
 
   useEffect(() => {
-    const timers = beats.map((_, i) =>
+    const timers = displayBeats.map((_, i) =>
       setTimeout(() => setEntered((prev) => [...prev, i]), 140 * i),
     );
     return () => timers.forEach(clearTimeout);
-  }, [beats.length]);
+  }, [displayBeats.length]);
 
   return (
     <section
@@ -117,7 +111,7 @@ export function EditorialCatalog() {
 
         {/* Interactive Selector */}
         <div className="flex h-[520px] w-full gap-4 overflow-hidden md:h-[600px]">
-          {beats.map((beat, i) => {
+          {displayBeats.map((beat, i) => {
             const isActive = beat.id === activeId;
             const isEntered = entered.includes(i);
             return (
@@ -141,7 +135,7 @@ export function EditorialCatalog() {
                 <div
                   className="absolute inset-0 bg-cover bg-center transition-transform duration-700 ease-out"
                   style={{
-                    backgroundImage: `url('${beat.artworkSrc}')`,
+                    backgroundImage: `url('${beat.artwork_url}')`,
                     transform: isActive ? "scale(1.05)" : "scale(1)",
                   }}
                 />
@@ -206,11 +200,11 @@ export function EditorialCatalog() {
                         className="font-serif text-3xl font-medium"
                         style={{ color: GOLD }}
                       >
-                        ${beat.price}
+                        ${beat.price_basic}
                       </span>
                       <div className="flex gap-4">
                         <Link
-                          href={`/beats/${beat.slug}`}
+                          href={`/beats?beat=${beat.slug}`}
                           onClick={(e) => e.stopPropagation()}
                           className="inline-flex items-center gap-2 rounded-sm px-6 py-2 text-xs font-bold uppercase tracking-[0.22em] transition-all hover:brightness-110"
                           style={{ backgroundColor: GOLD, color: BG }}
@@ -226,7 +220,7 @@ export function EditorialCatalog() {
                           Écouter
                         </Link>
                         <Link
-                          href={`/beats/${beat.slug}`}
+                          href={`/beats?beat=${beat.slug}`}
                           onClick={(e) => e.stopPropagation()}
                           className="inline-flex items-center rounded-sm border px-6 py-2 text-xs font-bold uppercase tracking-[0.22em] transition-all"
                           style={{ borderColor: GOLD, color: GOLD }}

@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { useMemo, useState } from "react";
-import { beatsCatalog, type Beat } from "@/lib/beats";
+import { type Beat } from "@/lib/beats";
 
 // ── Light-catalog palette (inversion of brand) ────────────────────────────────
 const PAPER       = "#f5f1e8";
@@ -35,17 +35,32 @@ function makePeaks(seed: number, count = 80): number[] {
   return out;
 }
 
-export function LightCatalog() {
-  const beats: Beat[] = beatsCatalog;
-  const [active, setActive] = useState(0);
+export function LightCatalog({ beats, featuredSlug }: { beats: Beat[]; featuredSlug?: string }) {
+  const initialIndex = featuredSlug
+    ? Math.max(0, beats.findIndex((b) => b.slug === featuredSlug))
+    : 0;
+  const [active, setActive] = useState(initialIndex);
   const [spinning, setSpinning] = useState(true);
   const beat = beats[active];
 
-  const wave = useMemo(() => makePeaks(beat.bpm + 11, 80), [beat.bpm]);
+  const wave = useMemo(() => makePeaks(beat ? beat.bpm + 11 : 142, 80), [beat]);
   const rackOrder = useMemo(
     () => beats.map((_, i) => i).filter((i) => i !== active),
     [beats, active],
   );
+
+  if (!beat) {
+    return (
+      <section
+        aria-labelledby="light-catalog-heading"
+        style={{ background: PAPER, color: INK, fontFamily: SANS, padding: "80px 60px", textAlign: "center" }}
+      >
+        <p style={{ fontFamily: MONO, fontSize: 12, letterSpacing: "0.2em", color: INK_MUTE, textTransform: "uppercase" }}>
+          No beats available yet.
+        </p>
+      </section>
+    );
+  }
 
   return (
     <section
@@ -215,7 +230,7 @@ export function LightCatalog() {
                 position: "relative",
                 aspectRatio: "1 / 1",
                 width: "100%",
-                background: `url('${beat.artworkSrc}') center/cover`,
+                background: `url('${beat.artwork_url}') center/cover`,
                 boxShadow: `
                   0 30px 60px rgba(13,12,10,0.20),
                   0 8px 18px rgba(13,12,10,0.12),
@@ -375,7 +390,7 @@ export function LightCatalog() {
                     position: "absolute",
                     inset: 0,
                     borderRadius: "50%",
-                    background: `url('${beat.artworkSrc}') center/cover`,
+                    background: `url('${beat.artwork_url}') center/cover`,
                     opacity: 0.55,
                     mixBlendMode: "multiply",
                   }}
@@ -497,10 +512,9 @@ export function LightCatalog() {
             <div style={{ marginTop: 22, borderTop: `1px solid ${LINE_MED}` }}>
               {[
                 ["BPM", String(beat.bpm)],
-                ["Key", beat.musicalKey],
+                ["Key", beat.musical_key],
                 ["Genre", beat.genre],
                 ["Mood", beat.mood],
-                ["Length", beat.duration],
                 ["Pressing", `CBA/${indexLabel(active)} · First press`],
               ].map(([k, v]) => (
                 <div
@@ -553,7 +567,7 @@ export function LightCatalog() {
                 }}
               >
                 <span>0:47</span>
-                <span>{beat.duration}</span>
+                <span>{beat.bpm} BPM</span>
               </div>
             </div>
 
@@ -589,7 +603,7 @@ export function LightCatalog() {
                     fontWeight: 500,
                   }}
                 >
-                  ${beat.price}
+                  ${beat.price_basic}
                 </div>
               </div>
               <Link
@@ -727,6 +741,7 @@ export function LightCatalog() {
                 beat={b}
                 lean={lean}
                 onSelect={() => setActive(idx)}
+                index={idx}
               />
             );
           })}
@@ -805,13 +820,15 @@ function RackSleeve({
   beat,
   lean,
   onSelect,
+  index,
 }: {
   beat: Beat;
   lean: number;
   onSelect: () => void;
+  index: number;
 }) {
   const [hover, setHover] = useState(false);
-  const num = String(beatsCatalog.findIndex((b) => b.id === beat.id) + 1).padStart(2, "0");
+  const num = String(index + 1).padStart(2, "0");
 
   return (
     <button
@@ -837,12 +854,12 @@ function RackSleeve({
           position: "relative",
           aspectRatio: "1 / 1",
           width: "100%",
-          background: `url('${beat.artworkSrc}') center/cover`,
+          background: `url('${beat.artwork_url}') center/cover`,
           boxShadow: hover
             ? "0 24px 40px rgba(13,12,10,0.25)"
             : "0 8px 18px rgba(13,12,10,0.12)",
           transition: "box-shadow 400ms",
-          outline: hover ? `1px solid ${GOLD}` : "1px solid rgba(13,12,10,0.06)",
+          outline: hover ? `1px solid ${GOLD_BRIGHT}` : "1px solid rgba(13,12,10,0.06)",
         }}
       >
         <div
@@ -922,7 +939,7 @@ function RackSleeve({
           <span>
             {beat.mood} · {beat.genre}
           </span>
-          <span style={{ color: INK, fontWeight: 600 }}>${beat.price}</span>
+          <span style={{ color: INK, fontWeight: 600 }}>${beat.price_basic}</span>
         </div>
       </div>
     </button>
