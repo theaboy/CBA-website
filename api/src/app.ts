@@ -10,6 +10,7 @@ import { adminAuthRouter }       from './routes/admin/auth';
 import { adminBeatsRouter }      from './routes/admin/beats';
 import { adminBookingsRouter }   from './routes/admin/bookings';
 import { adminEventsRouter }     from './routes/admin/events';
+import { adminOrdersRouter }     from './routes/admin/orders';
 import { adminTicketsRouter }    from './routes/admin/tickets';
 import { checkoutBeatsRouter }   from './routes/checkout/beats';
 import { checkoutTicketsRouter } from './routes/checkout/tickets';
@@ -51,6 +52,7 @@ app.use('/admin',          adminAuthRouter);
 app.use('/admin/beats',    requireAuth, adminBeatsRouter);
 app.use('/admin/bookings', requireAuth, adminBookingsRouter);
 app.use('/admin/events',   requireAuth, adminEventsRouter);
+app.use('/admin/orders',   requireAuth, adminOrdersRouter);
 app.use('/admin/tickets',  requireAuth, adminTicketsRouter);
 
 // 404 fallback
