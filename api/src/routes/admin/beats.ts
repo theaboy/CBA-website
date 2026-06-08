@@ -18,9 +18,9 @@ const beatBodySchema = z.object({
   priceBasic:      z.number().min(0),
   pricePremium:    z.number().min(0),
   priceExclusive:  z.number().min(0),
-  previewKey:      z.string().min(1),  // S3 object key
-  fullKey:         z.string().min(1),  // S3 object key
-  artworkKey:      z.string().min(1),  // S3 object key
+  previewKey:      z.string().min(1),  // Supabase Storage object key
+  fullKey:         z.string().min(1),  // Supabase Storage object key
+  artworkKey:      z.string().min(1),  // Supabase Storage object key
   tags:            z.array(z.string()).default([]),
   bestFor:         z.array(z.string()).default([]),
   mixPalette:      z.array(z.string()).default([]),
