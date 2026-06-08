@@ -59,6 +59,7 @@ export async function getPublishedBeats(filters: BeatFilters = {}): Promise<Beat
       query = query.order("price_basic", { ascending: false });
       break;
     case "popular":
+    case "most_played":
       query = query.order("play_count", { ascending: false });
       break;
     case "bpm-low":

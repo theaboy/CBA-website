@@ -7,15 +7,38 @@ import { createError } from '../middleware/errorHandler';
 export const beatsRouter = Router();
 
 const listQuerySchema = z.object({
-  genre:    z.string().optional(),
-  mood:     z.string().optional(),
-  bpmMin:   z.coerce.number().int().min(0).optional(),
-  bpmMax:   z.coerce.number().int().min(0).optional(),
-  priceMin: z.coerce.number().min(0).optional(),
-  priceMax: z.coerce.number().min(0).optional(),
-  sort:     z.enum(['latest', 'popular', 'price-low', 'price-high', 'bpm-low', 'bpm-high']).optional(),
-  featured: z.enum(['true', 'false']).optional(),
-});
+  genre:     z.string().optional(),
+  mood:      z.string().optional(),
+  bpmMin:    z.coerce.number().int().min(0).optional(),
+  bpmMax:    z.coerce.number().int().min(0).optional(),
+  bpm_min:   z.coerce.number().int().min(0).optional(),
+  bpm_max:   z.coerce.number().int().min(0).optional(),
+  priceMin:  z.coerce.number().min(0).optional(),
+  priceMax:  z.coerce.number().min(0).optional(),
+  price_min: z.coerce.number().min(0).optional(),
+  price_max: z.coerce.number().min(0).optional(),
+  sort:      z.enum(['latest', 'popular', 'most_played', 'price-low', 'price-high', 'bpm-low', 'bpm-high']).optional(),
+  featured:  z.enum(['true', 'false']).optional(),
+}).transform((query) => ({
+  genre: query.genre,
+  mood: query.mood,
+  bpmMin: query.bpmMin ?? query.bpm_min,
+  bpmMax: query.bpmMax ?? query.bpm_max,
+  priceMin: query.priceMin ?? query.price_min,
+  priceMax: query.priceMax ?? query.price_max,
+  sort: query.sort,
+  featured: query.featured,
+}));
+
+const publicBeatSelect = {
+  id: true, slug: true, title: true, tagline: true, description: true,
+  bpm: true, musicalKey: true, genre: true, mood: true,
+  priceBasic: true, pricePremium: true, priceExclusive: true,
+  previewKey: true, artworkKey: true,
+  tags: true, bestFor: true, mixPalette: true,
+  featured: true, isExclusiveSold: true, playCount: true, published: true, createdAt: true,
+  // fullKey intentionally excluded from public responses
+} satisfies Prisma.BeatSelect;
 
 beatsRouter.get('/', async (req, res, next) => {
   try {
@@ -44,6 +67,7 @@ beatsRouter.get('/', async (req, res, next) => {
     const orderByMap: Record<string, OrderBy> = {
       'latest':     { createdAt: 'desc' },
       'popular':    { playCount: 'desc' },
+      'most_played': { playCount: 'desc' },
       'price-low':  { priceBasic: 'asc' },
       'price-high': { priceBasic: 'desc' },
       'bpm-low':    { bpm: 'asc' },
@@ -54,17 +78,7 @@ beatsRouter.get('/', async (req, res, next) => {
     const beats = await prisma.beat.findMany({
       where,
       orderBy,
-      // Exclude fullKey from public response — only previewKey is shared here
-      // Plan 04 will replace previewKey with a signed URL in this response
-      select: {
-        id: true, slug: true, title: true, tagline: true, description: true,
-        bpm: true, musicalKey: true, genre: true, mood: true,
-        priceBasic: true, pricePremium: true, priceExclusive: true,
-        previewKey: true, artworkKey: true,
-        tags: true, bestFor: true, mixPalette: true,
-        featured: true, isExclusiveSold: true, playCount: true, published: true, createdAt: true,
-        // fullKey intentionally excluded from public list response
-      },
+      select: publicBeatSelect,
     });
 
     res.json({ beats });
@@ -73,25 +87,28 @@ beatsRouter.get('/', async (req, res, next) => {
   }
 });
 
-beatsRouter.get('/:id', async (req, res, next) => {
+beatsRouter.get('/:identifier', async (req, res, next) => {
   try {
     const beat = await prisma.beat.findUnique({
-      where: { id: req.params.id },
-      select: {
-        id: true, slug: true, title: true, tagline: true, description: true,
-        bpm: true, musicalKey: true, genre: true, mood: true,
-        priceBasic: true, pricePremium: true, priceExclusive: true,
-        previewKey: true, artworkKey: true,
-        tags: true, bestFor: true, mixPalette: true,
-        featured: true, isExclusiveSold: true, playCount: true, published: true, createdAt: true,
-        // fullKey excluded — only returned after purchase
-      },
+      where: isUuid(req.params.identifier)
+        ? { id: req.params.identifier }
+        : { slug: req.params.identifier },
+      select: publicBeatSelect,
     });
 
     if (!beat || !beat.published) throw createError('Beat not found', 404);
+
+    await prisma.beat.update({
+      where: { id: beat.id },
+      data: { playCount: { increment: 1 } },
+    });
 
     res.json({ beat });
   } catch (err) {
     next(err);
   }
 });
+
+function isUuid(value: string): boolean {
+  return /^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i.test(value);
+}
