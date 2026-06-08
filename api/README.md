@@ -44,6 +44,10 @@ The API runs on `http://localhost:3001` by default.
 
 The API uses `SUPABASE_SERVICE_ROLE_KEY` server-side to generate short-lived signed URLs from the private `full-audio` bucket. Keep the service role key out of frontend code and only expose public bucket URLs from the Next.js app.
 
+## Admin Auth Note
+
+Admin JWTs are signed with `HS256`, require a `JWT_SECRET` of at least 32 characters, and validate `JWT_ISSUER` / `JWT_AUDIENCE` claims. The defaults are `cba-api` and `cba-admin`.
+
 ## Scripts
 
 | Script | Description |

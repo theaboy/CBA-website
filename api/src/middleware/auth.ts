@@ -1,11 +1,7 @@
 import { Request, Response, NextFunction } from 'express';
-import jwt from 'jsonwebtoken';
+import { ZodError } from 'zod';
+import { AdminPayload, verifyAdminToken } from '../lib/adminJwt';
 import { createError } from './errorHandler';
-
-export interface AdminPayload {
-  sub: string;
-  email: string;
-}
 
 // Augment Express Request type to carry admin payload
 declare global {
@@ -23,18 +19,15 @@ export function requireAuth(req: Request, _res: Response, next: NextFunction): v
       throw createError('Unauthorized', 401);
     }
 
-    const token = authHeader.slice(7);
-    const secret = process.env.JWT_SECRET;
-    if (!secret) throw new Error('JWT_SECRET not configured');
-
-    const payload = jwt.verify(token, secret) as AdminPayload;
-    req.admin = payload;
+    req.admin = verifyAdminToken(authHeader.slice(7).trim());
     next();
   } catch (err) {
     if (err instanceof Error && err.name === 'JsonWebTokenError') {
       next(createError('Unauthorized', 401));
     } else if (err instanceof Error && err.name === 'TokenExpiredError') {
       next(createError('Token expired', 401));
+    } else if (err instanceof ZodError) {
+      next(createError('Unauthorized', 401));
     } else {
       next(err);
     }

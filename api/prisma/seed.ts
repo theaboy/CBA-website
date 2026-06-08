@@ -7,7 +7,7 @@ dotenv.config();
 const prisma = new PrismaClient();
 
 async function main() {
-  const email = process.env.ADMIN_EMAIL ?? 'admin@cba.local';
+  const email = (process.env.ADMIN_EMAIL ?? 'admin@cba.local').trim().toLowerCase();
   const password = process.env.ADMIN_PASSWORD ?? 'changeme-in-production';
 
   const existing = await prisma.adminUser.findUnique({ where: { email } });
