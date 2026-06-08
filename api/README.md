@@ -48,6 +48,14 @@ The API uses `SUPABASE_SERVICE_ROLE_KEY` server-side to generate short-lived sig
 
 Admin JWTs are signed with `HS256`, require a `JWT_SECRET` of at least 32 characters, and validate `JWT_ISSUER` / `JWT_AUDIENCE` claims. The defaults are `cba-api` and `cba-admin`.
 
+## Beat Catalog API
+
+- `GET /beats` returns published beats only and never exposes `fullKey`.
+- Supported filters: `genre`, `mood`, `bpm_min`, `bpm_max`, `price_min`, `price_max`, `featured`.
+- Camel-case aliases (`bpmMin`, `bpmMax`, `priceMin`, `priceMax`) remain supported for older callers.
+- Supported sorts: `latest`, `popular`, `most_played`, `price-low`, `price-high`, `bpm-low`, `bpm-high`.
+- `GET /beats/:identifier` accepts either a beat UUID or slug and increments `playCount` for published beats.
+
 ## Scripts
 
 | Script | Description |

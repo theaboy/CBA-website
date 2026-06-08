@@ -1,6 +1,6 @@
 export type BeatGenre = "Trap" | "Drill" | "Soul" | "Afro" | "R&B";
 export type BeatMood = "Cinematic" | "Nocturnal" | "Luxe" | "Cold" | "Melodic";
-export type BeatSort = "latest" | "popular" | "price-low" | "price-high" | "bpm-low" | "bpm-high";
+export type BeatSort = "latest" | "popular" | "most_played" | "price-low" | "price-high" | "bpm-low" | "bpm-high";
 export type BeatLicenseCode = "basic" | "premium" | "exclusive";
 
 export type BeatLicenseTier = {
