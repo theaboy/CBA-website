@@ -2,6 +2,7 @@ import { Router, raw } from 'express';
 import { randomUUID } from 'crypto';
 import { stripe } from '../../lib/stripe';
 import { prisma } from '../../lib/prisma';
+import { sendBeatOrderEmail, sendTicketOrderEmail } from '../../lib/emails';
 
 // Derive types from the stripe singleton — avoids fighting Stripe v22's CJS
 // namespace wrapping (export = StripeConstructor only exposes type Stripe,
@@ -76,7 +77,7 @@ async function fulfillBeatOrder(
   });
   if (existing) return;
 
-  await prisma.$transaction(async (tx) => {
+  const order = await prisma.$transaction(async (tx) => {
     const downloadExpiry = new Date();
     downloadExpiry.setDate(downloadExpiry.getDate() + DOWNLOAD_EXPIRY_DAYS);
 
@@ -88,7 +89,7 @@ async function fulfillBeatOrder(
       });
     }
 
-    await tx.orderBeat.create({
+    return tx.orderBeat.create({
       data: {
         beatId,
         licenseType: licenseType as 'BASIC' | 'PREMIUM' | 'EXCLUSIVE',
@@ -99,11 +100,22 @@ async function fulfillBeatOrder(
         downloadKey: randomUUID(),
         downloadExpiry,
       },
+      include: { beat: true },
     });
   });
 
   console.log(`Beat order fulfilled: beat=${beatId} license=${licenseType} email=${customerEmail}`);
-  // TODO: send confirmation email via Resend (issue #22)
+  try {
+    await sendBeatOrderEmail({
+      to: order.customerEmail,
+      customerName: order.customerName,
+      beatTitle: order.beat.title,
+      licenseType: order.licenseType,
+      downloadKey: order.downloadKey,
+    });
+  } catch (err) {
+    console.error('Beat confirmation email failed:', err);
+  }
 }
 
 // ─── Ticket fulfillment ──────────────────────────────────────────────────────
@@ -121,7 +133,7 @@ async function fulfillTicketOrder(
   });
   if (existing) return;
 
-  await prisma.$transaction(async (tx) => {
+  const order = await prisma.$transaction(async (tx) => {
     // Re-check capacity inside the transaction to prevent overselling
     const event = await tx.event.findUnique({ where: { id: eventId } });
     if (!event) throw new Error(`Event ${eventId} not found during fulfillment`);
@@ -137,7 +149,7 @@ async function fulfillTicketOrder(
     });
 
     // Create the order + one Ticket row per ticket purchased
-    await tx.orderTicket.create({
+    return tx.orderTicket.create({
       data: {
         eventId,
         customerEmail,
@@ -149,9 +161,24 @@ async function fulfillTicketOrder(
           create: Array.from({ length: qty }, () => ({})),
         },
       },
+      include: {
+        event: true,
+        tickets: true,
+      },
     });
   });
 
   console.log(`Ticket order fulfilled: event=${eventId} qty=${qty} email=${customerEmail}`);
-  // TODO: send confirmation email with QR tokens via Resend (issue #22)
+  try {
+    await sendTicketOrderEmail({
+      to: order.customerEmail,
+      customerName: order.customerName,
+      eventName: order.event.name,
+      eventDate: order.event.date,
+      location: order.event.location,
+      qrTokens: order.tickets.map((ticket) => ticket.qrToken),
+    });
+  } catch (err) {
+    console.error('Ticket confirmation email failed:', err);
+  }
 }
