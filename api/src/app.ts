@@ -8,6 +8,7 @@ import { downloadsRouter }       from './routes/downloads';
 import { adminAuthRouter }       from './routes/admin/auth';
 import { adminBeatsRouter }      from './routes/admin/beats';
 import { adminEventsRouter }     from './routes/admin/events';
+import { adminTicketsRouter }    from './routes/admin/tickets';
 import { checkoutBeatsRouter }   from './routes/checkout/beats';
 import { checkoutTicketsRouter } from './routes/checkout/tickets';
 import { stripeWebhookRouter }   from './routes/webhooks/stripe';
@@ -43,9 +44,10 @@ app.use('/checkout/beats',   checkoutBeatsRouter);
 app.use('/checkout/tickets', checkoutTicketsRouter);
 
 // Admin: login is public, resource routes require JWT
-app.use('/admin',        adminAuthRouter);
-app.use('/admin/beats',  requireAuth, adminBeatsRouter);
-app.use('/admin/events', requireAuth, adminEventsRouter);
+app.use('/admin',         adminAuthRouter);
+app.use('/admin/beats',   requireAuth, adminBeatsRouter);
+app.use('/admin/events',  requireAuth, adminEventsRouter);
+app.use('/admin/tickets', requireAuth, adminTicketsRouter);
 
 // 404 fallback
 app.use((_req, res) => {
