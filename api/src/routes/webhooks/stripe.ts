@@ -3,6 +3,7 @@ import { randomUUID } from 'crypto';
 import { stripe } from '../../lib/stripe';
 import { prisma } from '../../lib/prisma';
 import { sendBeatOrderEmail, sendTicketOrderEmail } from '../../lib/emails';
+import { fulfillTicketOrder as createTicketOrder } from '../../lib/ticketOrders';
 
 // Derive types from the stripe singleton — avoids fighting Stripe v22's CJS
 // namespace wrapping (export = StripeConstructor only exposes type Stripe,
@@ -127,46 +128,16 @@ async function fulfillTicketOrder(
   const { eventId, quantity, customerName, customerEmail } = meta;
   const qty = Number(quantity);
 
-  // Idempotency: skip if order already exists for this Stripe session
-  const existing = await prisma.orderTicket.findFirst({
-    where: { stripePaymentId: session.payment_intent as string },
+  const { order, created } = await createTicketOrder({
+    eventId,
+    quantity: qty,
+    customerEmail,
+    customerName,
+    amountTotalCents: session.amount_total ?? 0,
+    paymentReference: getPaymentReference(session),
   });
-  if (existing) return;
 
-  const order = await prisma.$transaction(async (tx) => {
-    // Re-check capacity inside the transaction to prevent overselling
-    const event = await tx.event.findUnique({ where: { id: eventId } });
-    if (!event) throw new Error(`Event ${eventId} not found during fulfillment`);
-
-    if (event.ticketsSold + qty > event.totalTickets) {
-      throw new Error(`Oversell prevented for event ${eventId}`);
-    }
-
-    // Increment ticketsSold atomically
-    await tx.event.update({
-      where: { id: eventId },
-      data: { ticketsSold: { increment: qty } },
-    });
-
-    // Create the order + one Ticket row per ticket purchased
-    return tx.orderTicket.create({
-      data: {
-        eventId,
-        customerEmail,
-        customerName,
-        quantity: qty,
-        amountPaid: (session.amount_total ?? 0) / 100,
-        stripePaymentId: session.payment_intent as string,
-        tickets: {
-          create: Array.from({ length: qty }, () => ({})),
-        },
-      },
-      include: {
-        event: true,
-        tickets: true,
-      },
-    });
-  });
+  if (!created) return;
 
   console.log(`Ticket order fulfilled: event=${eventId} qty=${qty} email=${customerEmail}`);
   try {
@@ -181,4 +152,13 @@ async function fulfillTicketOrder(
   } catch (err) {
     console.error('Ticket confirmation email failed:', err);
   }
+}
+
+function getPaymentReference(session: CheckoutSession): string {
+  const paymentIntent = session.payment_intent;
+  if (typeof paymentIntent === 'string' && paymentIntent.length > 0) {
+    return paymentIntent;
+  }
+
+  return session.id;
 }

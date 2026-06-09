@@ -56,6 +56,14 @@ Admin JWTs are signed with `HS256`, require a `JWT_SECRET` of at least 32 charac
 - Supported sorts: `latest`, `popular`, `most_played`, `price-low`, `price-high`, `bpm-low`, `bpm-high`.
 - `GET /beats/:identifier` accepts either a beat UUID or slug and increments `playCount` for published beats.
 
+## Ticketing API
+
+- `POST /checkout/tickets` creates a Stripe Checkout session after validating published event capacity.
+- Ticket checkout emails are normalized before they are stored in Stripe metadata.
+- Stripe fulfillment creates one `Ticket` row per purchased quantity and uses an atomic capacity update to prevent overselling.
+- `POST /admin/tickets/verify` checks in one QR token and rejects already-used tickets.
+- `GET /admin/events/:id/attendees` returns ticket holders and check-in state for the event.
+
 ## Scripts
 
 | Script | Description |
