@@ -4,6 +4,7 @@ import cors from 'cors';
 import { healthRouter }          from './routes/health';
 import { beatsRouter }           from './routes/beats';
 import { eventsRouter }          from './routes/events';
+import { radioRouter }           from './routes/radio';
 import { downloadsRouter }       from './routes/downloads';
 import { bookingsRouter }        from './routes/bookings';
 import { adminAuthRouter }       from './routes/admin/auth';
@@ -11,6 +12,7 @@ import { adminBeatsRouter }      from './routes/admin/beats';
 import { adminBookingsRouter }   from './routes/admin/bookings';
 import { adminEventsRouter }     from './routes/admin/events';
 import { adminOrdersRouter }     from './routes/admin/orders';
+import { adminRadioRouter }      from './routes/admin/radio';
 import { adminTicketsRouter }    from './routes/admin/tickets';
 import { checkoutBeatsRouter }   from './routes/checkout/beats';
 import { checkoutTicketsRouter } from './routes/checkout/tickets';
@@ -40,6 +42,7 @@ app.use(express.json());
 app.use('/health',    healthRouter);
 app.use('/beats',     beatsRouter);
 app.use('/events',    eventsRouter);
+app.use('/radio',     radioRouter);
 app.use('/downloads', downloadsRouter);
 app.use('/bookings',  bookingsRouter);
 
@@ -53,6 +56,7 @@ app.use('/admin/beats',    requireAuth, adminBeatsRouter);
 app.use('/admin/bookings', requireAuth, adminBookingsRouter);
 app.use('/admin/events',   requireAuth, adminEventsRouter);
 app.use('/admin/orders',   requireAuth, adminOrdersRouter);
+app.use('/admin/radio',    requireAuth, adminRadioRouter);
 app.use('/admin/tickets',  requireAuth, adminTicketsRouter);
 
 // 404 fallback
