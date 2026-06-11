@@ -41,7 +41,7 @@ export function SiteNav() {
         <Link href="/" className={styles.brand} aria-label={siteConfig.title}>
           <Image
             src="/cba/cba-logo-full.png"
-            alt="CBA — Create · Build · Achieve"
+            alt="CBA"
             width={60}
             height={40}
             priority

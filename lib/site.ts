@@ -11,6 +11,10 @@ export const siteConfig = {
   description:
     "Site officiel du collectif musical CBA de Montréal — beats, réservations studio, services DJ et découverte d'événements.",
   location: "Montréal, Canada",
+  contact: {
+    email: "hello@cba.ca",
+    cityLine: "Montréal, Québec · Canada",
+  },
   adminPreviewCookie: "cba_admin_preview",
   nav: [
     { href: "/",            label: "Accueil",             icon: "⌂", shortLabel: "Accueil" },
