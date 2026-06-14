@@ -772,7 +772,7 @@ export function LightCatalog({ beats, featuredSlug }: { beats: Beat[]; featuredS
             {indexLabel(beats.length - 1)} in rotation
           </span>
           <Link
-            href="/beats"
+            href="/beats/catalogue"
             style={{
               fontFamily: SANS,
               fontSize: 12,

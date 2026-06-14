@@ -1,9 +1,10 @@
-import type { ServiceId, FormulaId } from "./catalog";
+import type { ServiceId, FormulaId, DjId } from "./catalog";
 import type { ReservationContact } from "./state";
 
 export type ReservationPayload = {
   service: ServiceId;
   formulaId: FormulaId;
+  djId: DjId | null;   // only set for the "dj" service
   durationIdx: number;
   date: string;     // "YYYY-MM-DD"
   time: string;     // "HH:MM"

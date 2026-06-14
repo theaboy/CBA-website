@@ -175,19 +175,30 @@ export function Waveform({
 
   if (variant === "path") {
     const pts: string[] = [];
-    const seg = 80;
-    for (let i = 0; i <= seg * 2; i++) {
-      const x = (i / seg) * (width / 2);
-      const y = height / 2 + Math.sin(i * 0.35) * (height / 2.6) + Math.sin(i * 0.83) * (height / 6);
+    const steps = 320;
+    const mid = height / 2;
+    // Keep peaks/troughs inside the viewBox (leave 1px for the 1.4px stroke).
+    const amp = Math.max(0, height / 2 - 1);
+    // Draw TWO identical periods across 2× the width. Using integer cycle
+    // counts per `width` makes the wave perfectly periodic, so translating the
+    // SVG by -50% loops seamlessly for the always-on scroll animation.
+    const totalWidth = width * 2;
+    for (let i = 0; i <= steps; i++) {
+      const x = (i / steps) * totalWidth;
+      const phase = (x / width) * Math.PI * 2; // one full cycle per `width`
+      const y = mid + Math.sin(phase * 9) * (amp * 0.68) + Math.sin(phase * 21) * (amp * 0.32);
       pts.push((i === 0 ? "M" : "L") + x.toFixed(1) + "," + y.toFixed(1));
     }
     return (
-      <div style={{ width, height, overflow: "hidden", position: "relative" }}>
+      // Fill the whole container; the SVG is 2× wide and scrolls left,
+      // overflow hidden clips it to the box.
+      <div style={{ width: "100%", height, position: "relative", overflow: "hidden" }}>
         <svg
-          className={animCls}
-          width={width * 2}
+          className={styles.waveScroll}
+          width="200%"
           height={height}
-          viewBox={`0 0 ${width * 2} ${height}`}
+          viewBox={`0 0 ${totalWidth} ${height}`}
+          preserveAspectRatio="none"
           style={{ display: "block" }}
         >
           <path
@@ -196,6 +207,7 @@ export function Waveform({
             strokeWidth="1.4"
             fill="none"
             strokeLinecap="round"
+            vectorEffect="non-scaling-stroke"
             style={{ filter: `drop-shadow(0 0 3px ${stroke})`, opacity: 0.9 }}
           />
         </svg>

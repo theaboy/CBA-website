@@ -1,4 +1,3 @@
-import { SpinningRecord } from "@/components/experiences/spinning-record";
 import styles from "./reservation.module.css";
 
 export function ReservationHero() {
@@ -14,9 +13,6 @@ export function ReservationHero() {
           Studio ou DJ — une seule fenêtre pour bloquer la date, choisir la formule, et envoyer
           la demande. Confirmation manuelle par courriel sous 24 heures.
         </p>
-      </div>
-      <div className={styles.heroVisual}>
-        <SpinningRecord />
       </div>
     </header>
   );

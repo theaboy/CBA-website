@@ -22,14 +22,26 @@ export function Hero({
   recordingCount: number;
 }) {
   return (
-    <section style={{ height: "52vh", minHeight: 260, display: "flex", alignItems: "center" }}>
+    <section style={{ minHeight: "52vh", display: "flex", alignItems: "center", padding: "clamp(24px, 5vh, 64px) 0" }}>
       <div className={styles.wrap} style={{ width: "100%" }}>
-        <h1
-          className={`${styles.display} ${styles.amberGlow}`}
-          style={{ fontSize: "clamp(72px, 18vw, 220px)", margin: 0, lineHeight: 0.88, letterSpacing: "-0.02em" }}
-        >
-          RADIO
-        </h1>
+        <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: "clamp(8px, 2vw, 24px)" }}>
+          <h1
+            className={`${styles.display} ${styles.amberGlow}`}
+            style={{ fontSize: "clamp(72px, 18vw, 220px)", margin: 0, lineHeight: 0.88, letterSpacing: "-0.02em", textAlign: "center" }}
+          >
+            RADIO
+          </h1>
+          <img
+            src="/cba/radio-long.png"
+            alt="The Come Up — l'émission radio de CBA"
+            style={{
+              height: "clamp(160px, 32vw, 380px)",
+              width: "auto",
+              objectFit: "contain",
+              filter: "drop-shadow(0 4px 16px rgba(0,0,0,0.4))",
+            }}
+          />
+        </div>
       </div>
     </section>
   );
