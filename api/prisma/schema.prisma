@@ -70,6 +70,29 @@ model Event {
   @@map("events")
 }
 
+model RadioEpisode {
+  id        String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  slug      String   @unique
+  title     String
+  source    String
+  dateLabel String   @map("date_label")
+  duration  String
+  type      String
+  freq      String
+  variant   String   @default("portable")
+  moods     String[] @default([])
+  plays     Int      @default(0)
+  audioSrc  String?  @map("audio_src")
+  featured  Boolean  @default(false)
+  published Boolean  @default(false)
+  createdAt DateTime @default(now()) @map("created_at") @db.Timestamptz(6)
+
+  @@index([featured])
+  @@index([published])
+  @@index([createdAt])
+  @@map("radio_episodes")
+}
+
 model OrderBeat {
   id              String      @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
   beatId          String      @map("beat_id") @db.Uuid

@@ -2,7 +2,8 @@
 
 import { useState, useMemo, useRef, useEffect, useCallback } from "react";
 import { ARCHIVE, FEATURED, applyFilters } from "@/lib/radio/archive";
-import type { FilterState } from "@/lib/radio/archive";
+import type { ArchiveItem, FeaturedItem, FilterState } from "@/lib/radio/archive";
+import { fallbackRadioArchive, fetchRadioArchive } from "@/lib/radio/api";
 import {
   Hero,
   Featured,
@@ -16,6 +17,10 @@ import styles from "@/components/radio/freq/fa.module.css";
 const SORT_DEFAULT = "Récent";
 
 export default function FrequencyArchivePage() {
+  const fallback = useMemo(() => fallbackRadioArchive(), []);
+  const [archive, setArchive] = useState<ArchiveItem[]>(fallback.episodes);
+  const [featured, setFeatured] = useState<FeaturedItem>(fallback.featured ?? FEATURED);
+
   /* ── playback state ─────────────────────────────────────── */
   const [playingId, setPlayingId] = useState<string | null>(null);
   const [progress, setProgress]   = useState(0);
@@ -34,15 +39,35 @@ export default function FrequencyArchivePage() {
 
   /* ── derived filtered list ──────────────────────────────── */
   const filtered = useMemo(
-    () => applyFilters(ARCHIVE, filters, sortDial),
-    [filters, sortDial],
+    () => applyFilters(archive, filters, sortDial),
+    [archive, filters, sortDial],
   );
 
   /* ── all items flat (archive + featured) ─────────────────── */
   const allItems = useMemo(
-    () => [{ ...FEATURED, variant: "portable" as const, moods: [], plays: 0 }, ...ARCHIVE],
-    [],
+    () => [{ ...featured, variant: "portable" as const, moods: [], plays: 0 }, ...archive],
+    [archive, featured],
   );
+
+  useEffect(() => {
+    let cancelled = false;
+
+    fetchRadioArchive()
+      .then((data) => {
+        if (cancelled) return;
+        setArchive(data.episodes.length ? data.episodes : ARCHIVE);
+        setFeatured(data.featured ?? FEATURED);
+      })
+      .catch(() => {
+        if (cancelled) return;
+        setArchive(ARCHIVE);
+        setFeatured(FEATURED);
+      });
+
+    return () => {
+      cancelled = true;
+    };
+  }, []);
 
   function findItem(id: string) {
     return allItems.find((i) => i.id === id) ?? null;
@@ -110,19 +135,19 @@ export default function FrequencyArchivePage() {
   }
 
   const activeItem     = playingId ? findItem(playingId) : null;
-  const featuredPlaying = playingId === FEATURED.id;
+  const featuredPlaying = playingId === featured.id;
 
   return (
     <div className={styles.page}>
       <Hero
         onStartTuning={scrollToArchive}
-        recordingCount={ARCHIVE.length}
+        recordingCount={archive.length}
       />
 
       <Featured
-        item={FEATURED}
+        item={featured}
         isPlaying={featuredPlaying}
-        onToggle={() => toggle(FEATURED.id)}
+        onToggle={() => toggle(featured.id)}
       />
 
       <FilterPanel
