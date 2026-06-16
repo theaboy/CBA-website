@@ -31,16 +31,24 @@ export function Hero({
           >
             RADIO
           </h1>
-          <img
-            src="/cba/radio-long.png"
-            alt="The Come Up — l'émission radio de CBA"
-            style={{
-              height: "clamp(160px, 32vw, 380px)",
-              width: "auto",
-              objectFit: "contain",
-              filter: "drop-shadow(0 4px 16px rgba(0,0,0,0.4))",
-            }}
-          />
+          <a
+            href="https://www.instagram.com/_the_comeup_/"
+            target="_blank"
+            rel="noreferrer"
+            aria-label="Suivre The Come Up sur Instagram"
+            style={{ display: "inline-flex" }}
+          >
+            <img
+              src="/cba/radio-long.png"
+              alt="The Come Up — l'émission radio de CBA"
+              style={{
+                height: "clamp(160px, 32vw, 380px)",
+                width: "auto",
+                objectFit: "contain",
+                filter: "drop-shadow(0 4px 16px rgba(0,0,0,0.4))",
+              }}
+            />
+          </a>
         </div>
       </div>
     </section>
