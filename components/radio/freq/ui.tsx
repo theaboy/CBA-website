@@ -177,6 +177,7 @@ export function Waveform({
     const pts: string[] = [];
     const steps = 320;
     const mid = height / 2;
+    const bleed = 8;
     // Keep peaks/troughs inside the viewBox (leave 1px for the 1.4px stroke).
     const amp = Math.max(0, height / 2 - 1);
     // Draw TWO identical periods across 2× the width. Using integer cycle
@@ -184,7 +185,7 @@ export function Waveform({
     // SVG by -50% loops seamlessly for the always-on scroll animation.
     const totalWidth = width * 2;
     for (let i = 0; i <= steps; i++) {
-      const x = (i / steps) * totalWidth;
+      const x = bleed + (i / steps) * totalWidth;
       const phase = (x / width) * Math.PI * 2; // one full cycle per `width`
       const y = mid + Math.sin(phase * 9) * (amp * 0.68) + Math.sin(phase * 21) * (amp * 0.32);
       pts.push((i === 0 ? "M" : "L") + x.toFixed(1) + "," + y.toFixed(1));
@@ -197,7 +198,7 @@ export function Waveform({
           className={styles.waveScroll}
           width="200%"
           height={height}
-          viewBox={`0 0 ${totalWidth} ${height}`}
+          viewBox={`0 0 ${totalWidth + bleed * 2} ${height}`}
           preserveAspectRatio="none"
           style={{ display: "block" }}
         >

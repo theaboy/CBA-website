@@ -129,28 +129,19 @@ export function Featured({
 
               {/* Rangée lecture */}
               <div
+                className={`${styles.featuredTrigger} ${isPlaying ? styles.featuredTriggerActive : ""}`}
                 onClick={(e) => { e.stopPropagation(); onToggle(); }}
                 role="button"
                 tabIndex={0}
+                aria-label={isPlaying ? `Mettre en pause ${item.title}` : `Écouter ${item.title}`}
                 onKeyDown={(e) => (e.key === "Enter" || e.key === " ") && onToggle()}
-                style={{
-                  display: "flex", alignItems: "center", gap: 16,
-                  padding: "14px 20px",
-                  background: "linear-gradient(180deg, oklch(48% 0.10 75), oklch(34% 0.08 70))",
-                  border: "1px solid oklch(55% 0.10 75)",
-                  borderRadius: 6,
-                  cursor: "pointer",
-                  color: "oklch(12% 0.02 50)",
-                  boxShadow: "0 6px 16px rgba(0,0,0,0.5), inset 0 1px 0 rgba(255,230,180,0.4), inset 0 -2px 4px rgba(0,0,0,0.2)",
-                  marginTop: 4,
-                }}
               >
                 <PlayButton playing={isPlaying} onClick={onToggle} size={56} variant="cream" />
-                <div style={{ display: "flex", flexDirection: "column", gap: 2 }}>
-                  <span style={{ fontFamily: "var(--font-display)", fontSize: 18, fontWeight: 800, letterSpacing: "0.14em", textTransform: "uppercase" }}>
+                <div className={styles.featuredTriggerCopy}>
+                  <span className={styles.featuredTriggerTitle}>
                     {isPlaying ? "En lecture" : "Écouter"}
                   </span>
-                  <span style={{ fontFamily: "var(--font-mono)", fontSize: 11, letterSpacing: "0.12em", opacity: 0.7 }}>
+                  <span className={styles.featuredTriggerMeta}>
                     Face A · 00:00 / {item.duration}
                   </span>
                 </div>
