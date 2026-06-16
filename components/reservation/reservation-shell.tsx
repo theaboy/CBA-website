@@ -9,6 +9,7 @@ import {
 } from "@/lib/reservation";
 import { ReservationHero } from "./reservation-hero";
 import { ServiceSwitch } from "./service-switch";
+import { DjPicker } from "./dj-picker";
 import { FormulaGrid } from "./formula-grid";
 import { CalendarCard } from "./calendar-card";
 import { SlotPicker } from "./slot-picker";
@@ -31,9 +32,11 @@ export function ReservationShell() {
 
   async function handleSubmit() {
     if (!state.formulaId || !state.selectedDate || !state.selectedSlot) return;
+    if (state.service === "dj" && !state.djId) return;
     const payload: ReservationPayload = {
       service: state.service,
       formulaId: state.formulaId,
+      djId: state.service === "dj" ? state.djId : null,
       durationIdx: state.durationIdx,
       date: isoDate(state.selectedDate),
       time: state.selectedSlot,
@@ -62,6 +65,12 @@ export function ReservationShell() {
 
         <div className={styles.bookingGrid}>
           <div className={styles.leftCol}>
+            {state.service === "dj" && (
+              <DjPicker
+                djId={state.djId}
+                onSelect={(id) => dispatch({ type: "SET_DJ", id })}
+              />
+            )}
             <FormulaGrid
               service={state.service}
               formulaId={state.formulaId}

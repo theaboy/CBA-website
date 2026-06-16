@@ -54,10 +54,6 @@
 
 /* ─── Hero ─────────────────────────────────────────────────────── */
 .hero {
-  display: grid;
-  grid-template-columns: 1fr auto;
-  gap: clamp(24px, 4vw, 64px);
-  align-items: center;
   margin-bottom: clamp(40px, 6vw, 80px);
 }
 
@@ -109,14 +105,6 @@
   color: var(--cream-mute);
 }
 
-.heroVisual {
-  width: clamp(280px, 32vw, 400px);
-}
-
-@media (max-width: 880px) {
-  .hero { grid-template-columns: 1fr; }
-  .heroVisual { width: 280px; margin-inline: auto; }
-}
 
 /* ─── Service switch ───────────────────────────────────────────── */
 .switch {

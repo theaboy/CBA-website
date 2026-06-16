@@ -512,6 +512,14 @@
 .waveAnim     { animation: waveShift 2.4s linear infinite; }
 .waveAnimFast { animation: waveShift 1.2s linear infinite; }
 
+/* Always-on scroll for the full-width path waveform. The SVG is 2× wide with
+   two identical periods, so -50% loops seamlessly. */
+@keyframes waveScroll {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-50%); }
+}
+.waveScroll { animation: waveScroll 6s linear infinite; }
+
 /* ── Tuning needle ──────────────────────────────────────────────── */
 
 @keyframes needleSway {

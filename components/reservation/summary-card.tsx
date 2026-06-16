@@ -4,6 +4,7 @@ import {
   formatCAD,
   formatDate,
   getFormula,
+  getDj,
   type ReservationState,
   type ReservationContact,
 } from "@/lib/reservation";
@@ -22,7 +23,12 @@ export function SummaryCard({ state, pending, onUpdateContact, onSubmit, onReset
   const duration = formula?.durations[state.durationIdx] ?? null;
   const pricing = computePricing(state);
   const service = SERVICES[state.service];
-  const ready = !!state.formulaId && !!state.selectedDate && !!state.selectedSlot;
+  const dj = getDj(state.djId);
+  const ready =
+    !!state.formulaId &&
+    !!state.selectedDate &&
+    !!state.selectedSlot &&
+    (state.service !== "dj" || !!state.djId);
 
   function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
@@ -37,6 +43,14 @@ export function SummaryCard({ state, pending, onUpdateContact, onSubmit, onReset
       <p className={styles.summarySub}>{formula ? formula.name : "Formule à choisir"}</p>
 
       <div className={styles.summaryRows}>
+        {state.service === "dj" && (
+          <div className={styles.summaryRow}>
+            <span>DJ</span>
+            {dj
+              ? <strong>{dj.name}</strong>
+              : <span className={styles.empty}>À sélectionner</span>}
+          </div>
+        )}
         <div className={styles.summaryRow}>
           <span>Date</span>
           {state.selectedDate

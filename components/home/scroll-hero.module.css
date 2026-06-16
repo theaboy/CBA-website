@@ -23,16 +23,18 @@
 
 .logo {
   width: clamp(200px, 52vw, 380px);
-  aspect-ratio: 560 / 373;
+  /* Crop to monogram-only aspect so the "CREATE · BUILD · ACHIEVE"
+     tagline baked into the PNG is masked off-frame */
+  aspect-ratio: 1536 / 750;
   background: linear-gradient(135deg, #1e6539 0%, #c9a961 55%);
   -webkit-mask-image: url(/cba/cba-logo-full.png);
-  -webkit-mask-size: contain;
+  -webkit-mask-size: 100% auto;
   -webkit-mask-repeat: no-repeat;
-  -webkit-mask-position: center;
+  -webkit-mask-position: top center;
   mask-image: url(/cba/cba-logo-full.png);
-  mask-size: contain;
+  mask-size: 100% auto;
   mask-repeat: no-repeat;
-  mask-position: center;
+  mask-position: top center;
   filter: drop-shadow(0 4px 48px rgba(0,0,0,0.55));
 }
 

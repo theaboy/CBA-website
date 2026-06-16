@@ -36,7 +36,10 @@
 
 .brandLogo {
   height: 40px;
-  width: auto;
+  width: 82px;
+  /* Crop out the "CREATE · BUILD · ACHIEVE" tagline baked into the PNG */
+  object-fit: cover;
+  object-position: top;
   /* Logo is dark green on light bg — invert to white on the dark navbar */
   filter: brightness(0) invert(1);
   opacity: 0.92;

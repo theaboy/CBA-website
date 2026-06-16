@@ -1,4 +1,4 @@
-import type { ServiceId, FormulaId } from "./catalog";
+import type { ServiceId, FormulaId, DjId } from "./catalog";
 
 export type ReservationContact = {
   firstName: string;
@@ -11,6 +11,7 @@ export type ReservationContact = {
 export type ReservationState = {
   service: ServiceId;
   formulaId: FormulaId | null;
+  djId: DjId | null;
   durationIdx: number;
   viewYear: number;
   viewMonth: number;        // 0-11
@@ -22,6 +23,7 @@ export type ReservationState = {
 export type Action =
   | { type: "SET_SERVICE"; id: ServiceId }
   | { type: "SET_FORMULA"; id: FormulaId }
+  | { type: "SET_DJ"; id: DjId }
   | { type: "SET_DURATION"; idx: number }
   | { type: "NAV_MONTH"; delta: -1 | 1 }
   | { type: "SET_DATE"; date: Date }
@@ -34,6 +36,7 @@ const now = new Date();
 export const initialState: ReservationState = {
   service: "studio",
   formulaId: null,
+  djId: null,
   durationIdx: 0,
   viewYear: now.getFullYear(),
   viewMonth: now.getMonth(),
@@ -46,9 +49,11 @@ export function reducer(state: ReservationState, action: Action): ReservationSta
   switch (action.type) {
     case "SET_SERVICE":
       if (state.service === action.id) return state;
-      return { ...state, service: action.id, formulaId: null, durationIdx: 0 };
+      return { ...state, service: action.id, formulaId: null, djId: null, durationIdx: 0 };
     case "SET_FORMULA":
       return { ...state, formulaId: action.id, durationIdx: 0 };
+    case "SET_DJ":
+      return { ...state, djId: action.id };
     case "SET_DURATION":
       return { ...state, durationIdx: action.idx };
     case "NAV_MONTH": {

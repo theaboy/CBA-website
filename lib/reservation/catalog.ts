@@ -1,5 +1,8 @@
 export type ServiceId = "studio" | "dj";
 export type FormulaId = "rec" | "mix" | "prod" | "club" | "priv" | "fest";
+export type DjId = "mario" | "sherik" | "thekid" | "jah";
+
+export type Dj = { id: DjId; name: string };
 
 export type Duration = { label: string; h: number };
 
@@ -91,4 +94,17 @@ export const SERVICES: Record<ServiceId, ServiceConfig> = {
 export function getFormula(service: ServiceId, formulaId: FormulaId | null): Formula | null {
   if (!formulaId) return null;
   return SERVICES[service].formulas.find((f) => f.id === formulaId) ?? null;
+}
+
+/** DJs bookable through the "dj" service. */
+export const DJS: Dj[] = [
+  { id: "mario", name: "DJ Mario" },
+  { id: "sherik", name: "DJ Sherik" },
+  { id: "thekid", name: "DJ Thekid" },
+  { id: "jah", name: "DJ Jah" },
+];
+
+export function getDj(djId: DjId | null): Dj | null {
+  if (!djId) return null;
+  return DJS.find((d) => d.id === djId) ?? null;
 }
