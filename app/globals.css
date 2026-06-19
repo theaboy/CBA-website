@@ -1409,6 +1409,80 @@ h3 {
   gap: 0.9rem;
 }
 
+/* ──────────────────────────────────────────────────────────────
+   Beat detail / license page — light "paper" theme
+   Matches the /beats catalogue palette by re-scoping the shared
+   CSS variables to light values; everything that references them
+   (text, cards, borders, eyebrows, gold accents, waveform) flips
+   automatically. A handful of hard-coded dark values are overridden
+   explicitly below.
+   ────────────────────────────────────────────────────────────── */
+.beats-light {
+  --ink-0: #0d0c0a;
+  --ink-1: #3a342d;
+  --ink-2: #8a8580;
+  --line: rgba(13, 12, 10, 0.12);
+  --panel: #fbf9f2;
+  --panel-strong: #f3eee2;
+  --accent: #a47b3c;
+  --accent-soft: #a47b3c;
+  --shadow: 0 18px 50px rgba(13, 12, 10, 0.1);
+
+  color: var(--ink-0);
+  background:
+    radial-gradient(ellipse 60% 35% at 50% 0%, rgba(164, 123, 60, 0.05), transparent 60%),
+    radial-gradient(ellipse 80% 60% at 50% 100%, rgba(13, 12, 10, 0.04), transparent 70%),
+    #f5f1e8;
+  padding: clamp(2.5rem, 5vw, 4rem) clamp(1.25rem, 5vw, 4rem) clamp(4rem, 8vw, 6rem);
+}
+
+/* Soft inset surfaces — the dark rgba(255,255,255,.04) tint is invisible on paper */
+.beats-light .beat-detail-stat-grid article {
+  background: #fcfaf4;
+}
+
+.beats-light .beat-detail-chip-row span {
+  background: rgba(13, 12, 10, 0.04);
+}
+
+/* Price chip + play overlay sit over the cover photo — keep them dark with light text */
+.beats-light .beat-detail-price span,
+.beats-light .beat-detail-price strong {
+  color: #f5f1e8;
+}
+
+/* Gold-on-paper instead of the dark gradient for card hover / success states */
+.beats-light .beat-license-card:hover,
+.beats-light .beat-license-card.active {
+  border-color: rgba(164, 123, 60, 0.45);
+  background:
+    linear-gradient(180deg, rgba(164, 123, 60, 0.1) 0%, #fbf9f2 100%);
+}
+
+.beats-light .beat-inquiry-success {
+  border-color: rgba(164, 123, 60, 0.32);
+  background:
+    linear-gradient(180deg, rgba(164, 123, 60, 0.1) 0%, #fbf9f2 100%);
+}
+
+/* Form fields readable on paper */
+.beats-light .beat-inquiry-grid input,
+.beats-light .beat-inquiry-notes textarea {
+  background: #ffffff;
+  color: var(--ink-0);
+}
+
+.beats-light .beat-inquiry-grid small,
+.beats-light .beat-inquiry-notes small,
+.beats-light .form-error {
+  color: #b1402d;
+}
+
+/* Waveform bars: darker gold reads against paper */
+.beats-light .beat-waveform-bar {
+  background: linear-gradient(180deg, #a47b3c 0%, rgba(164, 123, 60, 0.25) 100%);
+}
+
 
 @keyframes waveformPulse {
   0%,

@@ -18,7 +18,7 @@ export default async function BeatDetailPage({
   }
 
   return (
-    <div className="page-shell">
+    <div className="page-shell beats-light">
       <BeatDetailHero beat={beat} />
       <BeatLicenseInquiry beat={beat} />
     </div>
