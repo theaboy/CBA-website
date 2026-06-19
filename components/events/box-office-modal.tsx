@@ -569,12 +569,14 @@ export function BoxOfficeModal({ event, onClose }: { event: EventRecord; onClose
             display: "grid",
             gridTemplateColumns: "1.05fr 1fr",
             gap: 0,
-            minHeight: 560,
+            minHeight: 0,
+            overflowY: "auto",
+            WebkitOverflowScrolling: "touch",
           }}
         >
           <div
             className="bo-ticket-pane"
-            style={{ padding: 32, background: "#15110b", display: "grid", placeItems: "stretch" }}
+            style={{ padding: 32, background: "#15110b", display: "grid", placeItems: "stretch", minHeight: 560 }}
           >
             <TicketPreview event={event} stamped={stamped} free={free} confirmation={confirmation} />
           </div>
