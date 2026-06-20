@@ -1,7 +1,6 @@
 import { notFound } from "next/navigation";
 import { getBeatBySlug } from "@/lib/beats/queries";
-import { BeatDetailHero } from "@/components/beats/beat-detail-hero";
-import { BeatLicenseInquiry } from "@/components/beats/beat-license-inquiry";
+import { BeatPurchase } from "@/components/beats/beat-purchase";
 
 export const dynamic = "force-dynamic";
 
@@ -17,10 +16,5 @@ export default async function BeatDetailPage({
     notFound();
   }
 
-  return (
-    <div className="page-shell beats-light">
-      <BeatDetailHero beat={beat} />
-      <BeatLicenseInquiry beat={beat} />
-    </div>
-  );
+  return <BeatPurchase beat={beat} />;
 }
