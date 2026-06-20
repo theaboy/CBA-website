@@ -41,7 +41,12 @@ function MiniBulbWord({ text = "BOX OFFICE", cell = 7 }: { text?: string; cell?:
   const w = x - letterGap;
   const h = 7 * cell;
   return (
-    <svg viewBox={`-4 -4 ${w + 8} ${h + 8}`} height={h + 8} style={{ display: "block" }}>
+    <svg
+      viewBox={`-4 -4 ${w + 8} ${h + 8}`}
+      width={w + 8}
+      height={h + 8}
+      style={{ display: "block", maxWidth: "100%", height: "auto" }}
+    >
       {bulbs.map((b, i) => (
         <circle
           key={i}
@@ -488,6 +493,7 @@ export function BoxOfficeModal({ event, onClose }: { event: EventRecord; onClose
       role="dialog"
       aria-modal="true"
       aria-label="Box Office"
+      className="bo-overlay"
       style={{
         position: "fixed",
         inset: 0,
@@ -503,6 +509,7 @@ export function BoxOfficeModal({ event, onClose }: { event: EventRecord; onClose
     >
       <div
         onClick={(e) => e.stopPropagation()}
+        className="bo-modal"
         style={{
           position: "relative",
           width: "min(1100px, 100%)",
@@ -517,6 +524,7 @@ export function BoxOfficeModal({ event, onClose }: { event: EventRecord; onClose
         }}
       >
         <header
+          className="bo-header"
           style={{
             padding: "18px 26px",
             borderBottom: "1px solid #2a221a",
@@ -582,6 +590,7 @@ export function BoxOfficeModal({ event, onClose }: { event: EventRecord; onClose
           </div>
 
           <div
+            className="bo-form-pane"
             style={{
               padding: "34px 36px 26px",
               background: "#f0e6d2",
@@ -892,6 +901,7 @@ export function BoxOfficeModal({ event, onClose }: { event: EventRecord; onClose
         </div>
 
         <footer
+          className="bo-footer"
           style={{
             padding: "16px 26px",
             borderTop: "1px solid #2a221a",
@@ -999,6 +1009,23 @@ export function BoxOfficeModal({ event, onClose }: { event: EventRecord; onClose
           }
           .bo-ticket-pane {
             display: none !important;
+          }
+        }
+        @media (max-width: 520px) {
+          .bo-overlay {
+            padding: 10px !important;
+          }
+          .bo-header {
+            padding: 14px 16px !important;
+          }
+          .bo-form-pane {
+            padding: 22px 18px 20px !important;
+          }
+          .bo-form-pane h2 {
+            font-size: 26px !important;
+          }
+          .bo-footer {
+            padding: 12px 16px !important;
           }
         }
       `}</style>

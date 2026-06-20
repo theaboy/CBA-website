@@ -127,78 +127,71 @@ export function BeatPurchase({ beat }: { beat: Beat }) {
                   priority
                   style={{ width: "100%", height: "100%", objectFit: "cover", display: "block" }}
                 />
-                {/* Play control overlay */}
-                <button
-                  type="button"
-                  onClick={() => void toggleBeat(beat)}
-                  aria-label={`${playing ? "Pause" : "Play"} ${beat.title}`}
-                  style={{
-                    position: "absolute",
-                    left: 14,
-                    bottom: 14,
-                    display: "inline-flex",
-                    alignItems: "center",
-                    gap: 10,
-                    padding: "11px 18px 11px 14px",
-                    background: playing ? GOLD : INK,
-                    color: PAPER,
-                    border: "none",
-                    borderRadius: 999,
-                    cursor: "pointer",
-                    fontFamily: SANS,
-                    fontSize: 11,
-                    fontWeight: 600,
-                    letterSpacing: "0.16em",
-                    textTransform: "uppercase",
-                    boxShadow: "0 10px 26px rgba(13,12,10,0.3)",
-                  }}
-                >
-                  <span aria-hidden style={{ display: "grid", placeItems: "center", width: 16, height: 16 }}>
-                    {playing ? (
-                      <span style={{ fontFamily: MONO, fontSize: 11, fontWeight: 700 }}>❚❚</span>
-                    ) : (
-                      <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden>
-                        <path d="M8 5v14l11-7z" />
-                      </svg>
-                    )}
-                  </span>
-                  {playing ? "Pause" : "Play"}
-                </button>
               </div>
             </div>
 
-            {/* Waveform */}
-            <div style={{ marginTop: 18 }}>
-              <div style={{ display: "flex", alignItems: "flex-end", gap: 2, height: 52 }}>
-                {wave.map((v, i) => {
-                  const on = playing && i / wave.length < 0.4;
-                  return (
-                    <div
-                      key={i}
-                      style={{
-                        flex: 1,
-                        height: `${v * 100}%`,
-                        background: on ? GOLD : "rgba(13,12,10,0.18)",
-                        borderRadius: 1,
-                      }}
-                    />
-                  );
-                })}
-              </div>
-              <div
+            {/* Inline preview player — circular play button + waveform */}
+            <div style={{ marginTop: 18, display: "flex", alignItems: "center", gap: 16 }}>
+              <button
+                type="button"
+                onClick={() => void toggleBeat(beat)}
+                aria-label={`${playing ? "Pause" : "Play"} ${beat.title} preview`}
                 style={{
-                  marginTop: 8,
-                  display: "flex",
-                  justifyContent: "space-between",
-                  fontFamily: MONO,
-                  fontSize: 10,
-                  letterSpacing: "0.2em",
-                  color: INK_MUTE,
-                  textTransform: "uppercase",
+                  flexShrink: 0,
+                  width: 54,
+                  height: 54,
+                  borderRadius: "50%",
+                  display: "grid",
+                  placeItems: "center",
+                  background: playing ? GOLD : INK,
+                  color: PAPER,
+                  border: "none",
+                  cursor: "pointer",
+                  boxShadow: "0 8px 20px rgba(13,12,10,0.22)",
+                  transition: "background 180ms ease, transform 180ms ease",
                 }}
               >
-                <span>Preview</span>
-                <span>{beat.bpm} BPM</span>
+                {playing ? (
+                  <span style={{ fontFamily: MONO, fontSize: 15, fontWeight: 700, lineHeight: 1 }}>❚❚</span>
+                ) : (
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden style={{ marginLeft: 2 }}>
+                    <path d="M8 5v14l11-7z" />
+                  </svg>
+                )}
+              </button>
+
+              <div style={{ flex: 1, minWidth: 0 }}>
+                <div style={{ display: "flex", alignItems: "flex-end", gap: 2, height: 44 }}>
+                  {wave.map((v, i) => {
+                    const on = playing && i / wave.length < 0.4;
+                    return (
+                      <div
+                        key={i}
+                        style={{
+                          flex: 1,
+                          height: `${v * 100}%`,
+                          background: on ? GOLD : "rgba(13,12,10,0.18)",
+                          borderRadius: 1,
+                        }}
+                      />
+                    );
+                  })}
+                </div>
+                <div
+                  style={{
+                    marginTop: 8,
+                    display: "flex",
+                    justifyContent: "space-between",
+                    fontFamily: MONO,
+                    fontSize: 10,
+                    letterSpacing: "0.2em",
+                    color: INK_MUTE,
+                    textTransform: "uppercase",
+                  }}
+                >
+                  <span>{playing ? "Playing preview" : "Play preview"}</span>
+                  <span>{beat.bpm} BPM</span>
+                </div>
               </div>
             </div>
           </div>

@@ -88,6 +88,7 @@ export function LightCatalog({ beats, featuredSlug }: { beats: Beat[]; featuredS
 
       {/* ── Liquid CATALOG wordmark — SVG with feTurbulence displacement ── */}
       <div
+        className="lc-wordmark"
         style={{
           position: "relative",
           zIndex: 1,
@@ -809,6 +810,7 @@ export function LightCatalog({ beats, featuredSlug }: { beats: Beat[]; featuredS
           .ec-rack-grid { grid-template-columns: repeat(3, 1fr); }
         }
         @media (max-width: 640px) {
+          .lc-wordmark { padding-top: 22px !important; margin-bottom: -12px !important; }
           .lc-gutter { padding-left: 20px !important; padding-right: 20px !important; }
           .ec-liner { padding: 28px 0 0 0 !important; }
           .ec-rack-grid { grid-template-columns: repeat(2, 1fr); gap: 10px; }
