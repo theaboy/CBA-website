@@ -20,6 +20,7 @@ type AudioContextValue = {
   pauseBeat: () => void;
   resumeBeat: () => Promise<void>;
   toggleBeat: (beat: Beat) => Promise<void>;
+  stopBeat: () => void;
 };
 
 const PlaybackContext = createContext<AudioContextValue | null>(null);
@@ -75,14 +76,19 @@ export function AudioProvider({ children }: { children: ReactNode }) {
     if (audio.src !== new URL(beat.audio_src, window.location.origin).toString()) {
       audio.src = beat.audio_src;
       audio.currentTime = 0;
-      setCurrentBeat(beat);
       setProgress(0);
       // Duration will be set by the loadedmetadata event handler
     }
 
-    await audio.play();
-    setCurrentBeat(beat);
-    setIsPlaying(true);
+    try {
+      await audio.play();
+      // Only surface the player once playback actually starts, so a
+      // missing/blocked preview can't leave a stuck, non-working widget.
+      setCurrentBeat(beat);
+      setIsPlaying(true);
+    } catch {
+      setIsPlaying(false);
+    }
   }
 
   function pauseBeat() {
@@ -95,8 +101,23 @@ export function AudioProvider({ children }: { children: ReactNode }) {
   async function resumeBeat() {
     const audio = audioRef.current;
     if (!audio || !currentBeat) return;
-    await audio.play();
-    setIsPlaying(true);
+    try {
+      await audio.play();
+      setIsPlaying(true);
+    } catch {
+      setIsPlaying(false);
+    }
+  }
+
+  function stopBeat() {
+    const audio = audioRef.current;
+    if (audio) {
+      audio.pause();
+      audio.currentTime = 0;
+    }
+    setIsPlaying(false);
+    setProgress(0);
+    setCurrentBeat(null);
   }
 
   async function toggleBeat(beat: Beat) {
@@ -123,7 +144,8 @@ export function AudioProvider({ children }: { children: ReactNode }) {
         playBeat,
         pauseBeat,
         resumeBeat,
-        toggleBeat
+        toggleBeat,
+        stopBeat
       }}
     >
       {children}

@@ -13,7 +13,7 @@ function formatTime(seconds: number) {
 }
 
 export function MiniPlayer() {
-  const { currentBeat, isPlaying, progress, duration, pauseBeat, resumeBeat } = useAudioPlayer();
+  const { currentBeat, isPlaying, progress, duration, pauseBeat, resumeBeat, stopBeat } = useAudioPlayer();
 
   if (!currentBeat) return null;
 
@@ -50,7 +50,14 @@ export function MiniPlayer() {
         >
           {isPlaying ? "Pause" : "Resume"}
         </button>
-        <span className="ghost-chip">Inquiry Flow Next</span>
+        <button
+          type="button"
+          className="ghost-chip"
+          onClick={stopBeat}
+          aria-label="Close player"
+        >
+          Close
+        </button>
       </div>
     </aside>
   );

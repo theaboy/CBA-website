@@ -3,22 +3,21 @@
 import Link from "next/link";
 import { useMemo, useState } from "react";
 import { type Beat } from "@/lib/beats";
-
-// ── Light-catalog palette (inversion of brand) ────────────────────────────────
-const PAPER       = "#f5f1e8";
-const PAPER_DEEP  = "#ece6d7";
-const INK         = "#0d0c0a";
-const INK_SOFT    = "#3a342d";
-const INK_MUTE    = "#8a8580";
-const INK_FAINT   = "#cdc4b3";
-const GOLD        = "#a47b3c";
-const GOLD_BRIGHT = "#c9a961";
-const LINE_LT     = "rgba(13,12,10,0.10)";
-const LINE_MED    = "rgba(13,12,10,0.18)";
-
-const SERIF = `"Cinzel", "Cormorant Garamond", Georgia, serif`;
-const SANS  = `"Space Grotesk", "Inter Tight", "Helvetica Neue", Arial, sans-serif`;
-const MONO  = `"JetBrains Mono", ui-monospace, monospace`;
+import {
+  PAPER,
+  PAPER_DEEP,
+  INK,
+  INK_SOFT,
+  INK_MUTE,
+  INK_FAINT,
+  GOLD,
+  GOLD_BRIGHT,
+  LINE_LT,
+  LINE_MED,
+  SERIF,
+  SANS,
+  MONO,
+} from "@/lib/beats/light-theme";
 
 const indexLabel = (i: number) => String(i + 1).padStart(2, "0");
 
@@ -89,6 +88,7 @@ export function LightCatalog({ beats, featuredSlug }: { beats: Beat[]; featuredS
 
       {/* ── Liquid CATALOG wordmark — SVG with feTurbulence displacement ── */}
       <div
+        className="lc-wordmark"
         style={{
           position: "relative",
           zIndex: 1,
@@ -141,6 +141,7 @@ export function LightCatalog({ beats, featuredSlug }: { beats: Beat[]; featuredS
 
       {/* ── Breadcrumb + Genre row ── */}
       <div
+        className="lc-gutter"
         style={{
           position: "relative",
           zIndex: 3,
@@ -205,7 +206,7 @@ export function LightCatalog({ beats, featuredSlug }: { beats: Beat[]; featuredS
 
       {/* ── FEATURE STAGE — sleeve + vinyl + liner notes ── */}
       <div
-        className="ec-stage"
+        className="ec-stage lc-gutter"
         style={{
           position: "relative",
           zIndex: 2,
@@ -647,6 +648,7 @@ export function LightCatalog({ beats, featuredSlug }: { beats: Beat[]; featuredS
 
       {/* ── THE RACK — leaning sleeves of the other beats ── */}
       <div
+        className="lc-gutter"
         style={{
           position: "relative",
           zIndex: 2,
@@ -808,7 +810,13 @@ export function LightCatalog({ beats, featuredSlug }: { beats: Beat[]; featuredS
           .ec-rack-grid { grid-template-columns: repeat(3, 1fr); }
         }
         @media (max-width: 640px) {
-          .ec-rack-grid { grid-template-columns: repeat(2, 1fr); }
+          .lc-wordmark { padding-top: 22px !important; margin-bottom: -12px !important; }
+          .lc-gutter { padding-left: 20px !important; padding-right: 20px !important; }
+          .ec-liner { padding: 28px 0 0 0 !important; }
+          .ec-rack-grid { grid-template-columns: repeat(2, 1fr); gap: 10px; }
+        }
+        @media (max-width: 400px) {
+          .ec-rack-grid { grid-template-columns: 1fr; }
         }
       `}</style>
     </section>
